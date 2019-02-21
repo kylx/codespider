@@ -1,0 +1,10 @@
+# Read more: https://docs.djangoproject.com/en/2.1/ref/databases/
+# my.cnf
+
+[client]
+database = codespider
+user = root
+password = 
+host = localhost
+port =
+default-character-set = utf8

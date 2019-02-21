@@ -16,3 +16,11 @@ FYI, different and **Git** sa **GitHub**
 
 ### Django
 1. [Crash Course](https://youtu.be/D6esTdOLXh4) *~1 hr* (Mostly useful though there are some outdated parts. Be mindful lang, ayaw patakag copy.)
+
+## Problems encountered (for reference)
+1. git push permission denied
+Solution: reset credentials in git-bash
+```
+git config --system --unset credential.helper
+```
+
