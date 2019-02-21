@@ -19,6 +19,7 @@ FYI, different and **Git** sa **GitHub**
 
 ## Problems encountered (for reference)
 1. git push permission denied
+
 Solution: reset credentials in git-bash
 ```
 git config --system --unset credential.helper
