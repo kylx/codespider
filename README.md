@@ -2,7 +2,7 @@
 
 ## NOTE
 Kung mag-edit mo:
-1. **Make sure na dili develop branch inyong gina-edit.Buhat mo sariling branch para sa kung unsa man ang features/scope sa inyong buhaton.**
+1. **Make sure na dili develop branch inyong gina-edit. Buhat mo sariling branch para sa kung unsa man ang features/scope sa inyong buhaton.**
 Tarunga name inyong branch if ever kailangan nato mag retrace sa atong gipangbuhat. Preferably sa develop mo mag-branch out. Or pwede sad sa branches sa lain people kung naa moy 'mini' collab session. Basta ayaw edit directly sa master ug develop branches.
 2. Do your stuff, commit commit mo sa inyong local copy, blah blah, etc...
 3. Kung humana, merge back to develop
