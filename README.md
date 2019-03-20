@@ -8,7 +8,7 @@ Tarunga name inyong branch if ever kailangan nato mag retrace sa atong gipangbuh
 3. Kung humana, merge back to develop
 5. Optional, i delete ang branch sa #1 para dili katag tan-awon ang branches.
 
-At any point, pwede mo mag push sa github mashare sa lain inyong changes, especially kung humana mo.
+At any point, pwede mo mag push sa github/origin para mashare sa lain inyong changes, especially kung humana mo.
 
 ---
 Open ["learn"](https://github.com/kylx/codespider/tree/master/learn) para sa mga kailangan tun-an.
