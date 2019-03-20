@@ -10,3 +10,6 @@ class Patient(models.Model):
 class Diagnosis(models.Model):
 	full_name = models.CharField(max_length=255)
 	short_name = models.CharField(blank=True, max_length=100)
+
+class Watcher(models.Model):
+	relationship = models.CharField(max_length=255)
