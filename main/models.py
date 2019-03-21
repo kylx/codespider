@@ -13,3 +13,12 @@ class Diagnosis(models.Model):
 
 class Watcher(models.Model):
 	relationship = models.CharField(max_length=255)
+	
+
+class Building(models.Model):
+	name = models.CharField(max_length=255)
+	
+class Room(models.Model):
+	building = models.ForeignKey("Building", on_delete=models.CASCADE)
+	display_name = models.CharField(max_length=20)
+	capacity = models.SmallIntegerField()
