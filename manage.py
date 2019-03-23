@@ -5,6 +5,7 @@ import sys
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codespider.settings')
 	
+	# runs everytime manage.py is called
     import main.startup as startup
     startup.run()
 	

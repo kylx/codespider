@@ -13,7 +13,6 @@ class Diagnosis(models.Model):
 
 class Watcher(models.Model):
 	relationship = models.CharField(max_length=255)
-	
 
 class Building(models.Model):
 	name = models.CharField(max_length=255)

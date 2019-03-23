@@ -1,0 +1,8 @@
+<h1>Patients</h1>
+<ul>
+{% for patient in object_list %}
+    <li>{{patient.id}}: {{ patient.last_name }}, {{patient.first_name}} {{patient.middle_name}}</li>
+{% empty %}
+    <li>No patients yet.</li>
+{% endfor %}
+</ul>
