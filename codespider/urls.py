@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('patient', PatientList.as_view()),
     path('patient/create', PatientCreate.as_view(success_url='/patient')),
+	path('login', login)
 ]

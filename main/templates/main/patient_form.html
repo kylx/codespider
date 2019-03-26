@@ -1,4 +1,138 @@
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
+<!DOCTYPE html>
+
+<head>
+	<title>Patient Information</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patientinfo-assign.css' %}">
+
+</head>
+
+<body>
+	<div class="container-pi">
+		<div class="wrap-pi">
+			<form class="pi-form validate-form">
+				<span class="pi-form-title">Patient Information</span>
+				
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
+					<input class="info_input" type="text" name="firstname" placeholder="Last Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="First Name is required">
+					<input class="info_input" type="text" name="lastname" placeholder="First Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs2-wrap-info_input" data-validate="Middle Initial is required">
+					<input class="info_input" type="text" name="middleinitial" placeholder="Middle Initial">
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input validate-info_input rs3-wrap-info_input" data-validate = "Age is required">
+					<input class="info_input" type="number" name="age" placeholder="Age" min=0>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs3-wrap-info_input">
+					<div>
+						<select class="selection-2" name="gender">
+							<option>Gender</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2">
+					<div>
+						<select class="selection-2" name="diagnosis">
+							<option>Diagnosis</option>
+							<option value="alc">Acute Lymphoblastic Leukemia</option>
+							<option value="bg">Brainstem Glioma</option>
+							<option value="bl">Burkitt's Lymphoma</option>
+							<option value="es">Ewing's Sarcoma</option>
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="region">
+							<option>Region</option>
+							<option value="r1">Region I (ILOCOS REGION)</option>
+							<option value="r2">Region II (CAGAYAN VALLEY)</option>
+							<option value="r3">Region III (CENTRAL LUZON)</option>
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="province">
+							<option>Province</option>
+							<option value="r1-1">Ilocos Norte</option>
+							<option value="r1-2">Ilocos Sur</option>
+							<option value="r1-3">La Union</option>
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="city">
+							<option>City</option>
+							<option value="r1-1-1">Batac</option>
+							<option value="r1-1-2">Laoag</option>
+							<option value="r1-2-1">Candon</option>
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+			</form>
+			
+			<div class="container-pi-form-btn">
+				<div class="wrap-pi-form-btn">
+					<div class="pi-form-bg-btn"></div>
+					<button class="pi-form-btn">
+						<span>
+							Save
+							<i class="fa fa-save m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+				
+				<div class="wrap-pi-form-btn">
+					<div class="pi-form-bg-btn"></div>
+					<button class="pi-form-btn">
+						<span>
+							Cancel
+							<i class="fa fa-window-close m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+	
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/vendor/select2.js' %}"></script>
+    <script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+    <script src="{% static 'js/patientinfo.js' %}"></script>
+</body>
+
+</html>

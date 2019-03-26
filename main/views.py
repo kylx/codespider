@@ -3,6 +3,13 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
 
+from django.http import HttpResponse
+
+
+def login(request):
+    context = {}
+    return render(request, 'main/patient_form.html', context)
+
 class PatientCreate(CreateView):
     model = Patient
     fields = [
