@@ -17,12 +17,16 @@ def login(request):
 def test(request):
     context = {'post': request.POST}
     
+    sexz = request.POST.get('gender')
+    if not sexz:
+        sexz = 'x'
+    
     patient = Patient(
         first_name = request.POST.get('firstname'),
         last_name = request.POST.get('lastname'),
         middle_name = request.POST.get('middleinitial'),
         age = request.POST.get('age'),
-        sex = request.POST.get('gender')[0],
+        sex = sexz
     )
     patient.save()
     return redirect('patient_list')
