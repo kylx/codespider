@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/util.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
     <link rel="stylesheet" href="{% static 'css/patientinfo-assign.css' %}">
-
 </head>
 
 <body>
 	<div class="container-pi">
 		<div class="wrap-pi">
-			<form class="pi-form validate-form">
+			<form class="pi-form validate-form" action="test" method="post">
+                 {% csrf_token %}
 				<span class="pi-form-title">Patient Information</span>
 				
 				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
@@ -41,9 +41,9 @@
 				<div class="wrap-info_input info_input-select2 rs3-wrap-info_input">
 					<div>
 						<select class="selection-2" name="gender">
-							<option>Gender</option>
-							<option value="male">Male</option>
-							<option value="female">Female</option>
+							{% for gender in genders %}
+                                <option value="{{ gender.pk }}">{{ gender.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 					<span class="focus-info_input"></span>
@@ -52,11 +52,9 @@
 				<div class="wrap-info_input info_input-select2">
 					<div>
 						<select class="selection-2" name="diagnosis">
-							<option>Diagnosis</option>
-							<option value="alc">Acute Lymphoblastic Leukemia</option>
-							<option value="bg">Brainstem Glioma</option>
-							<option value="bl">Burkitt's Lymphoma</option>
-							<option value="es">Ewing's Sarcoma</option>
+							{% for diagnosis in diagnoses %}
+                                <option value="{{ diagnosis.pk }}">{{ diagnosis.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 					<span class="focus-info_input"></span>
@@ -65,10 +63,9 @@
 				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
 					<div>
 						<select class="selection-2" name="region">
-							<option>Region</option>
-							<option value="r1">Region I (ILOCOS REGION)</option>
-							<option value="r2">Region II (CAGAYAN VALLEY)</option>
-							<option value="r3">Region III (CENTRAL LUZON)</option>
+							{% for region in regions %}
+                                <option value="{{ region.pk }}">{{ region.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 					<span class="focus-info_input"></span>
@@ -77,10 +74,9 @@
 				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
 					<div>
 						<select class="selection-2" name="province">
-							<option>Province</option>
-							<option value="r1-1">Ilocos Norte</option>
-							<option value="r1-2">Ilocos Sur</option>
-							<option value="r1-3">La Union</option>
+							{% for province in provinces %}
+                                <option value="{{ province.pk }}">{{ province.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 					<span class="focus-info_input"></span>
@@ -89,37 +85,36 @@
 				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
 					<div>
 						<select class="selection-2" name="city">
-							<option>City</option>
-							<option value="r1-1-1">Batac</option>
-							<option value="r1-1-2">Laoag</option>
-							<option value="r1-2-1">Candon</option>
+							{% for city in cities %}
+                                <option value="{{ city.pk }}">{{ city.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 					<span class="focus-info_input"></span>
 				</div>
+                
+                <div class="container-pi-form-btn">
+                    <div class="wrap-pi-form-btn">
+                        <div class="pi-form-bg-btn"></div>
+                        <button class="pi-form-btn" type="submit">
+                            <span>
+                                Save
+                                <i class="fa fa-save m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="wrap-pi-form-btn">
+                        <div class="pi-form-bg-btn"></div>
+                        <button class="pi-form-btn">
+                            <span>
+                                Cancel
+                                <i class="fa fa-window-close m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
 			</form>
-			
-			<div class="container-pi-form-btn">
-				<div class="wrap-pi-form-btn">
-					<div class="pi-form-bg-btn"></div>
-					<button class="pi-form-btn">
-						<span>
-							Save
-							<i class="fa fa-save m-l-7" aria-hidden="true"></i>
-						</span>
-					</button>
-				</div>
-				
-				<div class="wrap-pi-form-btn">
-					<div class="pi-form-bg-btn"></div>
-					<button class="pi-form-btn">
-						<span>
-							Cancel
-							<i class="fa fa-window-close m-l-7" aria-hidden="true"></i>
-						</span>
-					</button>
-				</div>
-			</div>
 		</div>
 	</div>
 	<div id="dropDownSelect1"></div>

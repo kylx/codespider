@@ -7,7 +7,11 @@ from django.http import HttpResponse
 
 
 def login(request):
-    context = {}
+    context = {
+        "cities": [
+            { 'pk': 1, 'name':'faw'}
+        ]
+    }
     return render(request, 'main/patient_form.html', context)
 
 class PatientCreate(CreateView):
