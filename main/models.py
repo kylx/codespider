@@ -34,3 +34,9 @@ class Visit(models.Model):
 class Extension(models.Model):
 	visit = models.ForeignKey("Visit", on_delete=models.CASCADE)
 	old_assigned_end_date = models.DateTimeField()
+	
+class Occupancy(models.Model):
+	visit = models.ForeignKey("Visit", on_delete=models.CASCADE)
+	room = models.ForeignKey("Room", on_delete=models.CASCADE)
+	watcher = models.ForeignKey("Watcher", on_delete=models.CASCADE)
+	date = models.DateTimeField()
