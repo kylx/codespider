@@ -30,3 +30,7 @@ class Visit(models.Model):
 	assigned_end_date = models.DateTimeField()
 	actual_end_date = models.DateTimeField()
 	is_ongoing = models.NullBooleanField()
+	
+class Extension(models.Model):
+	visit = models.ForeignKey("Visit", on_delete=models.CASCADE)
+	old_assigned_end_date = models.DateTimeField()
