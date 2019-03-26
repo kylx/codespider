@@ -15,7 +15,8 @@
 <body>
 	<div class="container-pi">
 		<div class="wrap-pi">
-			<form class="pi-form validate-form">
+			<form class="pi-form validate-form" action="test" method="post">
+                 {% csrf_token %}
 				<span class="pi-form-title">Patient Information</span>
 				
 				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
@@ -97,12 +98,11 @@
 					</div>
 					<span class="focus-info_input"></span>
 				</div>
-			</form>
-			
-			<div class="container-pi-form-btn">
+                
+                <div class="container-pi-form-btn">
 				<div class="wrap-pi-form-btn">
 					<div class="pi-form-bg-btn"></div>
-					<button class="pi-form-btn">
+					<button class="pi-form-btn" type="submit">
 						<span>
 							Save
 							<i class="fa fa-save m-l-7" aria-hidden="true"></i>
@@ -120,6 +120,9 @@
 					</button>
 				</div>
 			</div>
+			</form>
+			
+			
 		</div>
 	</div>
 	<div id="dropDownSelect1"></div>
