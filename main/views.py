@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
@@ -13,6 +13,19 @@ def login(request):
         ]
     }
     return render(request, 'main/patient_form.html', context)
+    
+def test(request):
+    context = {'post': request.POST}
+    
+    patient = Patient(
+        first_name = request.POST.get('firstname'),
+        last_name = request.POST.get('lastname'),
+        middle_name = request.POST.get('middleinitial'),
+        age = request.POST.get('age'),
+        sex = request.POST.get('gender')[0],
+    )
+    patient.save()
+    return redirect('patient_list')
 
 class PatientCreate(CreateView):
     model = Patient
