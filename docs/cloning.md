@@ -20,7 +20,7 @@
     ```
     pip install -r requirements.txt
     ```
-    If mysqlclient does not install (especially on windows), please refer to: []()https://stackoverflow.com/questions/51294268/pip-install-mysqlclient-returns-fatal-error-c1083-cannot-open-file-mysql-h
+    If mysqlclient does not install (especially on windows), please refer to: [](https://stackoverflow.com/questions/51294268/pip-install-mysqlclient-returns-fatal-error-c1083-cannot-open-file-mysql-h)
 7.  Run `Apache` and `MySQL` in xampp.
 8.  Using `phpmyadmin`, create a database named `codespider`. Keep it empty.
 9.  Back to the terminal, migrate django dependencies:
