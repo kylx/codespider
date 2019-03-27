@@ -9,7 +9,8 @@ from django.http import HttpResponse
 def login(request):
     context = {
         "cities": [
-            { 'pk': 1, 'name':'faw'}
+            { 'pk': 1, 'name':'faw'},
+            { 'pk': 2, 'name':'second'}
         ]
     }
     return render(request, 'main/patient_form.html', context)

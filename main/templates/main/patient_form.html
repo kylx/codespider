@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 
 <head>
-	<title>Patient Information</title>
+	<title>Patient Form</title>
     {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/patientinfo_titleicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/vendor/select2.css' %}">
     <link rel="stylesheet" href="{% static 'css/util.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
-    <link rel="stylesheet" href="{% static 'css/patientinfo-assign.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patientform-assign.css' %}">
 </head>
 
 <body>
 	<div class="container-pi">
 		<div class="wrap-pi">
 			<form class="pi-form validate-form" action="test" method="post">
-                 {% csrf_token %}
-				<span class="pi-form-title">Patient Information</span>
+                {% csrf_token %}
+				<span class="pi-form-title">Patient Form</span>
 				
 				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
 					<input class="info_input" type="text" name="firstname" placeholder="Last Name">
@@ -127,7 +128,7 @@
 			dropdownParent: $('#dropDownSelect1')
 		});
 	</script>
-    <script src="{% static 'js/patientinfo.js' %}"></script>
+    <script src="{% static 'js/patientform.js' %}"></script>
 </body>
 
 </html>
