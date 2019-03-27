@@ -1,4 +1,4 @@
-[< BACK](../README.MD)
+[< BACK](../README.md)
 
 # Git Cheatsheet
 DISCLAIMER: Command descriptions are ***heavily simplified***. 
