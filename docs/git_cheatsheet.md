@@ -43,6 +43,7 @@ Use your judgment for when to upload local changes. You don't have to upload cha
 | `git branch -a` | list *all* branches including sa github |
 | `git checkout <branch_name>` | switch working branch |
 | `git checkout -b <new_branch_name>` | create new branch (by branching from ***current*** working branch) |
+| `git merge <branch_name>` | merge changes from `<branch_name>` to  ***current*** working branch |
 
 ## Others
 Useful and commands pero medyo complicated. Kamo na search ani.
