@@ -43,3 +43,19 @@ Use your judgment for when to upload local changes. You don't have to upload cha
 | `git branch -a` | list *all* branches including sa github |
 | `git checkout <branch_name>` | switch working branch |
 | `git checkout -b <new_branch_name>` | create new branch (by branching from ***current*** working branch) |
+
+## Others
+Useful and commands pero medyo complicated. Kamo na search ani.
+
+1. `git diff` - show differences between files line-by-line, branches, commits, etc.
+   
+   Akong natry: show differences between current branch and develop
+   ```
+   $ git diff develop --stat
+    README.md                           | 43 +++++------------------------------
+    _config.yml                         |  1 +
+    docs/cloning.md                     | 37 ++++++++++++++++++++++++++++++
+    docs/git_cheatsheet.md              | 45 +++++++++++++++++++++++++++++++++++++
+    learn/README.md => docs/learning.md |  2 ++
+    5 files changed, 91 insertions(+), 37 deletions(-)
+    ```
