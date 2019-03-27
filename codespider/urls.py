@@ -21,7 +21,15 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 urlpatterns = [
+
+    path('home', home, name='home'),
+    path('room', room, name='room'),
+    path('patients', patients, name='patients'),
+    path('summary', summary, name='summary'),
+    path('inquiry', inquiry, name='inquiry'),
+
     path('admin/', admin.site.urls),
+    path('patient', PatientList.as_view(), name='patient_list'),
     path('patient', PatientList.as_view(), name='patient_list'),
     path('patient/create', PatientCreate.as_view(success_url='/patient')),
 	path('login', login),

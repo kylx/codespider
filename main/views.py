@@ -5,6 +5,37 @@ from .models import Patient
 
 from django.http import HttpResponse
 
+"""
+MAIN PAGES
+
+    frontend mag set sa final correct template
+    pwede pud mag butang ug dummy context for testing
+
+    backend mag populate sa final context
+"""
+
+def home(request):
+    context = {'url_name': 'HOME'}
+    return render(request, 'main/link_correct_template_here.html', context)
+
+def room(request):
+    context = {'url_name': 'ROOM'}
+    return render(request, 'main/link_correct_template_here.html', context)
+
+def patients(request):
+    context = {'url_name': 'PATIENTS'}
+    return render(request, 'main/link_correct_template_here.html', context)
+
+def summary(request):
+    context = {'url_name': 'SUMMARY'}
+    return render(request, 'main/link_correct_template_here.html', context)
+
+def inquiry(request):
+    context = {'url_name': 'INQUIRY'}
+    return render(request, 'main/link_correct_template_here.html', context)
+
+
+##----------------------
 
 def login(request):
     context = {
