@@ -1,4 +1,5 @@
 # Git Cheatsheet
+DISCLAIMER: Command descriptions are ***heavily simplified***. 
 
 ## Info commands
 Walay mag change sa files, commits, history, etc. pag gamit ani na commands. So use them freely and frequently.
