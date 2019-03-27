@@ -2,8 +2,8 @@
 
 
 Links
-## [Git Cheatsheet](docs/git_cheatsheet.md)
-## [Cloning](docs/cloning.md)
+| **[Git Cheatsheet](docs/git_cheatsheet.md)** | **[Cloning](docs/cloning.md)** |
+| --- | --- |
 
 
 
