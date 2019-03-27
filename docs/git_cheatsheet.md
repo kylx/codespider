@@ -1,12 +1,12 @@
 # Git Cheatsheet
 
 ## Info commands
-Walay magchange sa files, commits, history, etc. pag gamit ani na commands. So use them alot.
+Walay mag change sa files, commits, history, etc. pag gamit ani na commands. So use them freely and frequently.
 
 |||
 | --- | --- |
 | `git status` | show files added/not added for next commit |
-| `git status -s` | show status in compact form |
+| `git status -s` | show status in short/compact form |
 | `git log` | show commit history for current branch (add `--all` for all branches) |
 | `git log --oneline --graph --decorate` | pretty print commit history  (add `--all` for all branches) |
 
@@ -16,4 +16,27 @@ These commands only changes your local repo(files sa imong computer). Dili ma pr
 
 |||
 | --- | --- |
-| `git add -a` | add *all* file changes to next commit |
+| `git add -A` | add *all* file changes to next commit |
+| `git commit -m "enter message here"` | commit all *added* changes with message |
+| `git reset --HARD` | reset all changes |
+| `git stash` | save local changes temporarily (files will revert back to original state) |
+| `git stash pop` | re-apply stashed changes |
+
+## Uploading/Downloading changes to/from github
+Use your judgment for when to upload local changes. You don't have to upload changes every commit. 
+
+|||
+| --- | --- |
+| `git fetch` | check for new updates from github without changing files |
+| `git pull` | check for new updates from github *and* update files as well |
+| `git push` | upload all local changes to github |
+
+
+## Branch
+
+|||
+| --- | --- |
+| `git branch` | list branches on your local repo |
+| `git branch -a` | list *all* branches including sa github |
+| `git checkout <branch_name>` | switch working branch |
+| `git checkout -b <new_branch_name>` | create new branch (by branching from ***current*** working branch) |
