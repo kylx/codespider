@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Patient Form</title>
+    {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/patientinfo_titleicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patientform-assign.css' %}">
+</head>
+
+<body>
+	<div class="container-pi">
+		<div class="wrap-pi">
+			<form class="pi-form validate-form" action="test" method="post">
+                {% csrf_token %}
+				<span class="pi-form-title">Patient Form</span>
+				
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
+					<input class="info_input" type="text" name="firstname" placeholder="Last Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="First Name is required">
+					<input class="info_input" type="text" name="lastname" placeholder="First Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs2-wrap-info_input" data-validate="Middle Initial is required">
+					<input class="info_input" type="text" name="middleinitial" placeholder="Middle Initial">
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input validate-info_input rs3-wrap-info_input" data-validate = "Age is required">
+					<input class="info_input" type="number" name="age" placeholder="Age" min=0>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs3-wrap-info_input">
+					<div>
+						<select class="selection-2" name="gender">
+							{% for gender in genders %}
+                                <option value="{{ gender.pk }}">{{ gender.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2">
+					<div>
+						<select class="selection-2" name="diagnosis">
+							{% for diagnosis in diagnoses %}
+                                <option value="{{ diagnosis.pk }}">{{ diagnosis.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="region">
+							{% for region in regions %}
+                                <option value="{{ region.pk }}">{{ region.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="province">
+							{% for province in provinces %}
+                                <option value="{{ province.pk }}">{{ province.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input info_input-select2 rs4-wrap-info_input">
+					<div>
+						<select class="selection-2" name="city">
+							{% for city in cities %}
+                                <option value="{{ city.pk }}">{{ city.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-info_input"></span>
+				</div>
+                
+                <div class="container-pi-form-btn">
+                    <div class="wrap-pi-form-btn">
+                        <div class="pi-form-bg-btn"></div>
+                        <button class="pi-form-btn" type="submit">
+                            <span>
+                                Save
+                                <i class="fa fa-save m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="wrap-pi-form-btn">
+                        <div class="pi-form-bg-btn"></div>
+                        <button class="pi-form-btn">
+                            <span>
+                                Cancel
+                                <i class="fa fa-window-close m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+	
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/vendor/select2.js' %}"></script>
+    <script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+    <script src="{% static 'js/patientform.js' %}"></script>
+</body>
+
+</html>

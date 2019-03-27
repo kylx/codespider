@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Patients</title>
+    {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/patients_titleicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+
+<body>
+	<div class="super_container">
+	
+		<header class="header">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="header_content d-flex flex-row align-items-center justify-content-start">
+							<!-- insert logo -->
+							<div class="logo"><img src="images/logo.png" alt=""></div>
+							<nav class="main_nav">
+								<ul>
+									<li><a href="home.html">Home</a></li>
+									<li><a href="rooms.html">Rooms</a></li>
+									<li class="active"><a href="patients.html">Patients</a></li>
+									<li><a href="summary.html">Summary</a></li>
+									<li><a href="inquiry.html">Inquiry</a></li>
+								</ul>
+							</nav>
+							<div class="logout ml-auto">
+								<div class="logout_inner">
+									<img src={% static 'images/icons/logout.png' %}" alt=""><span>Logout</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="body">
+			<div class="table-body">
+				<table id="table1" class="table table-striped">
+					<thead>
+						<tr bgcolor="#ff3333">
+							<th>Last Name</th>
+							<th>First Name</th>
+							<th>Middle Initial</th>
+						</tr>
+					</thead>
+					<tbody>
+                        {% for patient in object_list %}
+                            <tr><td>{{ patient.last_name }}</td><td>{{patient.first_name}}</td><td>{{patient.middle_name}}</td></tr>
+                        {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>		
+	</div>
+</body>
+
+</html>
