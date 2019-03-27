@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Summary{% endblock title %}
+
+{% load staticfiles %}
+        
+{% block nav_titleicon %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/summary_titleicon.png' %}">
+{% endblock nav_titleicon %}
+
+{% block nav_bar %}
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'rooms' %}">Rooms</a></li>
+    <li><a href="{% url 'patients' %}">Patients</a></li>
+    <li class="active"><a href="{% url 'summary' %}">Summary</a></li>
+    <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+{% endblock nav_bar %}

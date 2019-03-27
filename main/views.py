@@ -16,23 +16,23 @@ MAIN PAGES
 
 def home(request):
     context = {'url_name': 'HOME'}
-    return render(request, 'main/link_correct_template_here.html', context)
+    return render(request, 'main/home.html', context)
 
-def room(request):
-    context = {'url_name': 'ROOM'}
-    return render(request, 'main/link_correct_template_here.html', context)
+def rooms(request):
+    context = {'url_name': 'ROOMS'}
+    return render(request, 'main/rooms.html', context)
 
 def patients(request):
     context = {'url_name': 'PATIENTS'}
-    return render(request, 'main/link_correct_template_here.html', context)
+    return render(request, 'main/patients.html', context)
 
 def summary(request):
     context = {'url_name': 'SUMMARY'}
-    return render(request, 'main/link_correct_template_here.html', context)
+    return render(request, 'main/summary.html', context)
 
 def inquiry(request):
     context = {'url_name': 'INQUIRY'}
-    return render(request, 'main/link_correct_template_here.html', context)
+    return render(request, 'main/inquiry.html', context)
 
 
 ##----------------------

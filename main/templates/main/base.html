@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock title %}</title>
+        {% load staticfiles %}
+        
+        {% block nav_titleicon %}
+           <link rel="icon" type="image/png" href="{% static 'images/icons/home_titleicon.png' %}">
+        {% endblock nav_titleicon %}
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        
+        {% block nav_stylesheet %}
+        {% endblock nav_stylesheet %}
+    </head>
+    
+    <body>
+        <div class="super_container">
+	
+            <header class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                                <nav class="main_nav">
+                                    <ul>
+                                        {% block nav_bar %}
+                                            <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                                            <li><a href="{% url 'rooms' %}">Rooms</a></li>
+                                            <li><a href="{% url 'patients' %}">Patients</a></li>
+                                            <li><a href="{% url 'summary' %}">Summary</a></li>
+                                            <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+                                        {% endblock nav_bar %}
+                                    </ul>
+                                </nav>
+                                <div class="logout ml-auto">
+                                    <div class="logout_inner">
+                                        <img src="images/icons/logout.png" alt=""><span>Logout</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+        </div>
+    </body>
+</html>
