@@ -1,8 +1,6 @@
 # Cloning
 
 
-
-
 ## Prerequisites:
 1. xampp, python, and git are already installed.
 2. `pip` actually works.

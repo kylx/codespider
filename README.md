@@ -1,10 +1,10 @@
 # codespider
 
-| [Git Cheatsheet](docs/git_cheatsheet.md)        | [Cloning](docs/cloning.md)           | Cool  |
-| ------------- |:-------------:| -----:|
 
-## 
-## 
+Links
+## [Git Cheatsheet](docs/git_cheatsheet.md)
+## [Cloning](docs/cloning.md)
+
 
 
 ## NOTE
