@@ -1,5 +1,7 @@
 # codespider
 
+Test link [docs](docs/git_cheatsheet.md)
+
 ## NOTE
 Kung mag-edit mo:
 1. **Make sure na dili develop branch inyong gina-edit. Buhat mo sariling branch para sa kung unsa man ang features/scope sa inyong buhaton.**
