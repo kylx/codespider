@@ -12,7 +12,7 @@ Walay magchange sa files, commits, history, etc. pag gamit ani na commands. So u
 
 
 ## Local Repo
-These commands only changes your local repo(files sa imong computer). Dili ma propate ang changes sa github.
+These commands only changes your local repo(files sa imong computer). Dili ma propagate ang changes sa github.
 
 |||
 | --- | --- |
