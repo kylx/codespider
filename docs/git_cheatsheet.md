@@ -6,7 +6,7 @@ DISCLAIMER: Command descriptions are ***heavily simplified***.
 ## Info commands
 Walay mag change sa files, commits, history, etc. pag gamit ani na commands. So use them freely and frequently.
 
-|||
+|cmd|description|
 | --- | --- |
 | `git status` | show files added/not added for next commit |
 | `git status -s` | show status in short/compact form |
@@ -17,7 +17,7 @@ Walay mag change sa files, commits, history, etc. pag gamit ani na commands. So 
 ## Local Repo
 These commands only changes your local repo(files sa imong computer). Dili ma propagate ang changes sa github.
 
-|||
+|cmd|description|
 | --- | --- |
 | `git add -A` | add *all* file changes to next commit |
 | `git commit -m "enter message here"` | commit all *added* changes with message |
@@ -28,7 +28,7 @@ These commands only changes your local repo(files sa imong computer). Dili ma pr
 ## Uploading/Downloading changes to/from github
 Use your judgment for when to upload local changes. You don't have to upload changes every commit. 
 
-|||
+|cmd|description|
 | --- | --- |
 | `git fetch` | check for new updates from github without changing files |
 | `git pull` | check for new updates from github *and* update files as well |
@@ -37,7 +37,7 @@ Use your judgment for when to upload local changes. You don't have to upload cha
 
 ## Branch
 
-|||
+|cmd|description|
 | --- | --- |
 | `git branch` | list branches on your local repo |
 | `git branch -a` | list *all* branches including sa github |
