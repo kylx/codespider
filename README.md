@@ -3,8 +3,9 @@
 ### >[Github Pages Site](https://kylx.github.io/codespider/)<
 
 1. **[Git Cheatsheet](docs/git_cheatsheet.md)**
-2. **[Cloning](docs/cloning.md)**
-3. **[Learning Resources](docs/learning.md)**
+2. **[Testing](docs/testing.md)**
+3. **[Cloning](docs/cloning.md)**
+4. **[Learning Resources](docs/learning.md)**
 
 
 
