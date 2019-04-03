@@ -2,12 +2,13 @@
 
 <head>
 	<title>Assign to Room</title>
-	<link rel="icon" type="image/png" href="images/icons/assign_titleicon.png"/>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="x/util.css">
-	<link rel="stylesheet" type="text/css" href="x/form.css">
-	<link rel="stylesheet" type="text/css" href="x/patientform-assign.css">
+    {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/assign_titleicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'x/util.css' %}">
+    <link rel="stylesheet" href="{% static 'x/form.css' %}">
+    <link rel="stylesheet" href="{% static 'x/patientform-assign.css' %}">
 </head>
 
 <body>
@@ -99,8 +100,8 @@
 	</div>
 	<div id="dropDownSelect1"></div>
 	
-	<script src="js/jquery.js"></script>
-	<script src="x/patientform.js"></script> <!-- Currently using patientform.js -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'x/patientform.js' %}"></script>
 </body>
 
 </html>
