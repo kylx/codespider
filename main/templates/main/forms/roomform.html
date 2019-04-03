@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Assign to Room</title>
+	<link rel="icon" type="image/png" href="images/icons/assign_titleicon.png"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="x/util.css">
+	<link rel="stylesheet" type="text/css" href="x/form.css">
+	<link rel="stylesheet" type="text/css" href="x/patientform-assign.css">
+</head>
+
+<body>
+	<div class="container-pi">
+		<div class="wrap-pi">
+			<form class="pi-form validate-form">
+				<span class="pi-form-title">Assign to Room</span>
+				
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="Last Name is required">
+					<div class="label-info_input">Last Name</div>
+					<input class="info_input" type="text" name="firstname" placeholder="Last Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs1-wrap-info_input" data-validate="First Name is required">
+					<div class="label-info_input">First Name</div>
+					<input class="info_input" type="text" name="lastname" placeholder="First Name">
+					<span class="focus-info_input"></span>
+				</div>
+
+				<div class="wrap-info_input validate-info_input rs2-wrap-info_input" data-validate="Middle Initial is required">
+					<div class="label-info_input">Middle Initial</div>
+					<input class="info_input" type="text" name="middleinitial" placeholder="Middle Initial">
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="wrap-info_input validate-info_input rs2-wrap-info_input" data-validate = "Number is required">
+					<div class="label-info_input">No. of Watchers</div>
+					<input class="info_input" type="number" name="watcher-num" placeholder="Age" min=0 max=2>
+					<span class="focus-info_input"></span>
+				</div>
+				
+				<div class="rs5-wrap-info_input">
+					<div class="label-info_input">Watcher/s (Relationship)</div>
+					<div class="row">
+						<div class="col"><input type="checkbox" id="mother" name="watcher-rel"><label class="info_input-indent">Mother</label></div>
+						<div class="col"><input type="checkbox" id="grandfather" name="watcher-rel"><label class="info_input-indent">Grandfather</label></div>
+						<div class="col"><input type="checkbox" id="sister" name="watcher-rel"><label class="info_input-indent">Sister</label></div>
+						<div class="col"><input type="checkbox" id="other" name="watcher-rel"><label class="info_input-indent">Other</label></div>
+					</div>
+					<div class="row">
+						<div class="col"><input type="checkbox" id="father" name="watcher-rel"><label class="info_input-indent">Father</label></div>
+						<div class="col"><input type="checkbox" id="aunt" name="watcher-rel"><label class="info_input-indent">Aunt</label></div>
+						<div class="col"><input type="checkbox" id="brother" name="watcher-rel"><label class="info_input-indent">Brother</label></div>
+						<div class="col"></div>
+					</div>
+					<div class="row">
+						<div class="col"><input type="checkbox" id="grandmother" name="watcher-rel"><label class="info_input-indent">Grandmother</label></div>
+						<div class="col"><input type="checkbox" id="uncle" name="watcher-rel"><label class="info_input-indent">Uncle</label></div>
+						<div class="col"><input type="checkbox" id="cousin" name="watcher-rel"><label class="info_input-indent">Cousin</label></div>
+						<div class="col"></div>
+					</div>
+				</div>
+				
+				<div class="label-info_input">Date of Stay</div>
+				<div class="rs3-wrap-info_input">
+					<div class="label-sub-info_input">From</div>
+					<input class="form-control" type="date" required>
+				</div>
+					
+				<div class="rs3-wrap-info_input">
+					<div class="label-sub-info_input">To</div>
+					<input class="form-control" type="date" required>
+				</div>
+			</form>
+			
+			<div class="container-pi-form-btn">
+				<div class="wrap-pi-form-btn">
+					<div class="pi-form-bg-btn"></div>
+					<button class="pi-form-btn">
+						<span>
+							Add
+							<i class="fa fa-user-plus m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+				
+				<div class="wrap-pi-form-btn">
+					<div class="pi-form-bg-btn"></div>
+					<button class="pi-form-btn">
+						<span>
+							Cancel
+							<i class="fa fa-window-close m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+	
+	<script src="js/jquery.js"></script>
+	<script src="x/patientform.js"></script> <!-- Currently using patientform.js -->
+</body>
+
+</html>
