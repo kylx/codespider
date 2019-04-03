@@ -23,7 +23,8 @@ def rooms(request):
     return render(request, 'main/rooms.html', context)
 
 def patients(request):
-    context = {'url_name': 'PATIENTS'}
+    patient_list = Patient.objects.all()
+    context = {'patients': patient_list}
     return render(request, 'main/patients.html', context)
 
 def summary(request):

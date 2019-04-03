@@ -4,7 +4,7 @@
 	width: 100%;
 	height: 100vh;
 	max-height: 892px;
-	color: #000000;
+	color: #720000;
 }
 
 /*.home_container {
@@ -21,10 +21,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
-}
-
-.home_content {
-	max-width: 600px;
 }*/
 
 .home_subtitle {
@@ -42,4 +38,10 @@
 	color: #de2f38;
 	line-height: 1.2;
 	margin-top: 11px;
+}
+
+/* PROGRESS BAR */
+.progress_bar-container {
+    margin-top: 50px;
+    padding-left: 25%;
 }

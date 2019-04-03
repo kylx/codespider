@@ -1,3 +1,5 @@
+/* Used by:	home.html */
+
 /* FONT */
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900');
@@ -118,6 +120,10 @@ p a:hover::after {
 	width: 110px;
 }
 
+.logo img {
+	max-width: 100%;
+}
+
 .main_nav {
 	overflow: hidden;
 	margin-left: 157px;
@@ -143,49 +149,34 @@ p a:hover::after {
 }
 
 .main_nav ul li.active a,
+
 .main_nav ul li a:hover {
 	color: #00bfbf;
 }
 
-.wrap-out-btn {
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    width: 10%;
-    height: 43px;
+.logout {
+	height: 43px;
     border-radius: 22px;
     background: linear-gradient(to right, #487fee, #32fa95);
-    padding: 0px;
+    padding: 2px;
     overflow: hidden;
-    margin: 0 auto;
 }
 
-.out-bg-btn {
-    position: absolute;
-    z-index: -1;
-    width: 100%;
+.logout_inner {
+	width: 100%;
 	height: 100%;
-	padding: 20px;
+	padding-left: 16px;
+	padding-right: 18px;
 	background: #3f6fce;
 	border-radius: 20px;
 }
 
-.out-btn {
-    position: absolute;
-    z-index: 2;
-    font-size: 16px;
+.logout span {
+	font-size: 16px;
 	font-weight: 500;
 	color: #ffffff;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border-radius: 20px;
-    border-color: transparent;
-    align-items: right;
-}
-
-.out-btn span:hover {
-    color: #000000;
+	margin-left: 11px;
+	line-height: 39px;
 }
 
 .bar {
