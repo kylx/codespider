@@ -34,6 +34,14 @@ def summary(request):
 def inquiry(request):
     context = {'url_name': 'INQUIRY'}
     return render(request, 'main/inquiry.html', context)
+    
+def tmp_create_patient(request):
+    context = {'url_name': 'PATIENTS_CREATE'}
+    return render(request, 'main/forms/patientform.html', context)
+
+def tmp_assign_room(request):
+    context = {'url_name': 'PATIENTS_CREATE'}
+    return render(request, 'main/forms/roomform.html', context)
 
 
 ##----------------------

@@ -27,6 +27,8 @@ urlpatterns = [
     path('patients', patients, name='patients'),
     path('summary', summary, name='summary'),
     path('inquiry', inquiry, name='inquiry'),
+    path('tmp/create_patient', tmp_create_patient),
+    path('tmp/assign_room', tmp_assign_room),
 
     path('admin/', admin.site.urls),
     path('patient', PatientList.as_view(), name='patient_list'),
