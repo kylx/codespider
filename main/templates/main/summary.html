@@ -10,7 +10,7 @@
 
 {% block page_stylesheet %}
     <link rel="stylesheet" href="{% static 'css/summary.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -24,49 +24,46 @@
 {% block page_body %}
 <div class="split left">
     <div class="centered">
-        <div class="body">
-            <div class="table-body">
-                <table id="table1" class="table table-striped">
-                    <thead>
-                        <tr bgcolor="#ff3333">
-                            <th>Day</th>
-                            <th>Patients</th>
-                            <th>Watchers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td></td><td></td></tr>
-                        <tr><td>2</td><td></td><td></td></tr>
-                        <tr><td>3</td><td></td><td></td></tr>
-                        <tr><td>4</td><td></td><td></td></tr>
-                        <tr><td>5</td><td></td><td></td></tr>
-                        <tr><td>6</td><td></td><td></td></tr>
-                        <tr><td>7</td><td></td><td></td></tr>
-                        <tr><td>8</td><td></td><td></td></tr>
-                        <tr><td>9</td><td></td><td></td></tr>
-                        <tr><td>10</td><td></td><td></td></tr>
-                        <tr><td>11</td><td></td><td></td></tr>
-                        <tr><td>12</td><td></td><td></td></tr>
-                        <tr><td>13</td><td></td><td></td></tr>
-                        <tr><td>14</td><td></td><td></td></tr>
-                        <tr><td>15</td><td></td><td></td></tr>
-                        <tr><td>16</td><td></td><td></td></tr>
-                        <tr><td>17</td><td></td><td></td></tr>
-                        <tr><td>18</td><td></td><td></td></tr>
-                        <tr><td>19</td><td></td><td></td></tr>
-                        <tr><td>20</td><td></td><td></td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-body">
+            <table id="table1" class="table table-striped">
+                <thead>
+                    <tr bgcolor="#ff3333">
+                        <th>Day</th>
+                        <th>Patients</th>
+                        <th>Watchers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td></td><td></td></tr>
+                    <tr><td>2</td><td></td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td></tr>
+                    <tr><td>4</td><td></td><td></td></tr>
+                    <tr><td>5</td><td></td><td></td></tr>
+                    <tr><td>6</td><td></td><td></td></tr>
+                    <tr><td>7</td><td></td><td></td></tr>
+                    <tr><td>8</td><td></td><td></td></tr>
+                    <tr><td>9</td><td></td><td></td></tr>
+                    <tr><td>10</td><td></td><td></td></tr>
+                    <tr><td>11</td><td></td><td></td></tr>
+                    <tr><td>12</td><td></td><td></td></tr>
+                    <tr><td>13</td><td></td><td></td></tr>
+                    <tr><td>14</td><td></td><td></td></tr>
+                    <tr><td>15</td><td></td><td></td></tr>
+                    <tr><td>16</td><td></td><td></td></tr>
+                    <tr><td>17</td><td></td><td></td></tr>
+                    <tr><td>18</td><td></td><td></td></tr>
+                    <tr><td>19</td><td></td><td></td></tr>
+                    <tr><td>20</td><td></td><td></td></tr>
+                    <tr><td>Average</td><td></td><td></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 <div class="split right">
     <div class="centered">
         <div id="calendar">
-            <div id="calendar_header">
-                <i class="icon-chevron-left"></i><h1></h1><i class="icon-chevron-right"></i>
-            </div>
+            <div id="calendar_header"><i class="fa fa-chevron-left"></i><h1></h1><i class="fa fa-chevron-right"></i></div>
             <div id="calendar_weekdays"></div>
             <div id="calendar_content"></div>
         </div>
