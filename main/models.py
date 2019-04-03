@@ -1,21 +1,21 @@
 from django.db import models
 
 class Patient(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    middle_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    middle_initial = models.CharField(max_length=1)
     age = models.SmallIntegerField()
     sex = models.CharField(max_length=1)
  
 class Diagnosis(models.Model):
-	full_name = models.CharField(max_length=255)
-	short_name = models.CharField(max_length=100, blank=True)
+	full_name = models.CharField(max_length=60)
+	short_name = models.CharField(max_length=30, blank=True)
 
 class Watcher(models.Model):
-	relationship = models.CharField(max_length=255)
+	relationship = models.CharField(max_length=15)
 	
 class Building(models.Model):
-	name = models.CharField(max_length=255)
+	name = models.CharField(max_length=20)
 	
 class Room(models.Model):
 	building = models.ForeignKey("Building", on_delete=models.CASCADE)
