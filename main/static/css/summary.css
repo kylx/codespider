@@ -1,15 +1,15 @@
 .split {
-    height: 100%;
-    width: 50%;
     position: fixed;
+	top: 90px;
+    height: 87%;
+    width: 50%;
     z-index: 1;
-    top: 90px;
     overflow-x: auto;
-    padding-top: 20px;
+    padding-top: 0;
 }
 
 .left {
-    left: 2;
+    left: 0;
 }
 
 .right {
@@ -18,28 +18,23 @@
 
 .centered {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
+    padding-top: 20px;
+    margin-left: 20%;
 }
 
 /* TABLE */
 .table-body {
 	position: relative;
-	top: 200px;
+	top: 0;
 	width: 150%;
 	height: auto;
 	font-family: Montserrat, sans-serif;
-	box-shadow: 5px 10px 10px 10px #888888;
 }
 
 table#table1 {
-	width: 100%; 
-	margin-left:; 
-	margin-right:%;
+	width: 100%;
 	text-align: center;
-    height: 5px;
 }
  
 .table-striped>tbody>tr:nth-child(odd)>td, 

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+	hello{{provinces}}
 	<div class="container-pi">
 		<div class="wrap-pi">
 			<form class="pi-form validate-form" action="test" method="post">
@@ -65,7 +66,7 @@
 					<div>
 						<select class="selection-2" name="region">
 							{% for region in regions %}
-                                <option value="{{ region.pk }}">{{ region.name }}</option>
+                                <option value="{{ region.code }}">{{ region.long_name }}</option>
                             {% endfor %}
 						</select>
 					</div>
@@ -76,7 +77,7 @@
 					<div>
 						<select class="selection-2" name="province">
 							{% for province in provinces %}
-                                <option value="{{ province.pk }}">{{ province.name }}</option>
+                                <option value="{{ province.code }}">{{ province.long_name }}</option>
                             {% endfor %}
 						</select>
 					</div>
@@ -87,7 +88,7 @@
 					<div>
 						<select class="selection-2" name="city">
 							{% for city in cities %}
-                                <option value="{{ city.pk }}">{{ city.name }}</option>
+                                <option value="{{ city.code }}">{{ city.long_name }}</option>
                             {% endfor %}
 						</select>
 					</div>

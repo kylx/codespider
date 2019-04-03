@@ -1,0 +1,34 @@
+.counter {
+	float: left;
+	width: 70%;
+	padding: 15px;
+	font-family: 'Montserrat', Sans-Serif;
+	text-align: center;
+    color: black;
+}
+
+.counter_name {
+	font-size: 30px;
+}
+
+.cname-two {
+	position: relative;
+	top: 20%;
+}
+
+.counter_num {
+	font-weight: bold;
+}
+
+.cnum-one {
+	font-size: 70px;
+}
+
+.cnum-two {
+	font-size: 40px;
+}
+
+.rowspanned {
+	overflow: visible;
+	height: 10px;
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
+from .enums import Enums
 
 from django.http import HttpResponse
 
@@ -44,8 +45,21 @@ def tmp_assign_room(request):
     return render(request, 'main/forms/roomform.html', context)
 
 def create_patient(request):
+    context = {
+        'regions': Enums.REGIONS,
+        'provinces': Enums.PROVINCES,
+        'cities': Enums.CITIES,
+    }
+    return render(request, 'main/forms/patientform.html', context)
+
+
+def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/patientform.html', context)
+
+def tmp_assign_room(request):
+    context = {'url_name': 'PATIENTS_CREATE'}
+    return render(request, 'main/forms/roomform.html', context)
 
 
 ##----------------------
