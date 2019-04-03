@@ -59,7 +59,7 @@ $(function() {
         });
         n.find("#calendar_header").css({
             height: e * (1 / 7) + "px"
-        }).find('i[class^="icon-chevron"]').css("line-height", e * (1 / 7) + "px")
+        }).find(".fa").css("line-height", e * (1 / 7) + "px")
     }
 
     function v(e, t) {
@@ -96,7 +96,7 @@ $(function() {
     var l = u.find("#calendar_content");
     b();
     c();
-    a.find('i[class^="icon-chevron"]').on("click", function() {
+    a.find(".fa").on("click", function() {
         var e = $(this);
         var r = function(e) {
             n = e == "next" ? n + 1 : n - 1;

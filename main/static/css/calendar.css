@@ -6,7 +6,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 320px;
-    font-family: 'Lato', sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 #calendar_weekdays div {
@@ -81,9 +81,11 @@ body {
     width: 70%;
 }
 
-i[class^=icon-chevron] {
+.fa {
     color: #FFFFFF;
     float: left;
+    padding-bottom: 10px;
+    margin-top: -15px;
     width: 15%;
     border-radius: 50%;
 }
