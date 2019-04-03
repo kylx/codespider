@@ -29,9 +29,7 @@ urlpatterns = [
     path('inquiry', inquiry, name='inquiry'),
 
     path('admin/', admin.site.urls),
-    path('patient', PatientList.as_view(), name='patient_list'),
-    path('patient', PatientList.as_view(), name='patient_list'),
-    path('patient/create', PatientCreate.as_view(success_url='/patient')),
+    path('create_patient', create_patient),
 	path('login', login),
 	path('test', test),
 ]

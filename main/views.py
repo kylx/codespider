@@ -35,6 +35,10 @@ def inquiry(request):
     context = {'url_name': 'INQUIRY'}
     return render(request, 'main/inquiry.html', context)
 
+def create_patient(request):
+    context = {'url_name': 'PATIENTS_CREATE'}
+    return render(request, 'main/forms/patientform.html', context)
+
 
 ##----------------------
 
@@ -45,7 +49,7 @@ def login(request):
             { 'pk': 2, 'name':'second'}
         ]
     }
-    return render(request, 'main/patient_form.html', context)
+    return render(request, 'main/forms/patientform.html', context)
     
 def test(request):
     context = {'post': request.POST}
