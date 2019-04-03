@@ -22,7 +22,7 @@ from django.views.generic.list import ListView
 
 urlpatterns = [
 
-    path('home', rooms, name='home'),
+    path('home', home, name='home'),
     path('rooms', rooms, name='rooms'),
     path('patients', patients, name='patients'),
     path('summary', summary, name='summary'),
@@ -31,9 +31,7 @@ urlpatterns = [
     path('tmp/assign_room', tmp_assign_room),
 
     path('admin/', admin.site.urls),
-    path('patient', PatientList.as_view(), name='patient_list'),
-    path('patient', PatientList.as_view(), name='patient_list'),
-    path('patient/create', PatientCreate.as_view(success_url='/patient')),
+    path('create_patient', create_patient),
 	path('login', login),
 	path('test', test),
 ]
