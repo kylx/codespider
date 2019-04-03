@@ -22,7 +22,7 @@ class LocationCode():
 	- :02d formats the numbers to always use 2 digits. i.e, 3 -> '03', 0 -> '00'
 	"""
 	def __str__(self):
-		return f'{self.region:02d}{self.province:02d}{self.city:02d}'
+		return f'{self.region}{self.province}{self.city}'
 		
 class Location():
 	def __init__(self, code, long_name, short_name=''):
