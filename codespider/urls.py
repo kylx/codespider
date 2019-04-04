@@ -38,7 +38,7 @@ urlpatterns = [
      path('tmp/action/assign-room', test, name='action/assign-room'),
 
      
-    path('', show_urls, name='show-urls'),
+    path('', show_urls, name='dev/show-urls'),
 
     # admin
     path('admin', admin.site.urls, name='admin'),

@@ -65,8 +65,32 @@ from codespider.urls import *
 from django.urls import get_resolver
 
 def show_urls(request):
+    # create a lambda/function which check if an obj is a string (an instance of str)
+    is_string = lambda obj : isinstance(obj, str)
+    is_forms = lambda url : url.startswith('forms');
+    is_action = lambda url : url.startswith('action');
+    is_dev = lambda url : url.startswith('dev');
+    is_main = lambda url : not (is_forms(url) or is_action(url) or is_dev(url))
+
+    # get url list, returns urlpattern strings as well as function pointers
+    raw_url_list = list(get_resolver(None).reverse_dict.keys());
+    # since only need urlpatterns, filter out non-strings
+    url_list = list(filter(is_string, raw_url_list))
+
+    url_main    = list(filter(is_main   , url_list))
+    url_forms   = list(filter(is_forms  , url_list))
+    url_actions  = list(filter(is_action , url_list))
+    url_devs     = list(filter(is_dev    , url_list))
+
+    
+
     context = {
-        'urls': list(get_resolver(None).reverse_dict.keys())
+        'url_list': url_list,
+        'url_main': url_main,
+        'url_forms': url_forms,
+        'url_actions': url_actions,
+        'url_devs': url_devs,
+        'raw_urls': raw_url_list,
     }
 
     return render(request, 'tmp/show_urls.html', context)

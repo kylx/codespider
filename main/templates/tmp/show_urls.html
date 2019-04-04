@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +9,51 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 </head>
+
 <body>
     <div class="container">
         <h1>Temporary page showing all accessible urls</h1>
-        <div class="list-group">
-        {% for urll in urls reversed %} 
-            {% if urll and urll.strip %}
-            <a class="list-group-item" href="{% url urll %}">{{urll}}</a>
-            {% endif %}
-        {% endfor %}
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-header">Main Pages</h5>
+                <div class="card-text"></div>
+                {% for urll in url_main reversed %}
+                <a class="card-link" href="{% url urll %}"><strong>{{urll}}</strong></a>
+                {% endfor %}
+            </div>
         </div>
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-header">Forms</h5>
+                <div class="card-text">
+                    These are supposedly embedded into the main pages as some kind of popup.
+                </div>
+                {% for urll in url_forms reversed %}
+                <a class="card-link" href="{% url urll %}"><strong>{{urll}}</strong></a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-header">Actions</h5>
+                <div class="card-text">
+                    Does not render anything. Receives & handles the requests from the forms. Needs an input from a previous page.
+                    As such, this shouldn't be directly accessible to the user.
+                </div>
+                {% for urll in url_actions reversed %}
+                <a class="card-link" href="{% url urll %}"><strong>{{urll}}</strong></a>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
     <div class="container">
-        dump:
-        <pre>{{urls}}</pre>
+        raw-list: {{raw_urls}}
     </div>
-    
-</body>
-</html>
 
+</body>
+
+</html>
