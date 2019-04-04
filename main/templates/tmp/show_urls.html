@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>URLS</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Temporary page showing all accessible urls</h1>
+        <div class="list-group">
+        {% for urll in urls reversed %} 
+            {% if urll and urll.strip %}
+            <a class="list-group-item" href="{% url urll %}">{{urll}}</a>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        dump:
+        <pre>{{urls}}</pre>
+    </div>
+    
+</body>
+</html>
+

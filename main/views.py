@@ -61,58 +61,16 @@ def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
 
+from codespider.urls import *
+from django.urls import get_resolver
 
-##----------------------
-
-def login(request):
+def show_urls(request):
     context = {
-        "cities": [
-            { 'pk': 1, 'name':'faw'},
-            { 'pk': 2, 'name':'second'}
-        ]
+        'urls': list(get_resolver(None).reverse_dict.keys())
     }
-    return render(request, 'main/forms/patientform.html', context)
-    
+
+    return render(request, 'tmp/show_urls.html', context)
+
 def test(request):
-    context = {'post': request.POST}
-    
-    sexz = request.POST.get('gender')
-    if not sexz:
-        sexz = 'x'
-    
-    patient = Patient(
-        first_name = request.POST.get('firstname'),
-        last_name = request.POST.get('lastname'),
-        middle_name = request.POST.get('middleinitial'),
-        age = request.POST.get('age'),
-        sex = sexz
-    )
-    patient.save()
-    return redirect('patient_list')
-
-class PatientCreate(CreateView):
-    model = Patient
-    fields = [
-		'first_name',
-		'last_name',
-		'middle_name',
-		'age',
-		'sex',
-	]
-	
-	# first_name = models.CharField(max_length=255)
-    # last_name = models.CharField(max_length=255)
-    # middle_name = models.CharField(max_length=255)
-    # age = models.SmallIntegerField()
-    # sex = models.CharField(max_length=1)
-# Create your views here.
-
-class PatientList(ListView):
-
-    model = Patient
-    # paginate_by = 100  # if pagination is desired
-
-    # def get_context_data(self, **kwargs):
-        # context = super().get_context_data(**kwargs)
-        # context['now'] = timezone.now()
-        # return context
+    context = {}
+    return render(request, 'tmp/todo.html', context)
