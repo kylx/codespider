@@ -9,6 +9,7 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock page_stylesheet %}
 
@@ -22,18 +23,26 @@
 
 {% block page_body %}
 <div class="body">
+    <div class="p-header-cont">
+        <div class="p-header-wrap patient_search">
+            a
+        </div>
+        <div class="p-header-wrap patient_add">
+            b
+        </div>
+    </div>  
     <div class="table-body">
-        <table id="table1" class="table table-striped">
-            <thead>
-                <tr bgcolor="#ff3333">
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Middle Initial</th>
+        <table id="patient_table" class="table">
+            <thead class="text-center">
+                <tr class="tr_head">
+                    <th>LAST NAME</th>
+                    <th>FIRST NAME</th>
+                    <th>MIDDLE INITIAL</th>
                 </tr>
             </thead>
-             <tbody>
+            <tbody>
                 {% for patient in patients %}
-                <tr><td>{{ patient.last_name }}</td><td>{{patient.first_name}}</td><td>{{patient.middle_initial}}</td></tr>
+                <tr><td>{{ patient.last_name }}</td><td>{{patient.first_name}}</td><td class="text-center">{{patient.middle_initial}}</td></tr>
                 {% endfor %}
             </tbody>
         </table>
