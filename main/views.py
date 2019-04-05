@@ -6,15 +6,6 @@ from .enums import Enums
 
 from django.http import HttpResponse
 
-"""
-MAIN PAGES
-
-    frontend mag set sa final correct template
-    pwede pud mag butang ug dummy context for testing
-
-    backend mag populate sa final context
-"""
-
 def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
@@ -43,25 +34,7 @@ def tmp_create_patient(request):
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
-
-def create_patient(request):
-    context = {
-        'regions': Enums.REGIONS,
-        'provinces': Enums.PROVINCES,
-        'cities': Enums.CITIES,
-    }
-    return render(request, 'main/forms/patientform.html', context)
-
-
-def tmp_create_patient(request):
-    context = {'url_name': 'PATIENTS_CREATE'}
-    return render(request, 'main/forms/patientform.html', context)
-
-def tmp_assign_room(request):
-    context = {'url_name': 'PATIENTS_CREATE'}
-    return render(request, 'main/forms/roomform.html', context)
-
-from codespider.urls import *
+    
 from django.urls import get_resolver
 
 def show_urls(request):
