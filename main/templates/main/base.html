@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock title %}</title>
         {% load staticfiles %}
         
@@ -51,6 +53,11 @@
             {% block page_body %}{% endblock page_body %}
 
         </div>
+        
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/bootstrap/popper.js' %}"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
+        
         {% block page_js %}{% endblock page_js %}
     </body>
 </html>
