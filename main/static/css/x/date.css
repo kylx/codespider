@@ -16,24 +16,6 @@
 	margin-top: 75px;
 }
 
-.counter-container {
-    position: relative;
-    display: inline-block;
-    width: 70%;
-	height: 50%;
-    color: #323232;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-	padding: 10px;
-	background-color: #f6f6ee;
-	font-family: Montserrat, sans-serif;
-	border-radius: 12px;
-	margin-top: 25px;
-}
-
 .day {
 	font-size: 50px;
 	font-weight: bold;

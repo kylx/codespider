@@ -1,27 +1,47 @@
-.p-header-cont {
-    position: relative;
-	top: 90px;
+.search-container {
+    width: 50%;
+    min-height: 100px;
+    background: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-	justify-content: center;
+    padding: 10px;
+    margin: 0 auto;
 }
 
-.p-header-wrap {
-    width: 49%;
-	display: inline-block;
-	position: relative;
-	z-index: 1;
-	overflow: hidden;
-	margin: 0 auto;
-    min-width: 160px;
+.form-control {
+    border-style: none none solid none;
+    border-bottom: 2px solid #000;
+    border-radius: 0;
 }
 
-.header_center {
+.form-control-no-border:focus {
+    border-color: #000;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
-.patient_search {
-    background-color: yellow;
+.patient_add-container {
+    width: 100%;
+    min-height: 100px;
+    background: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
 }
 
-.patient_add {
-    background-color: red;s
+.btn-outline-dark {
+    border-radius: 20px;
 }

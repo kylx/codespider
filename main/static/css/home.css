@@ -1,0 +1,75 @@
+.row {
+    margin: 0;
+}
+
+.col-lg-1,
+.col-lg-4,
+.col-lg-6,
+.col-lg-12 {
+    padding: 0;
+}
+
+.home-container {
+    padding: 3% 0% 3% 3%;
+}
+
+.home_subtitle {
+	padding-top: 5%;
+    padding-left: 5%;
+	font-size: 14px;
+	font-weight: 700;
+	color: #de2f38;
+	text-transform: uppercase;
+	line-height: 0.75;
+}
+
+.home_title {
+    margin-top: 11px;
+    padding-left: 5%;
+	font-size: 60px;
+	font-weight: 600;
+	color: #de2f38;
+	line-height: 1.2;
+}
+
+.date-container {
+    padding: 7% 10% 7% 10%;
+}
+
+.day {
+	font-size: 50px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.day-week {
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.month-year {
+	font-size: 20px;
+}
+
+.progress_bar-container {
+    padding: 1%;
+}
+
+.counter-container {
+    padding: 1% 12% 1% 12%;
+}
+
+.cname {
+    font-size: 25px;
+}
+
+.cnum-1 {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.cnum-2 {
+    font-size: 28px;
+    font-weight: bold;
+}

@@ -9,54 +9,104 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/date.css' %}">
-    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li class="active"><a href="{% url 'rooms' %}">Rooms</a></li>
-    <li><a href="{% url 'patients' %}">Patients</a></li>
-    <li><a href="{% url 'summary' %}">Summary</a></li>
-    <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+    <li class="nav-item active"><a class="nav-link" href="{% url 'rooms' %}">Rooms</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
 {% endblock nav_bar %}
 
 {% block page_body %}
-<div class="body">
-    <div class="date-container rooms-dc">
-        <div class="row">
-            <div class="col">
-                <div class="day"><span id="theDay"></span></div>
-            </div>
-            <div class="col">
-                <div class="day-week"><span id="theDayWeek"></span></div>
-                <div class="month-year"><span id="theMonthYear"></span></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 date-container" >
+            <div class="row">
+                <div class="col-lg-6 text-right">
+                    {# {{ chosen_date|date:"d" }} #}
+                    <div class="day" id="theDay"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"l" }} #}
+                            <div class="day-week" id="theDayWeek"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"F Y" }} #}
+                            <div class="month-year" id="theMonthYear"></div> 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="table-body">
-        <table id="table1" class="table table-striped">
-            <thead>
-                <tr bgcolor="#ff3333">
-                    <th>ROOM #</th>
-                    <th>PATIENT'S NAME</th>
-                    <th>NO. OF WATCHERS</th>
-                    <th>RELATIONSHIP</th>
-                    <th>DATE OF STAY</th>
-                </tr>
-            </thead>
-            <!-- <tbody>
-                {% for patient in object_list %}
-                <tr><td>{{patient.room_no}}</td><td>{{patient.last_name}, {patient.first_name} {patient.middle_initial}.}</td>
-                <td>{{patient.watcher_no}}</td><td>{{patient.relationship1}, <td>{{patient.relationship2}}</td>}</td>
-                <td>{{patient.date_of_stay}}</td></tr>
-                {% endfor %}
-            </tbody> -->
-        </table>
+    <div class="row text-center">
+        <div class="col-lg-12 counter-container">
+            <div class="row">
+                <div class="col-lg-6 cname">Patients</div>
+                <div class="col-lg-6 cname">Watchers</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6 cname">Boys</div>
+                                <div class="col-lg-6 cnum-2">15</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 cname">Girls</div>
+                                <div class="col-lg-6 cnum-2">5</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 cnum-1">20</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 cnum-1">26</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="background-color: orange">
+        <div class="container-table">
+            <div class="wrap-table">
+                <table class="table" id="table">
+                
+                <thead>
+                    <tr class="table-head text-center">
+                        <th class="col-1">Room #</th>
+                        <th class="col-2">Patient's Name</th>
+                        <th class="col-3">No. of Watcher(s)</th>
+                        <th class="col-4">Relationship(s)</th>
+                        <th class="col-5">Date of Stay</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td class="col-1">{{ patient.room_no }}</td>
+                        <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
+                        <td class="col-3">{{patient.middle_initial}}</td>
+                        {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
+                        <td class="col-5">{{ patient.date_of_stay }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/date.js' %}"></script>
+    <script src="{% static 'js/x/date.js' %}"></script>    
 {% endblock page_js %}

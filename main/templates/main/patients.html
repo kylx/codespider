@@ -10,42 +10,145 @@
 
 {% block page_stylesheet %}
     <link rel="stylesheet" href="{% static 'css/patients.css' %}">
-    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patients-table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patients-form.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'rooms' %}">Rooms</a></li>
-    <li class="active"><a href="{% url 'patients' %}">Patients</a></li>
-    <li><a href="{% url 'summary' %}">Summary</a></li>
-    <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'rooms' %}">Rooms</a></li>
+    <li class="nav-item active"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
 {% endblock nav_bar %}
 
 {% block page_body %}
-<div class="body">
-    <div class="p-header-cont">
-        <div class="p-header-wrap patient_search">
-            a
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col">
+                    <div class="search-container">
+                        <input type="search" id="search" class="form-control form-control-no-border" placeholder="Search">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="p-header-wrap patient_add">
-            b
+        <div class="col-lg-6">
+            <div class="patient_add-container">
+            
+                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#PatientsModal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add New Patient
+                </button>
+                
+                <div class="modal" id="PatientsModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header modal-title">
+                                Patient Information
+                            </div>
+                            <form method="post" action="">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            {{ form.last_name }}
+                                            <!--<input class="input" type="text" name="lastname" placeholder="Last Name">
+                                            <span class="focus-input"></span>-->
+                                        </div>
+                                        <div class="col-lg-5">
+                                            {{ form.first_name }}
+                                            <!--<input class="input" type="text" name="firstname" placeholder="First Name">
+                                            <span class="focus-input"></span>-->
+                                        </div>
+                                        <div class="col-lg-2">
+                                            {{ form.middle_initial }}
+                                            <!--<input class="input" type="text" name="middleinitial" placeholder="Middle Initial">
+                                            <span class="focus-input"></span>-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            {{ form.age }}
+                                            <!--<input class="input" type="number" name="age" placeholder="Age" min=0 max=100>
+                                            <span class="focus-input"></span>-->
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{ form.sex }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            {{ form.diagnosis }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            {{ form.region }}
+                                        </div>
+                                        <div class="col-lg-4">
+                                            {{ form.province }}
+                                        </div>
+                                        <div class="col-lg-4">
+                                            {{ form.city }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">
+                                        <span>
+                                            Save
+                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                        <span>
+                                            Cancel
+                                            <i class="fa fa-window-close" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>   
+                
+            </div>
         </div>
-    </div>  
-    <div class="table-body">
-        <table id="patient_table" class="table">
-            <thead class="text-center">
-                <tr class="tr_head">
-                    <th>LAST NAME</th>
-                    <th>FIRST NAME</th>
-                    <th>MIDDLE INITIAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for patient in patients %}
-                <tr><td>{{ patient.last_name }}</td><td>{{patient.first_name}}</td><td class="text-center">{{patient.middle_initial}}</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    </div>
+    <div class="row">
+        <div class="container-table">
+            <div class="wrap-table">
+                <table class="table" id="table">
+                
+                <thead>
+                    <tr class="table-head">
+                        <th class="col-1">Last Name</th>
+                        <th class="col-2">First Name</th>
+                        <th class="col-3">Middle Initial</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td class="col-1">{{ patient.last_name }}</td>
+                        <td class="col-2">{{ patient.first_name }}</td>
+                        <td class="col-3">{{ patient.middle_initial }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock page_body %}
+
+{% block page_js %}
+    <script src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'js/plugins/Searchable.js' %}"></script>
+{% endblock page_js %}
