@@ -9,107 +9,79 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/home-body.css' %}">
-    <link rel="stylesheet" href="{% static 'css/date.css' %}">
-    <link rel="stylesheet" href="{% static 'css/counter.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
-    <li class="active"><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'rooms' %}">Rooms</a></li>
-    <li><a href="{% url 'patients' %}">Patients</a></li>
-    <li><a href="{% url 'summary' %}">Summary</a></li>
-    <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+    <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="nav-link" href="{% url 'rooms' %}">Main</a>
+            <a class="nav-link" href="{% url 'rooms' %}">Annex</a>
+        </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
 {% endblock nav_bar %}
 
 {% block page_body %}
-<div class="home">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="home_subtitle">Occupancy Status</div>
-                <div class="home_title">House of Hope Foundation</div>
-            </div>
-            <div class="col">
-                <div class="date-container">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 home-container">
+            <div class="home_subtitle">Occupancy Status</div>
+            <div class="home_title">House of Hope Foundation</div>
+        </div>
+        <div class="col-lg-6 date-container">
+            <div class="row">
+                <div class="col-lg-4">
+                    {# {{ chosen_date|date:"d" }} #}
+                    <div class="day" id="theDay"></div>
+                </div>
+                <div class="col-lg-8">
                     <div class="row">
-                        <div class="col">
-                            <div class="day"><span id="theDay"></span></div>
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"l" }} #}
+                            <div class="day-week" id="theDayWeek"></div>
                         </div>
-                        <div class="col">
-                            <div class="day-week"><span id="theDayWeek"></span></div>
-                            <div class="month-year"><span id="theMonthYear"></span></div>
-                        </div>		
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"F Y" }} #}
+                            <div class="month-year" id="theMonthYear"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="w-100"></div>
-            <div class="col">
-                <div class="progress_bar-container">
-                    <div id="progress_bar"></div>
-                </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-6 progress_bar-container">
+            <div id="progress_bar"></div>
+        </div>
+        <div class="col-lg-6 counter-container">
+            <div class="row">
+                <div class="col-lg-12 cname">Patients</div>
             </div>
-            <div class="col">
-                <div class="counter">
+            <div class="row">
+                <div class="col-lg-8">
                     <div class="row">
-                        <div class="col">
-                            <div class="counter_name">
-                                Patients
-                            </div>
-                        </div>
+                        <div class="col-lg-6 cname">Boys</div>
+                        <div class="col-lg-6 cnum-2 milestone_counter" data-end-value="15">0</div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <div class="counter_name cname-two">
-                                Boys
-                            </div>
-                        </div>
-                        <div class="milestone_content cnum-two col">
-                            <div class="milestone_counter counter_num cnum-two" data-end-value="15">
-                                0
-                            </div>
-                        </div>
-                        <div class="milestone_content cnum-two col">
-                            <div class="counter_num cnum-one">
-                                <div class="milestone_counter rowspanned" data-end-value="20">
-                                    0
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="counter_name cname-two">
-                                Girls
-                            </div>
-                        </div>
-                        <div class="milestone_content cnum-two col">
-                            <div class="milestone_counter counter_num cnum-two" data-end-value="5">
-                                0
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="counter_num cnum-one">
-                                <div class="rowspanned">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="counter_name">
-                                Watchers
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="milestone_content cnum-two col">
-                            <div class="col">
-                                <div class="milestone_counter" data-end-value="26">0</div>
-                            </div>
-                        </div>
+                        <div class="col-lg-6 cname">Girls</div>
+                        <div class="col-lg-6 cnum-2 milestone_counter" data-end-value="5">0</div>
                     </div>
                 </div>
+                <div class="col-lg-4 cnum-1 milestone_counter" data-end-value="20">0</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 cname">Watchers</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 cnum-1 milestone_counter" data-end-value="26">0</div>
             </div>
         </div>
     </div>
@@ -117,10 +89,11 @@
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/jquery.js' %}"></script> <!-- Should be placed first -->
-    <script src="{% static 'js/date.js' %}"></script>
     <script src="{% static 'js/progressbar.js' %}"></script>
-	<script src="{% static 'js/plugins/TweenMax.js' %}"></script>
+    
+    <script src="{% static 'js/x/date.js' %}"></script>
+    
+    <script src="{% static 'js/plugins/TweenMax.js' %}"></script>
 	<script src="{% static 'js/plugins/ScrollMagic.js' %}"></script>
 	<script src="{% static 'js/counter.js' %}"></script>
 {% endblock page_js %}

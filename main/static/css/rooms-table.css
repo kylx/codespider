@@ -1,0 +1,167 @@
+/* Author: Colorlib
+Released: May, 2018
+License: CC BY 3.0 */
+
+.container-table {
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 30px;
+}
+
+.wrap-table {
+    width: 1200px;
+}
+
+table {
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    position: relative;
+}
+
+table * {
+    position: relative;
+}
+
+table td,
+table th {
+    padding-left: 8px;
+}
+
+table thead tr {
+    height: 60px;
+    background: #ff6e6e;
+}
+
+table tbody tr {
+    height: 50px;
+}
+
+table tbody tr:last-child {
+    border: 0;
+}
+
+.table-head th {
+    font-family: Montserrat;
+    color: #000;
+    font-weight: 600;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 0;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 0;
+}
+
+tbody tr:nth-child(odd),
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr {
+    font-family: Montserrat;
+    font-size: 15px;
+    color: #000;
+}
+
+tbody tr:hover {
+    color: #000;
+    background-color: rgba(255,112,77,0.5);
+    cursor: pointer;
+}
+
+.col-1 {
+    width: 120px;
+}
+
+.col-2 {
+    width: 360px;
+}
+
+.col-3 {
+    width: 120px;
+}
+
+.col-4 {
+    width: 240px;
+}
+
+.col-5 {
+    width: 360px;
+}
+
+@media screen and (max-width: 576px) {
+    table {
+        display: block;
+    }
+    table > *,
+    table tr,
+    table td,
+    table th {
+        display: block;
+    }
+    table thead {
+        display: none;
+    }
+    table tbody tr {
+        height: auto;
+        padding: 37px 0;
+    }
+    table tbody tr td {
+        padding-left: 40% !important;
+        margin-bottom: 24px;
+    }
+    table tbody tr td:last-child {
+        margin-bottom: 0;
+    }
+    table tbody tr td:before {
+        font-family: Montserrat;
+        font-size: 14px;
+        color: #999999;
+        position: absolute;
+        width: 40%;
+        left: 30px;
+        top: 25%;
+    }
+    table tbody tr td:nth-child(1):before {
+        content: "Last Name";
+    }
+    table tbody tr td:nth-child(2):before {
+        content: "First Name";
+    }
+    table tbody tr td:nth-child(3):before {
+        content: "Middle Initial";
+    }
+    .column1,
+    .column2,
+    .column3 {
+        width: 100%;
+    }
+    tbody tr {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-table {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

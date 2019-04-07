@@ -14,11 +14,17 @@
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'rooms' %}">Rooms</a></li>
-    <li><a href="{% url 'patients' %}">Patients</a></li>
-    <li class="active"><a href="{% url 'summary' %}">Summary</a></li>
-    <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="nav-link" href="{% url 'rooms' %}">Main</a>
+            <a class="nav-link" href="{% url 'rooms' %}">Annex</a>
+        </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+    <li class="nav-item active"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
 {% endblock nav_bar %}
 
 {% block page_body %}

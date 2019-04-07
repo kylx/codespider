@@ -9,51 +9,46 @@
         {% block page_titleicon %}{% endblock page_titleicon %}
         
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
         
         {% block page_stylesheet %}{% endblock page_stylesheet %}
     </head>
     
     <body>
-        <div class="super_container">
-	
-            <header class="header">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="header_content d-flex flex-row align-items-center justify-content-start">
-                                <div class="logo"><img src="{% static 'images/logo.png' %}" width=90px alt=""/></div>
-                                <nav class="main_nav">
-                                    <ul>
-                                        {% block nav_bar %}
-                                            <li><a href="{% url 'home' %}">Home</a></li>
-                                            <li><a href="{% url 'rooms' %}">Rooms</a></li>
-                                            <li><a href="{% url 'patients' %}">Patients</a></li>
-                                            <li><a href="{% url 'summary' %}">Summary</a></li>
-                                            <li><a href="{% url 'inquiry' %}">Inquiry</a></li>
-                                        {% endblock nav_bar %}
-                                    </ul>
-                                </nav>
-                                <div class="wrap-out-btn">
-                                    <div class="out-bg-btn"></div>
-                                    <button class="out-btn" type="submit">
-                                        <span>
-                                            <i class="fa fa-power-off m-l-7" aria-hidden="true"></i>
-                                            Logout
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <a class="navbar-brand mr-0" href="#"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
+            <button class="navbar-toggler ml-1" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsibleNavbar">
+                <ul class="navbar-nav mx-auto text-center">
+                    {% block nav_bar %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="nav-link" href="{% url 'rooms' %}">Main</a>
+                            <a class="nav-link" href="{% url 'rooms' %}">Annex</a>
                         </div>
-                    </div>
-                </div>
-            </header>
-            
-            {% block page_body %}{% endblock page_body %}
-
-        </div>
+                    </li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
+                    {% endblock nav_bar %}
+                </ul>
+                <ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                        Logout
+                    </button>
+                </ul>
+            </div>
+        </nav>
         
+        {% block page_body %}{% endblock page_body %}
+
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'js/bootstrap/popper.js' %}"></script>
         <script src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
