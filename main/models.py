@@ -7,6 +7,8 @@ class Patient(models.Model):
     age = models.SmallIntegerField()
     sex = models.CharField(max_length=1)
     diagnosis = models.ForeignKey("Diagnosis",on_delete=models.CASCADE,null=True,blank=True)
+
+
  
 class Diagnosis(models.Model):
 	full_name = models.CharField(max_length=60)
