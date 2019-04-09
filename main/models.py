@@ -6,6 +6,7 @@ class Patient(models.Model):
     middle_initial = models.CharField(max_length=1)
     age = models.SmallIntegerField()
     sex = models.CharField(max_length=1)
+    diagnosis = models.ForeignKey("Diagnosis",on_delete=models.CASCADE,null=True,blank=True)
  
 class Diagnosis(models.Model):
 	full_name = models.CharField(max_length=60)
@@ -24,7 +25,6 @@ class Room(models.Model):
 	
 class Visit(models.Model):
 	patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
-	diagnosis = models.ForeignKey("Diagnosis", on_delete=models.CASCADE)
 	start_date = models.DateTimeField()
 	assigned_end_date = models.DateTimeField()
 	actual_end_date = models.DateTimeField()
