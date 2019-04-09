@@ -176,10 +176,11 @@ $(document).ready(function() {
 	});
 	
 	prov.change(function() {
-		city.val('');
+		
 		
 		let filter = $(this).val();
 		city.prop('disabled', filter == '');
+		city.val('');
 		
 		
 		city.children('option').each(function() {
@@ -195,30 +196,10 @@ $(document).ready(function() {
 		})
 	});
 	
-	
-	<!-- prov.change(function() { -->
-		<!-- let filter = $(this).val(); -->
-		<!-- if (filter == '') { -->
-			<!-- city.prop('disabled', true); -->
-		<!-- } -->
-		
-		<!-- city.prop('disabled', false); -->
-		<!-- city.val(''); -->
-		<!-- city.children('option').each(function() { -->
-			<!-- <!--  --> -->
-			<!-- if ($(this).val().startsWith(filter)){ -->
-				<!-- console.log($(this).val(), ' vs ', filter); -->
-				<!-- $(this).show(); -->
-			<!-- } -->
-				
-			<!-- else { -->
-				<!-- $(this).hide(); -->
-			<!-- } -->
-		<!-- }) -->
-	<!-- }) -->
+	$('select[name=region]').trigger('change');
 });
 	
-$('select[name=region]').trigger('change');
+
 </script>
 {% endblock page_body %}
 
