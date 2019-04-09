@@ -42,12 +42,19 @@ class PatientForm(ModelForm):
     )
 	
     age = forms.IntegerField (
-        label = 'Age'
+        label = 'Age',
+		widget = forms.NumberInput ( attrs = {
+            'class' : 'form-control, input',
+			'placeholder' : 'Age'
+        })
     )
     
     sex = forms.CharField (
         label = 'Sex',
         widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
             choices = Enums.SEX
         )
     )
@@ -55,7 +62,11 @@ class PatientForm(ModelForm):
     diagnosis = forms.CharField (
         label = 'Diagnosis',
         widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
 		    choices = [
+				['default', 'Diagnosis'],
 			    ['all', 'Acute Lymphoblastic Leukemia'],
 		        ['bg', 'Brainstem Glioma'],
 	        ]
@@ -66,7 +77,11 @@ class PatientForm(ModelForm):
     region = forms.CharField (
         label = 'Region',
         widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
             choices = [
+				['default', 'Region'],
 			    ['r1', 'Region I (Ilocos Region)'],
 		        ['r2', 'Region II (Cagayan Valley)'],
 	        ]
@@ -77,7 +92,11 @@ class PatientForm(ModelForm):
     province = forms.CharField (
         label = 'Province',
         widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
 		    choices = [
+				['default', 'Province'],
 			    ['r1-1', 'Ilocos Norte'],
 		        ['r1-2', 'Ilocos Sur'],
 	        ]
@@ -88,7 +107,11 @@ class PatientForm(ModelForm):
     city = forms.CharField (
         label = 'City',
         widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
 		    choices = [
+				['default', 'City'],
 			    ['r1-1-1', 'Batac'],
 		        ['r1-1-2', 'Laoag'],
 	        ]
