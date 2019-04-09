@@ -21,6 +21,8 @@ urlpatterns = [
     # main pages
     path('home'     , home      , name='home'),
     path('rooms'    , rooms     , name='rooms'),
+    path('rooms/main'    , rooms_main     , name='rooms-main'),
+    path('rooms/annex'    , rooms_annex     , name='rooms-annex'),
     path('patients' , patients  , name='patients'),
     path('summary'  , summary   , name='summary'),
     path('inquiry'  , inquiry   , name='inquiry'),
