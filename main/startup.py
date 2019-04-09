@@ -5,7 +5,9 @@ def filter_location(location_list, location_filter):
     return [location for location in location_list if location[0].startswith(location_filter[0])]
 
 def run():
-	pass
+	
+    pass
+    
 	# print(PatientForms())
     # print('Running startup...')
     # print(Enums.REGIONS)
