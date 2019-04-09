@@ -75,6 +75,7 @@ class Enums():
 
     # region number, long name, short name(optional)
     REGIONS = [
+		('', 'Choose Region...'),
     #    region('id', 'psgcCode', 'regDesc', 'regCode'),
         region('1', '010000000', 'REGION I (ILOCOS REGION)', '01'),
         region('2', '020000000', 'REGION II (CAGAYAN VALLEY)', '02'),
@@ -98,6 +99,7 @@ class Enums():
     
     # region number, province code, long name, short name(optional)
     PROVINCES = [
+		('', 'Choose Province...'),
     #    province('id', 'psgcCode', 'provDesc', 'regCode', 'provCode'),
         province('1', '012800000', 'ILOCOS NORTE', '01', '0128'),
         province('2', '012900000', 'ILOCOS SUR', '01', '0129'),
@@ -192,6 +194,7 @@ class Enums():
     
     # region number, province code, long name, short name(optional)
     CITIES = [
+		('', 'Choose City...'),
         #city('id', 'psgcCode', 'citymunDesc', 'regDesc', 'provCode', 'citymunCode'),
         city('1', '012801000', 'ADAMS', '01', '0128', '012801'),
         city('2', '012802000', 'BACARRA', '01', '0128', '012802'),
