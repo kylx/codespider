@@ -24,8 +24,7 @@ class Building(models.Model):
 class Room(models.Model):
 	building = models.ForeignKey("Building", on_delete=models.CASCADE)
 	display_name = models.CharField(max_length=20)
-	capacity = models.SmallIntegerField()
-	
+		
 class Visit(models.Model):
 	patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
 	start_date = models.DateTimeField()
