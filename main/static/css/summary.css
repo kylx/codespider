@@ -49,7 +49,7 @@ table#table1 {
 	margin-left:; 
 	margin-right:%;
 	text-align: center;
-    height: 5px;
+    height: 3px;
 }
  
 .table-striped>tbody>tr:nth-child(odd)>td, 

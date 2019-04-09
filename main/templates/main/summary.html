@@ -11,6 +11,7 @@
 {% block page_stylesheet %}
     <link rel="stylesheet" href="{% static 'css/summary.css' %}">
     <link rel="stylesheet" href="{% static 'css/summary_calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/month.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -68,12 +69,16 @@
 </div>
 <div class="split right">
     <div class="centered">
-        
-    </div>
+        <label for="start">Select Month:</label>
+
+        <input type="month" id="start" name="start"
+            min="2019-01" value="2019-05">
+
 </div>
 {% endblock page_body %}
 
 {% block page_js %}
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/calendar.js' %}"></script>
+    <script src="{% static 'js/jquery.monthpicker.js' %}"></script>
 {% endblock page_js %}
