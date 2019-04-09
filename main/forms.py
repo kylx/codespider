@@ -95,3 +95,52 @@ class PatientForm(ModelForm):
             # choices = Enums.CITIES
         )
     )
+	
+class RoomForm(ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['last_name', 'first_name', 'middle_initial']
+        
+    last_name = forms.CharField (
+        label = 'Last Name',
+        widget = forms.TextInput ( attrs = {
+            'class' : 'input',
+            'placeholder' : 'Last Name'
+        })
+    )
+    
+    first_name = forms.CharField (
+        label = 'First Name',
+        widget = forms.TextInput ( attrs = {
+            'class' : 'input',
+            'placeholder' : 'First Name'
+        })
+    )
+    
+    middle_initial = forms.CharField (
+        label = 'Middle Initial',
+        widget = forms.TextInput ( attrs = {
+            'class' : 'input',
+            'placeholder' : 'Middle Initial'
+        })
+    )
+
+    relationship = forms.MultipleChoiceField (
+        label = 'Relationship',
+		widget = forms.CheckboxSelectMultiple,
+		# queryset = Patient.objects.all(),
+		required = False
+    )
+	
+    date_from = forms.DateField(
+        widget=forms.DateInput( format = '%m/%d/%Y' ),
+        input_formats = ( '%m/%d/%Y' )
+    )
+    
+    date_to = forms.DateField(
+        widget=forms.DateInput(
+            format = '%m/%d/%Y',
+            attrs = { 'class': 'datepicker' }
+        ),
+        input_formats = ( '%m/%d/%Y' )
+    )

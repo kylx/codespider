@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
-from .forms import PatientForm
+from .forms import PatientForm, RoomForm
 
 from django.http import HttpResponse
 
@@ -20,13 +20,18 @@ def home(request):
     return render(request, 'main/home.html', context)
 
 def rooms(request):
-    context = {'url_name': 'ROOMS'}
+    form = RoomForm()
+    context = {
+        'url_name': 'ROOMS',
+		'form': form
+    }
     return render(request, 'main/rooms.html', context)
 
 def patients(request):
     patient_list = Patient.objects.all()
     form = PatientForm()
     context = {
+        'url_name': 'PATIENTS',
         'patients': patient_list,
 		'form': form
     }
