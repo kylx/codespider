@@ -3,6 +3,8 @@
 {% block title %}Patients{% endblock title %}
 
 {% load staticfiles %}
+
+{% load location %}
         
 {% block page_titleicon %}
     <link rel="icon" type="image/png" href="{% static 'images/icons/patients_titleicon.png' %}">
@@ -143,10 +145,86 @@
         </div>
     </div>
 </div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+	
+	let reg = $('select[name=region]');
+	let prov = $('select[name=province]');
+	let city = $('select[name=city]');
+	
+	// disable province & city at start
+	prov.prop('disabled', true);
+	city.prop('disabled', true);
+		
+	reg.change(function() {
+		prov.val('');
+		city.val('');
+		city.prop('disabled', true);
+		
+		let filter = $(this).val();
+		prov.prop('disabled', filter == '');
+		
+		
+		prov.children('option').each(function() {
+			if ($(this).val().startsWith(filter)) 
+				$(this).show();
+			else 
+				$(this).hide();
+		})
+	});
+	
+	prov.change(function() {
+		city.val('');
+		
+		let filter = $(this).val();
+		city.prop('disabled', filter == '');
+		
+		
+		city.children('option').each(function() {
+			if ($(this).val().startsWith(filter)) {
+				$(this).show();
+			}
+				
+			else {
+			
+				$(this).hide();
+				
+			}
+		})
+	});
+	
+	
+	<!-- prov.change(function() { -->
+		<!-- let filter = $(this).val(); -->
+		<!-- if (filter == '') { -->
+			<!-- city.prop('disabled', true); -->
+		<!-- } -->
+		
+		<!-- city.prop('disabled', false); -->
+		<!-- city.val(''); -->
+		<!-- city.children('option').each(function() { -->
+			<!-- <!--  --> -->
+			<!-- if ($(this).val().startsWith(filter)){ -->
+				<!-- console.log($(this).val(), ' vs ', filter); -->
+				<!-- $(this).show(); -->
+			<!-- } -->
+				
+			<!-- else { -->
+				<!-- $(this).hide(); -->
+			<!-- } -->
+		<!-- }) -->
+	<!-- }) -->
+});
+	
+$('select[name=region]').trigger('change');
+</script>
 {% endblock page_body %}
 
 {% block page_js %}
     <script src="{% static 'js/search.js' %}"></script>
     <script src="{% static 'js/plugins/Searchable.js' %}"></script>
     <script src="{% static 'js/sorting.js' %}"></script>
+    
 {% endblock page_js %}
