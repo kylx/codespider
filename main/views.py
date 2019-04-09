@@ -11,7 +11,16 @@ def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
-def rooms(request):
+	
+def rooms_main(request):
+    form = RoomForm()
+    context = {
+        'url_name': 'ROOMS',
+		'form': form
+    }
+    return render(request, 'main/rooms.html', context)
+	
+def rooms_annex(request):
     form = RoomForm()
     context = {
         'url_name': 'ROOMS',
@@ -44,6 +53,14 @@ def tmp_create_patient(request):
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
+
+def rooms(request):
+    form = RoomForm()
+    context = {
+        'url_name': 'ROOMS',
+		'form': form
+    }
+    return render(request, 'main/rooms.html', context)
     
 from django.urls import get_resolver
 
