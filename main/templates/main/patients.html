@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/patients.css' %}">
     <link rel="stylesheet" href="{% static 'css/patients-table.css' %}">
     <link rel="stylesheet" href="{% static 'css/patients-form.css' %}">
+	<link rel="stylesheet" href="{% static 'css/plugins/DataTables.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -31,16 +32,7 @@
 {% block page_body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6">
-            <div class="row">
-                <div class="col">
-                    <div class="search-container">
-                        <input type="search" id="search" class="form-control form-control-no-border" placeholder="Search">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="patient_add-container">
             
                 <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#PatientsModal">
@@ -118,6 +110,13 @@
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
+				<div class="row">
+					<div class="col-lg-6">
+					</div>
+					<div class="col-lg-6">
+					</div>
+				</div>
+			
                 <table class="table" id="table">
                 
                 <thead>
@@ -146,7 +145,6 @@
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/search.js' %}"></script>
-    <script src="{% static 'js/plugins/Searchable.js' %}"></script>
-    <script src="{% static 'js/sorting.js' %}"></script>
+	<script src="{% static 'js/row-click.js' %}"></script>
+	<script src="{% static 'js/plugins/DataTables.js' %}"></script>
 {% endblock page_js %}
