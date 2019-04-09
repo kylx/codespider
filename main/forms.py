@@ -147,12 +147,14 @@ class RoomForm(ModelForm):
             'placeholder' : 'Middle Initial'
         })
     )
-
+	
     relationship = forms.MultipleChoiceField (
         label = 'Relationship',
 		widget = forms.CheckboxSelectMultiple,
-		# queryset = Patient.objects.all(),
-		required = False
+		choices = [
+			['rel-1', 'Mother'],
+			['rel-2', 'Father'],
+		]
     )
 	
     date_from = forms.DateField(
