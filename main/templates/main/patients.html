@@ -57,29 +57,20 @@
                             <form method="post" action="">
                                 <div class="modal-body">
                                     {% csrf_token %}
-                                    {{ form }}
                                     <div class="row">
                                         <div class="col-lg-5">
                                             {{ form.last_name }}
-                                            <!--<input class="input" type="text" name="lastname" placeholder="Last Name">
-                                            <span class="focus-input"></span>-->
                                         </div>
                                         <div class="col-lg-5">
                                             {{ form.first_name }}
-                                            <!--<input class="input" type="text" name="firstname" placeholder="First Name">
-                                            <span class="focus-input"></span>-->
                                         </div>
                                         <div class="col-lg-2">
                                             {{ form.middle_initial }}
-                                            <!--<input class="input" type="text" name="middleinitial" placeholder="Middle Initial">
-                                            <span class="focus-input"></span>-->
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             {{ form.age }}
-                                            <!--<input class="input" type="number" name="age" placeholder="Age" min=0 max=100>
-                                            <span class="focus-input"></span>-->
                                         </div>
                                         <div class="col-lg-6">
                                             {{ form.sex }}

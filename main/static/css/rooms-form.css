@@ -1,9 +1,6 @@
 .modal-body .col-lg-2,
-.modal-body .col-lg-4,
-.modal-body .col-lg-5,
-.modal-body .col-lg-6,
-.modal-body .col-lg-12 {
-    padding: 0px 5px;
+.modal-body .col-lg-5 {
+	padding: 0px 5px;
 }
 
 .modal {
