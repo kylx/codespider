@@ -3,6 +3,8 @@
 {% block title %}Patients{% endblock title %}
 
 {% load staticfiles %}
+
+{% load location %}
         
 {% block page_titleicon %}
     <link rel="icon" type="image/png" href="{% static 'images/icons/patients_titleicon.png' %}">
@@ -12,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/patients.css' %}">
     <link rel="stylesheet" href="{% static 'css/patients-table.css' %}">
     <link rel="stylesheet" href="{% static 'css/patients-form.css' %}">
+	<link rel="stylesheet" href="{% static 'css/plugins/DataTables.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -31,16 +34,7 @@
 {% block page_body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6">
-            <div class="row">
-                <div class="col">
-                    <div class="search-container">
-                        <input type="search" id="search" class="form-control form-control-no-border" placeholder="Search">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="patient_add-container">
             
                 <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#PatientsModal">
@@ -118,6 +112,13 @@
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
+				<div class="row">
+					<div class="col-lg-6">
+					</div>
+					<div class="col-lg-6">
+					</div>
+				</div>
+			
                 <table class="table" id="table">
                 
                 <thead>
@@ -143,10 +144,65 @@
         </div>
     </div>
 </div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+	
+	let reg = $('select[name=region]');
+	let prov = $('select[name=province]');
+	let city = $('select[name=city]');
+	
+	// disable province & city at start
+	prov.prop('disabled', true);
+	city.prop('disabled', true);
+		
+	reg.change(function() {
+		prov.val('');
+		city.val('');
+		city.prop('disabled', true);
+		
+		let filter = $(this).val();
+		prov.prop('disabled', filter == '');
+		
+		
+		prov.children('option').each(function() {
+			if ($(this).val().startsWith(filter)) 
+				$(this).show();
+			else 
+				$(this).hide();
+		})
+	});
+	
+	prov.change(function() {
+		
+		
+		let filter = $(this).val();
+		city.prop('disabled', filter == '');
+		city.val('');
+		
+		
+		city.children('option').each(function() {
+			if ($(this).val().startsWith(filter)) {
+				$(this).show();
+			}
+				
+			else {
+			
+				$(this).hide();
+				
+			}
+		})
+	});
+	
+	$('select[name=region]').trigger('change');
+});
+	
+
+</script>
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/search.js' %}"></script>
-    <script src="{% static 'js/plugins/Searchable.js' %}"></script>
-    <script src="{% static 'js/sorting.js' %}"></script>
+	<script src="{% static 'js/row-click.js' %}"></script>
+	<script src="{% static 'js/plugins/DataTables.js' %}"></script>
 {% endblock page_js %}

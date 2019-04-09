@@ -80,12 +80,8 @@ class PatientForm(ModelForm):
 			attrs = {
 				'class' : 'form-control, input'
 			},
-            choices = [
-				['default', 'Region'],
-			    ['r1', 'Region I (Ilocos Region)'],
-		        ['r2', 'Region II (Cagayan Valley)'],
-	        ]
-			# choices = Enums.REGIONS
+            
+			choices = Enums.REGIONS
         )
     )
     
@@ -95,12 +91,8 @@ class PatientForm(ModelForm):
 			attrs = {
 				'class' : 'form-control, input'
 			},
-		    choices = [
-				['default', 'Province'],
-			    ['r1-1', 'Ilocos Norte'],
-		        ['r1-2', 'Ilocos Sur'],
-	        ]
-            # choices = Enums.PROVINCES
+		    
+            choices = Enums.PROVINCES
         )
     )
     
@@ -110,12 +102,7 @@ class PatientForm(ModelForm):
 			attrs = {
 				'class' : 'form-control, input'
 			},
-		    choices = [
-				['default', 'City'],
-			    ['r1-1-1', 'Batac'],
-		        ['r1-1-2', 'Laoag'],
-	        ]
-            # choices = Enums.CITIES
+            choices = Enums.CITIES
         )
     )
 	
