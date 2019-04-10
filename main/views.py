@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
 from .enums import Enums
-from .forms import PatientForm, RoomForm
+from .forms import PatientForm, RoomForm, FilterForm
 
 from django.http import HttpResponse
 
@@ -43,7 +43,11 @@ def summary(request):
     return render(request, 'main/summary.html', context)
 
 def inquiry(request):
-    context = {'url_name': 'INQUIRY'}
+    form = FilterForm()
+    context = {
+        'url_name': 'INQUIRY',
+        'form': form
+    }
     return render(request, 'main/inquiry.html', context)
     
 def tmp_create_patient(request):
