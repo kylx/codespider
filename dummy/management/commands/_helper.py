@@ -5,6 +5,8 @@ import random
 
 ids = {
     'diagnosis': 1,
+    'patient': 1,
+    'watcher': 1,
 }
 
 def diagnosis(full_name, short_name=None):
@@ -20,8 +22,8 @@ def diagnosis(full_name, short_name=None):
     }
 
 def patient():
-    pk = ids['diagnosis']
-    ids['diagnosis'] += 1
+    pk = ids['patient']
+    ids['patient'] += 1
 
     city = random.choice(Enums.CITIES)[0]
 
@@ -45,5 +47,17 @@ def patient():
             "region": city[:2],
             "province": city[:4],
             "city": city[:6]
+        }
+    }
+
+def watcher(rel):
+    pk = ids['watcher']
+    ids['watcher'] += 1
+
+    return {
+        "model": "main.watcher",
+        "pk": pk,
+        "fields": {
+            "relationship": rel,
         }
     }

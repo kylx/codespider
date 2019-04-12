@@ -11,6 +11,12 @@ everytime this commands is run, some fields are RE-randomized
 
 data = [
     diagnosis('Henlo HSA', 'HHSA'),
+    watcher('mother'),
+    watcher('father'),
+    watcher('grandmother'),
+    watcher('grandmother'),
+    watcher('daughter'),
+    watcher('son'),
 ]
 
 for x in range(100):
