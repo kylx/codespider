@@ -1,5 +1,5 @@
 from main.enums import Enums
-from main.models import Diagnosis
+from main.models import *
 from dummy.management.commands._randomdata import *
 import random
 
@@ -7,6 +7,11 @@ ids = {
     'diagnosis': 1,
     'patient': 1,
     'watcher': 1,
+    'building': 1,
+    'room': 1,
+    'visit': 1,
+    'occupancy': 1,
+    'extension': 1,
 }
 
 def diagnosis(full_name, short_name=None):
@@ -59,5 +64,30 @@ def watcher(rel):
         "pk": pk,
         "fields": {
             "relationship": rel,
+        }
+    }
+
+def building(name):
+    pk = ids['building']
+    ids['building'] += 1
+
+    return {
+        "model": "main.building",
+        "pk": pk,
+        "fields": {
+            "name": name,
+        }
+    }
+
+def room(building, num):
+    pk = ids['room']
+    ids['room'] += 1
+
+    return {
+        "model": "main.room",
+        "pk": pk,
+        "fields": {
+            'building': Building.objects.get(name=building).id,
+            "display_name": 'Room ' + str(num),
         }
     }

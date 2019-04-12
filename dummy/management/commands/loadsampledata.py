@@ -17,10 +17,19 @@ data = [
     watcher('grandmother'),
     watcher('daughter'),
     watcher('son'),
+    building('main'),
+    building('annex'),
 ]
 
+# Add patients
 for x in range(100):
     data.append(patient())
+
+# Add rooms
+for x in range(1,30):
+    data.append(room('main', x))
+for x in range(1,25):
+    data.append(room('annex', x))
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
