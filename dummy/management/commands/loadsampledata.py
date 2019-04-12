@@ -10,13 +10,11 @@ everytime this commands is run, some fields are RE-randomized
 
 
 data = [
-    patient('B', 'Del Campo', 20, 'm'),
-    patient('B', 'Del Campo', 20, 'm'),
-    patient('B', 'Del Campo', 20, 'm'),
-    patient('B', 'Del Campo', 20, 'm'),
-    patient('B', 'Del Campo', 20, 'm'),
     diagnosis('Henlo HSA', 'HHSA'),
 ]
+
+for x in range(100):
+    data.append(patient())
 
 class Command(BaseCommand):
     def handle(self, *args, **options):

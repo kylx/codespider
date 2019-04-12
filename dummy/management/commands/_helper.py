@@ -19,24 +19,28 @@ def diagnosis(full_name, short_name=None):
         },
     }
 
-def patient( mid, lname, age, sex):
+def patient():
     pk = ids['diagnosis']
     ids['diagnosis'] += 1
 
     city = random.choice(Enums.CITIES)[0]
-    print(city[:2])
-    print(city[:4])
-    print(city[:6])
+
+    fname = random.choice(fnames)
+    rr = random.random()
+    if (rr < 0.7):
+        fname += ' ' + random.choice(fnames)
+    elif (random.random() < 0.1):
+        fname += ' ' + random.choice(fnames)
 
     return {
         "model": "main.patient",
         "pk": pk,
         "fields": {
-            "first_name": random.choice(fnames),
-            "last_name": lname,
-            "middle_initial": mid,
-            "age": age,
-            "sex": sex,
+            "first_name": fname,
+            "last_name": random.choice(lnames),
+            "middle_initial": random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+            "age": random.choice(range(5,20)),
+            "sex": random.choice('mf'),
             "diagnosis": Diagnosis.objects.order_by('?').first().id,
             "region": city[:2],
             "province": city[:4],
