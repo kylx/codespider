@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 "pk": 1,
                 "fields": {
                     "password": "pbkdf2_sha256$120000$qMvEV5wbOqE0$VCZFdXdiVBL/DfzpByAwHNvrB1hmdD1/zKQcIjlsUyg=",
-                    "last_login": "2019-04-12T09:14:54.973Z",
+                    "last_login": "2018-04-12T09:14:54.973Z",
                     "is_superuser": True,
                     "username": "test",
                     "first_name": "",
@@ -83,7 +83,7 @@ class Command(BaseCommand):
         call_command('loaddata', 'db.json')
 
         data = []
-        for x in range(1, 200):
+        for x in range(1, 2000):
             data.append(occupancy())
         with open('db.json', 'w') as dump_file:
             json.dump(data, dump_file, indent=4)

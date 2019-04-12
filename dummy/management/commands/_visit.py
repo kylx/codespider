@@ -34,7 +34,7 @@ def visit_start(tag):
         
     visit_patients[tag] = pat
 
-    print('hahaha', pat)
+    # print('hahaha', pat)
     start = get_rand_time()
     end = get_rand_time()
 
