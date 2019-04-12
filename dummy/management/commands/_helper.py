@@ -1,5 +1,6 @@
 from main.enums import Enums
 from main.models import Diagnosis
+from dummy.management.commands._randomdata import *
 import random
 
 ids = {
@@ -18,7 +19,7 @@ def diagnosis(full_name, short_name=None):
         },
     }
 
-def patient(fname, mid, lname, age, sex):
+def patient( mid, lname, age, sex):
     pk = ids['diagnosis']
     ids['diagnosis'] += 1
 
@@ -31,7 +32,7 @@ def patient(fname, mid, lname, age, sex):
         "model": "main.patient",
         "pk": pk,
         "fields": {
-            "first_name": fname,
+            "first_name": random.choice(fnames),
             "last_name": lname,
             "middle_initial": mid,
             "age": age,
