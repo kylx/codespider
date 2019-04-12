@@ -12,7 +12,6 @@ def province(idnum, psgcCode, name, region_code, province_code):
     
 def city(idnum, psgcCode, name, region_code, province_code, city_code):
     return (psgcCode[:6], name) # use 1st 6 characters of code
-
     
 # ----- Encode information here -----
 class Enums():
