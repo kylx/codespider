@@ -38,7 +38,6 @@ def patient():
         fname += ' ' + random.choice(fnames)
     elif (random.random() < 0.1):
         fname += ' ' + random.choice(fnames)
-
     return {
         "model": "main.patient",
         "pk": pk,
@@ -48,7 +47,7 @@ def patient():
             "middle_initial": random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
             "age": random.choice(range(5,20)),
             "sex": random.choice('mf'),
-            "diagnosis": Diagnosis.objects.order_by('?').first().id,
+            "diagnosis": random.choice(range(1, ids['diagnosis'])),
             "region": city[:2],
             "province": city[:4],
             "city": city[:6]
@@ -89,5 +88,19 @@ def room(building, num):
         "fields": {
             'building': Building.objects.get(name=building).id,
             "display_name": 'Room ' + str(num),
+        }
+    }
+
+def occupancy():
+    pk = ids['occupancy']
+    ids['occupancy'] += 1
+    
+    return {
+        'model': 'main.occupancy',
+        'pk': pk,
+        'fields': {
+            'visit': Visit.objects.order_by('?').first().id,
+            'room': Room.objects.order_by('?').first().id,
+            'watcher': [Watcher.objects.order_by('?').first().id,Watcher.objects.order_by('?').first().id,],
         }
     }
