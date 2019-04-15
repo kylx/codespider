@@ -18,8 +18,8 @@ def city(idnum, psgcCode, name, region_code, province_code, city_code):
 class Enums():
 
     SEX = [
-        ('m', 'male'),
-        ('f', 'female'),
+        ('m', 'Male'),
+        ('f', 'Female'),
     ]
 
     REGIONS = [
