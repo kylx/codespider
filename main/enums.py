@@ -45,7 +45,6 @@ class Enums():
 
     ]
     
-    # region number, province code, long name, short name(optional)
     PROVINCES = [
 		('', 'Choose Province...'), # initial empty value in combobox
         # province('psgcCode', 'name'),
