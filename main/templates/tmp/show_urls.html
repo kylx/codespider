@@ -50,6 +50,37 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <div class="container">
+            
+                <h1 id="rad"></h1>
+                <button type="submit" id="rand">Sign up</button>
+    </div>
+    <script>
+        var ss = "fish";
+        var ss2 = "fish";
+        $("#rand").click(function () {
+            $.ajax({
+                url: '{% url "rand" %}',
+                dataType: 'json',
+                success: function (data) {
+                    // console.log(JSON.stringify(data));
+                    ss2 = data;
+                    console.log('raw: ', data);
+                    ss = JSON.parse(data.rand_patient);
+                    
+                    console.log('obj: ', ss);
+                    // console.log('name: ', ss.rand_patient);
+                    // console.log('name[0]: ', data.rand_patient[0]);
+                    // ss = data.rand_patient;
+                    let pat = data.rand_patient[0].fields;
+                    console.log(pat);
+                    // let name = pat.first_name + ' ' + pat.middle_initial + '. ' + pat.last_name;
+                    $("#rad").text(name);
+                }
+            });
+        });
+    </script>
     <div class="container">
         raw-list: {{raw_urls}}
     </div>
