@@ -18,8 +18,8 @@ def city(idnum, psgcCode, name, region_code, province_code, city_code):
 class Enums():
 
     SEX = [
-        ('m', 'male'),
-        ('f', 'female'),
+        ('m', 'Male'),
+        ('f', 'Female'),
     ]
 
     REGIONS = [
@@ -45,7 +45,6 @@ class Enums():
 
     ]
     
-    # region number, province code, long name, short name(optional)
     PROVINCES = [
 		('', 'Choose Province...'), # initial empty value in combobox
         # province('psgcCode', 'name'),
