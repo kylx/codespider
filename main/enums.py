@@ -1,106 +1,54 @@
-            
+ 
+"""
+ Helper functions for easier encoding of locations
+    'name' is what is displayed in combo/selection boxes
+ """
 
-class LocationCode():
-    """
-    see https://psa.gov.ph/classification/psgc/
-    Browse PSGC database on right-side of web page
+def region(psgcCode, name):
+    return (psgcCode[:2], name) # use 1st 2 characters of code
     
-    PSGC codes have the format: rrppccxxx
-        region = rr
-        province = pp
-        city = cc
-        xxx is not used
-    """
-    def __init__(self, region, province=None, city=None):
-        self.region = region
-        self.province = province
-        self.city = city
-        
-    """
-    Convert to string
-    - concatenate region + province + city using python fstrings
-    - :02d formats the numbers to always use 2 digits. i.e, 3 -> '03', 0 -> '00'
-    """
-    def __str__(self):
-        return f'{self.region}{self.province}{self.city}'
-        
-class Location():
-    def __init__(self, code, long_name, short_name=''):
-        self.code = code
-        self.long_name = long_name
-        if short_name: 
-            self.short_name = short_name
-        else:
-            self.short_name = long_name
-        
-    def __str__(self):
-        return f'{self.code}: {self.short_name} - {self.long_name}'
+def province(idnum, psgcCode, name, region_code, province_code):
+    return (psgcCode[:4], name) # use 1st 4 characters of code
     
-# Helper functions for easier encoding of locations
+def city(idnum, psgcCode, name, region_code, province_code, city_code):
+    return (psgcCode[:6], name) # use 1st 6 characters of code
 
-def region(idnum, psgcCode, long_name, region_code, short_name=''):
-    code = LocationCode(region_code)
-    location = Location(code, long_name, short_name)
-    return (region_code, long_name)
-    return location
-    
-def province(idnum, psgcCode, long_name, region_code, province_code, short_name=''):
-    code = LocationCode(region_code, province_code)
-    location = Location(code, long_name, short_name)
-    return (province_code, long_name)
-    return location
-    
-def city(idnum, psgcCode, long_name, region_code, province_code, city_code, short_name=''):
-    code = LocationCode(region_code, province_code, city_code)
-    location = Location(code, long_name, short_name)
-    return (city_code, long_name)
-    return location
-
-    """
-    TODO
-        - get regions, provinces, cities as arrays/list of a certain format which can be used in models
-        - get provinces in a region
-        - get cities in a province
-        - get cities in a region ?? (maybe not needed)
-        - refactor (daghan redundant codes, after encode dako ra kaayo ang file, need to split, etc..)
-    """
     
 # ----- Encode information here -----
 class Enums():
 
     SEX = [
-        ['m', 'male'],
-        ['f', 'female'],
+        ('m', 'male'),
+        ('f', 'female'),
     ]
 
-    # region number, long name, short name(optional)
     REGIONS = [
-		('', 'Choose Region...'),
-    #    region('id', 'psgcCode', 'regDesc', 'regCode'),
-        region('1', '010000000', 'REGION I (ILOCOS REGION)', '01'),
-        region('2', '020000000', 'REGION II (CAGAYAN VALLEY)', '02'),
-        region('3', '030000000', 'REGION III (CENTRAL LUZON)', '03'),
-        region('4', '040000000', 'REGION IV-A (CALABARZON)', '04'),
-        region('5', '170000000', 'REGION IV-B (MIMAROPA)', '17'),
-        region('6', '050000000', 'REGION V (BICOL REGION)', '05'),
-        region('7', '060000000', 'REGION VI (WESTERN VISAYAS)', '06'),
-        region('8', '070000000', 'REGION VII (CENTRAL VISAYAS)', '07'),
-        region('9', '080000000', 'REGION VIII (EASTERN VISAYAS)', '08'),
-        region('10', '090000000', 'REGION IX (ZAMBOANGA PENINSULA)', '09'),
-        region('11', '100000000', 'REGION X (NORTHERN MINDANAO)', '10'),
-        region('12', '110000000', 'REGION XI (DAVAO REGION)', '11'),
-        region('13', '120000000', 'REGION XII (SOCCSKSARGEN)', '12'),
-        region('14', '130000000', 'NATIONAL CAPITAL REGION (NCR)', '13'),
-        region('15', '140000000', 'CORDILLERA ADMINISTRATIVE REGION (CAR)', '14'),
-        region('16', '150000000', 'AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)', '15'),
-        region('17', '160000000', 'REGION XIII (Caraga)', '16')
+		('', 'Choose Region...'), # initial empty value in combobox
+        # region('psgcCode', 'name'),
+        region('010000000', 'r1 - Ilocos Region'),
+        region('020000000', 'r2 - Cagayan Valley'),
+        region('030000000', 'r3 - Central Luzon'),
+        region('040000000', 'r4a - CALABARZON'),
+        region('170000000', 'r4b - MIMAROPA'),
+        region('050000000', 'r5 - Bicol Region'),
+        region('060000000', 'r6 - Western Visayas'),
+        region('070000000', 'r7 - Central Visayas'),
+        region('080000000', 'r8 - Eastern Visayas'),
+        region('090000000', 'r9 - Zamboanga Peninsula'),
+        region('100000000', 'r10 - Northern Mindanao'),
+        region('110000000', 'r11 - Davao Region'),
+        region('120000000', 'r12 - SOCCSKSARGEN'),
+        region('130000000', 'NCR - National Capital Region'),
+        region('140000000', 'CAR - Cordillera Administrative Region'),
+        region('150000000', 'ARMM - Autonomous Region In Muslim Mindanao'),
+        region('160000000', 'r13 - Caraga Region'),
 
     ]
     
     # region number, province code, long name, short name(optional)
     PROVINCES = [
-		('', 'Choose Province...'),
-    #    province('id', 'psgcCode', 'provDesc', 'regCode', 'provCode'),
+		('', 'Choose Province...'), # initial empty value in combobox
+        # province('psgcCode', 'name'),
         province('1', '012800000', 'ILOCOS NORTE', '01', '0128'),
         province('2', '012900000', 'ILOCOS SUR', '01', '0129'),
         province('3', '013300000', 'LA UNION', '01', '0133'),
@@ -192,10 +140,9 @@ class Enums():
 
     ]
     
-    # region number, province code, long name, short name(optional)
     CITIES = [
-		('', 'Choose City...'),
-        #city('id', 'psgcCode', 'citymunDesc', 'regDesc', 'provCode', 'citymunCode'),
+		('', 'Choose City...'),  # initial empty value in combobox
+        # city('psgcCode', 'name'),
         city('1', '012801000', 'ADAMS', '01', '0128', '012801'),
         city('2', '012802000', 'BACARRA', '01', '0128', '012802'),
         city('3', '012803000', 'BADOC', '01', '0128', '012803'),
@@ -1847,19 +1794,3 @@ class Enums():
 
     ]
     
-    # For simple visual checking
-    # call this method somewhere to check
-    @staticmethod
-    def print_all():
-        print('Regions')
-        print(Enums.REGIONS)
-        for region in Enums.REGIONS:
-            print('  ', region)
-        print('Provinces')
-        for province in Enums.PROVINCES:
-            print('  ', province)
-        print('Cities')
-        for city in Enums.CITIES:
-            print('  ', city)
-
-        
