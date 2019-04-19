@@ -7,9 +7,11 @@
 def region(psgcCode, name):
     return (psgcCode[:2], name) # use 1st 2 characters of code
     
+# TODO: def province(psgcCode, name)
 def province(idnum, psgcCode, name, region_code, province_code):
     return (psgcCode[:4], name) # use 1st 4 characters of code
-    
+
+# TODO: def province(psgcCode, name)
 def city(idnum, psgcCode, name, region_code, province_code, city_code):
     return (psgcCode[:6], name) # use 1st 6 characters of code
     
