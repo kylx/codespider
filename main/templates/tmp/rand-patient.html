@@ -1,0 +1,53 @@
+
+{% load static %}
+
+<script src="{% static 'js/vue.js'%}"></script>
+
+{# This is a comment #}
+<div class="container" id="app">
+    <div class="card">
+        <div class="card-header">
+            Patient # [[id]]
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">[[lname]], [[fname]] [[mid]].</h5>
+            <p class="card-text">
+                <div>Age: [[age]]</div>
+                <div>Sex: [[sex]]</div>
+
+            </p>
+            <button class="btn btn-primary" v-on:click="getRand">Get random patient</button>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            id: '0',
+            fname: '*',
+            lname: '*',
+            mid: '*',
+            age: '*',
+            sex: '*',
+        },
+        methods: {
+            getRand: function() {
+                    fetch('{% url "rand" %}')
+                    .then(response => response.json())
+                    .then(myJson => JSON.parse(myJson.rand_patient)[0])
+                    .then(patient => {
+                        console.log(patient, this.$data);
+                        this.$data.id = patient.pk;
+                        this.$data.fname = patient.fields.first_name;
+                        this.$data.lname = patient.fields.last_name;
+                        this.$data.mid = patient.fields.middle_initial;
+                        this.$data.age = patient.fields.age;
+                        this.$data.sex = patient.fields.sex;
+                    })
+                }
+                ,
+        },
+        delimiters: ['[[', ']]']
+    });
+</script>
