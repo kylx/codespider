@@ -134,7 +134,7 @@
                 <tbody id="app">
                     {% for patient in patients %}
                     <tr>
-                        <td class="col-1">[[ message ]]{{ patient.last_name }}</td>
+                        <td class="col-1">{{ patient.last_name }}</td>
                         <td class="col-2">{{ patient.first_name }}</td>
                         <td class="col-3">{{ patient.middle_initial }}</td>
                     </tr>
@@ -148,7 +148,6 @@
 </div>
 
 <script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/vue.js' %}"></script>
 <script>
 $(document).ready(function() {
 	let reg = $('select[name=region]');
@@ -192,16 +191,6 @@ $(document).ready(function() {
 
     resetProv();
 });
-
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  },
-  delimiters: ['[[',']]']
-});
-	
 
 </script>
 {% endblock page_body %}
