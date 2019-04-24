@@ -30,6 +30,7 @@ urlpatterns = [
     # temporary
     path('tmp/create-patient', tmp_create_patient, name="forms/create-patient"),
     path('tmp/assign-room', tmp_assign_room, name="forms/assign-room"),
+    path('tmp/rand', rand_patient, name="rand"),
 
     # requires input
     path('tmp/action/create-patient', test, name='action/create-patient'),

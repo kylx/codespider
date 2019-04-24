@@ -4,6 +4,8 @@
 
 {% load staticfiles %}
 
+
+
 {% load location %}
         
 {% block page_titleicon %}
@@ -129,7 +131,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="app">
                     {% for patient in patients %}
                     <tr>
                         <td class="col-1">{{ patient.last_name }}</td>
@@ -189,7 +191,6 @@ $(document).ready(function() {
 
     resetProv();
 });
-	
 
 </script>
 {% endblock page_body %}
