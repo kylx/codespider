@@ -97,3 +97,11 @@ def show_urls(request):
 def test(request):
     context = {}
     return render(request, 'tmp/todo.html', context)
+from django.core import serializers
+from django.http import JsonResponse
+def rand_patient(request):
+    data = {
+        'rand_patient': serializers.serialize('json', [Patient.objects.order_by('?').first()]),
+        'regions': Enums.REGIONS,
+    }
+    return JsonResponse(data)
