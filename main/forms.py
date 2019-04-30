@@ -3,15 +3,6 @@ from django.forms import ModelForm
 from .models import Patient
 from .enums import Enums
 
-class DateForm(forms.Form):
-    date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )
-
 class PatientForm(ModelForm):
     class Meta:
         model = Patient
@@ -150,9 +141,109 @@ class RoomForm(ModelForm):
     )
     
     date_to = forms.DateField(
-        widget=forms.DateInput(
-            format = '%m/%d/%Y',
-            attrs = { 'class': 'datepicker' }
-        ),
+        widget=forms.DateInput( format = '%m/%d/%Y' ),
         input_formats = ( '%m/%d/%Y' )
     )
+	
+class FilterForm(ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['last_name', 'first_name', 'middle_initial']
+		
+    date_from = forms.DateField(
+	widget=forms.DateInput( format = '%m/%d/%Y' ),
+	input_formats = ( '%m/%d/%Y' )
+    )
+    
+    date_to = forms.DateField(
+        widget=forms.DateInput( format = '%m/%d/%Y' ),
+        input_formats = ( '%m/%d/%Y' )
+    )
+	
+    patient = forms.MultipleChoiceField (
+        label = 'Relationship',
+		widget = forms.CheckboxSelectMultiple,
+		choices = [
+			['p-a', 'All Patients'],
+			['p-b', 'Boys'],
+			['p-g', 'Girls']
+		]
+    )
+	
+    watcher = forms.MultipleChoiceField (
+        label = 'Relationship',
+		widget = forms.CheckboxSelectMultiple,
+		choices = [
+			['w', 'Watchers'],
+		]
+    )
+	
+    building = forms.MultipleChoiceField (
+        label = 'Relationship',
+		widget = forms.CheckboxSelectMultiple,
+		choices = [
+			['b-al', 'All Buildings'],
+			['b-ma', 'Main'],
+			['b-an', 'Annex'],
+		]
+    )
+	
+    diagnosis = forms.CharField (
+        label = 'Diagnosis',
+        widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+		    choices = [
+				['default', 'Diagnosis'],
+			    ['all', 'Acute Lymphoblastic Leukemia'],
+		        ['bg', 'Brainstem Glioma'],
+	        ]
+            # choices = DIAGNOSIS
+        )
+    )
+    
+    region = forms.CharField (
+        label = 'Region',
+        widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+            choices = [
+				['default', 'Region'],
+			    ['r1', 'Region I (Ilocos Region)'],
+		        ['r2', 'Region II (Cagayan Valley)'],
+	        ]
+			# choices = Enums.REGIONS
+        )
+    )
+    
+    province = forms.CharField (
+        label = 'Province',
+        widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+		    choices = [
+				['default', 'Province'],
+			    ['r1-1', 'Ilocos Norte'],
+		        ['r1-2', 'Ilocos Sur'],
+	        ]
+            # choices = Enums.PROVINCES
+        )
+    )
+    
+    city = forms.CharField (
+        label = 'City',
+        widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+		    choices = [
+				['default', 'City'],
+			    ['r1-1-1', 'Batac'],
+		        ['r1-1-2', 'Laoag'],
+	        ]
+            # choices = Enums.CITIES
+        )
+    )	
