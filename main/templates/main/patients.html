@@ -21,16 +21,32 @@
 
 {% block nav_bar %}
     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
-        <div class="dropdown-menu dropdown-menu-right">
-            <a class="nav-link" href="{% url 'rooms' %}">Main</a>
-            <a class="nav-link" href="{% url 'rooms' %}">Annex</a>
-        </div>
-    </li>
-    <li class="nav-item active"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Summary</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'inquiry' %}">Inquiry</a></li>
+                    
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'rooms/main' %}">Main</a>
+			<a class="nav-link" href="{% url 'rooms/annex' %}">Annex</a>
+		</div>
+	</li>
+	
+	<li class="nav-item active"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+	
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Summary</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'summary/monthly' %}">Monthly</a>
+			<a class="nav-link" href="{% url 'summary/daily' %}">Daily</a>
+		</div>
+	</li>
+	
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Inquiry</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'inquiry/part1' %}">Part 1</a>
+			<a class="nav-link" href="{% url 'inquiry/part2' %}">Part 2</a>
+		</div>
+	</li>
 {% endblock nav_bar %}
 
 {% block page_body %}
