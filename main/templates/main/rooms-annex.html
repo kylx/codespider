@@ -1,0 +1,194 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Rooms{% endblock title %}
+
+{% load staticfiles %}
+        
+{% block page_titleicon %}
+    <link rel="icon" type="image/png" href="{% static 'images/icons/rooms_titleicon.png' %}">
+{% endblock page_titleicon %}
+
+{% block page_stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+{% endblock page_stylesheet %}
+
+{% block nav_bar %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'rooms/main' %}">Main</a>
+			<a class="nav-link active" href="{% url 'rooms/annex' %}">Annex</a>
+		</div>
+	</li>
+	
+	<li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+	
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Summary</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'summary/monthly' %}">Monthly</a>
+			<a class="nav-link" href="{% url 'summary/daily' %}">Daily</a>
+		</div>
+	</li>
+	
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Inquiry</a>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a class="nav-link" href="{% url 'inquiry/part1' %}">Part 1</a>
+			<a class="nav-link" href="{% url 'inquiry/part2' %}">Part 2</a>
+		</div>
+	</li>
+{% endblock nav_bar %}
+
+{% block page_body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 date-container" >
+            <div class="row">
+                <div class="col-lg-6 text-right">
+                    {# {{ chosen_date|date:"d" }} #}
+                    <div class="day" id="theDay"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"l" }} #}
+                            <div class="day-week" id="theDayWeek"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {# {{ chosen_date|date:"F Y" }} #}
+                            <div class="month-year" id="theMonthYear"></div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-12 counter-container">
+            <div class="row">
+                <div class="col-lg-6 cname">Patients</div>
+                <div class="col-lg-6 cname">Watchers</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6 cname">Boys</div>
+                                <div class="col-lg-6 cnum-2">15</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 cname">Girls</div>
+                                <div class="col-lg-6 cnum-2">5</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 cnum-1">20</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 cnum-1">26</div>
+            </div>
+        </div>
+    </div>
+	<div class="row">
+		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#RoomsModal">
+			<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+			Assign to Room
+		</button>
+		
+		<div class="modal" id="RoomsModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header modal-title">
+						Assign to Room
+					</div>
+					<form method="post" action="">
+						<div class="modal-body">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-lg-5">
+									{{ form.last_name }}
+								</div>
+								<div class="col-lg-5">
+									{{ form.first_name }}
+								</div>
+								<div class="col-lg-2">
+									{{ form.middle_initial }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									{{ form.relationship }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									{{ form.date_from }}
+								</div>
+								<div class="col-lg-6">
+									{{ form.date_to }}
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">
+								<span>
+									Assign
+									<i class="fa fa-save" aria-hidden="true"></i>
+								</span>
+							</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">
+								<span>
+									Cancel
+									<i class="fa fa-window-close" aria-hidden="true"></i>
+								</span>
+							</button>
+						</div>
+					</form> 
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="container-table">
+            <div class="wrap-table">
+                <table class="table" id="table">
+                
+                <thead>
+                    <tr class="table-head text-center">
+                        <th class="col-1">Room #</th>
+                        <th class="col-2">Patient's Name</th>
+                        <th class="col-3">No. of Watcher(s)</th>
+                        <th class="col-4">Relationship(s)</th>
+                        <th class="col-5">Date of Stay</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td class="col-1">{{ patient.room_no }}</td>
+                        <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
+                        <td class="col-3">{{patient.middle_initial}}</td>
+                        {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
+                        <td class="col-5">{{ patient.date_of_stay }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_body %}
+
+{% block page_js %}
+    <script src="{% static 'js/x/date.js' %}"></script>    
+{% endblock page_js %}

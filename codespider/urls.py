@@ -20,16 +20,13 @@ from main.views import *
 urlpatterns = [
     # main pages
     path('home'     		, home      	, name='home'),
-    path('rooms'    		, rooms     	, name='rooms'),
     path('rooms/main'    	, rooms_main     , name='rooms/main'),
     path('rooms/annex'    	, rooms_annex     , name='rooms/annex'),
     path('patients' 		, patients  , name='patients'),
     path('summary/daily'  	, summary_daily   , name='summary/daily'),
     path('summary/monthly'  , summary_monthly   , name='summary/monthly'),
-    path('summary'  		, summary   , name='summary'),
     path('inquiry/part1'  	, inquiry_part1   , name='inquiry/part1'),
     path('inquiry/part2'  	, inquiry_part2   , name='inquiry/part2'),
-    path('inquiry'  		, inquiry   , name='inquiry'),
     path('login'  			, login   , name='login'),
 
     # temporary

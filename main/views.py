@@ -18,7 +18,7 @@ def rooms_main(request):
         'url_name': 'ROOMS',
 		'form': form
     }
-    return render(request, 'main/rooms.html', context)
+    return render(request, 'main/rooms-main.html', context)
 	
 def rooms_annex(request):
     form = RoomForm()
@@ -26,7 +26,7 @@ def rooms_annex(request):
         'url_name': 'ROOMS',
 		'form': form
     }
-    return render(request, 'main/rooms.html', context)
+    return render(request, 'main/rooms-annex.html', context)
 
 def patients(request):
     patient_list = Patient.objects.all()
@@ -38,37 +38,29 @@ def patients(request):
     }
     return render(request, 'main/patients.html', context)
 
-def summary(request):
-    context = {'url_name': 'SUMMARY'}
-    return render(request, 'main/summary.html', context)
 def summary_daily(request):
     context = {'url_name': 'SUMMARY'}
-    return render(request, 'main/summary.html', context)
+    return render(request, 'main/summary-daily.html', context)
+	
 def summary_monthly(request):
     context = {'url_name': 'SUMMARY'}
-    return render(request, 'main/summary.html', context)
+    return render(request, 'main/summary-monthly.html', context)
 
-def inquiry(request):
-    form = FilterForm()
-    context = {
-        'url_name': 'INQUIRY',
-        'form': form
-    }
-    return render(request, 'main/inquiry.html', context)
 def inquiry_part1(request):
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
         'form': form
     }
-    return render(request, 'main/inquiry.html', context)
+    return render(request, 'main/inquiry-part1.html', context)
+	
 def inquiry_part2(request):
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
         'form': form
     }
-    return render(request, 'main/inquiry.html', context)
+    return render(request, 'main/inquiry-part2.html', context)
     
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
@@ -92,28 +84,6 @@ def tmp_create_patient(request):
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
-
-def rooms(request):
-    form = RoomForm()
-    context = {
-        'url_name': 'ROOMS',
-		'form': form
-    }
-    return render(request, 'main/rooms.html', context)
-def rooms_main(request):
-    form = RoomForm()
-    context = {
-        'url_name': 'ROOMS',
-		'form': form
-    }
-    return render(request, 'main/rooms.html', context)
-def rooms_annex(request):
-    form = RoomForm()
-    context = {
-        'url_name': 'ROOMS',
-		'form': form
-    }
-    return render(request, 'main/rooms.html', context)
 
 def login(request):
     context = {}
