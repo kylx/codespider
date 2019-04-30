@@ -41,8 +41,28 @@ def patients(request):
 def summary(request):
     context = {'url_name': 'SUMMARY'}
     return render(request, 'main/summary.html', context)
+def summary_daily(request):
+    context = {'url_name': 'SUMMARY'}
+    return render(request, 'main/summary.html', context)
+def summary_monthly(request):
+    context = {'url_name': 'SUMMARY'}
+    return render(request, 'main/summary.html', context)
 
 def inquiry(request):
+    form = FilterForm()
+    context = {
+        'url_name': 'INQUIRY',
+        'form': form
+    }
+    return render(request, 'main/inquiry.html', context)
+def inquiry_part1(request):
+    form = FilterForm()
+    context = {
+        'url_name': 'INQUIRY',
+        'form': form
+    }
+    return render(request, 'main/inquiry.html', context)
+def inquiry_part2(request):
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
@@ -65,6 +85,24 @@ def rooms(request):
 		'form': form
     }
     return render(request, 'main/rooms.html', context)
+def rooms_main(request):
+    form = RoomForm()
+    context = {
+        'url_name': 'ROOMS',
+		'form': form
+    }
+    return render(request, 'main/rooms.html', context)
+def rooms_annex(request):
+    form = RoomForm()
+    context = {
+        'url_name': 'ROOMS',
+		'form': form
+    }
+    return render(request, 'main/rooms.html', context)
+
+def login(request):
+    context = {}
+    return render(request, 'tmp/todo.html', context)
     
 from django.urls import get_resolver
 
