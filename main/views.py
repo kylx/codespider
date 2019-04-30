@@ -117,3 +117,10 @@ def rand_patient(request):
         'regions': Enums.REGIONS,
     }
     return JsonResponse(data)
+	
+def regex(request, test='wtf'):
+
+	context = {
+		'aaa': test,
+	}
+	return render(request, 'tmp/regex.html', context)
