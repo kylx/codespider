@@ -21,11 +21,16 @@ urlpatterns = [
     # main pages
     path('home'     , home      , name='home'),
     path('rooms'    , rooms     , name='rooms'),
-    path('rooms/main'    , rooms_main     , name='rooms-main'),
-    path('rooms/annex'    , rooms_annex     , name='rooms-annex'),
+    path('rooms/main'    , rooms_main     , name='rooms/main'),
+    path('rooms/annex'    , rooms_annex     , name='rooms/annex'),
     path('patients' , patients  , name='patients'),
+    path('summary/daily'  , summary   , name='summary/daily'),
+    path('summary/monthly'  , summary   , name='summary/monthly'),
     path('summary'  , summary   , name='summary'),
+    path('inquiry/part1'  , inquiry   , name='inquiry/part1'),
+    path('inquiry/part2'  , inquiry   , name='inquiry/part2'),
     path('inquiry'  , inquiry   , name='inquiry'),
+    path('login'  , test   , name='login'),
 
     # temporary
     path('tmp/create-patient', tmp_create_patient, name="forms/create-patient"),
