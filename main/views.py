@@ -72,7 +72,22 @@ def inquiry_part2(request):
     
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
-    return render(request, 'main/forms/patientform.html', context)
+    if request.method == 'POST':
+        post = Patient()
+        post.last_name = request.POST.get('last_name')
+        post.first_name = request.POST.get('first_name')
+        post.middle_initial = request.POST.get('middle_initial')
+        post.age = request.POST.get('age')
+        post.sex = request.POST.get('sex')
+        # post.diagnosis = request.POST.get('diagnosis')
+        post.region = request.POST.get('region')
+        post.province = request.POST.get('province')
+        post.city = request.POST.get('city')
+        post.save()
+        return render(request, 'main/forms/patientform.html', context)
+
+    else:
+        return render(request, 'main/forms/patientform.html', context)
 
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
