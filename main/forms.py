@@ -26,7 +26,7 @@ class UserForm(ModelForm):
 class PatientForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
+        fields = ['last_name', 'first_name', 'middle_initial', 'age', 'sex', 'diagnosis', 'region', 'province', 'city']
         
     last_name = forms.CharField (
         label = 'Last Name',
@@ -120,7 +120,7 @@ class PatientForm(ModelForm):
 class RoomForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
+        fields = ['last_name', 'first_name', 'middle_initial', 'date_from', 'date_to']
         
     last_name = forms.CharField (
         label = 'Last Name',
@@ -168,7 +168,7 @@ class RoomForm(ModelForm):
 class FilterForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
+        fields = ['building', 'diagnosis', 'region', 'province', 'city']
 		
     date_from = forms.DateField(
 	widget=forms.DateInput( format = '%m/%d/%Y' ),

@@ -1,3 +1,7 @@
+ul {
+	list-style: none;
+}
+
 .filter-body .col-lg-4 {
 	padding: 3% 1% 0% 1%;
 }
