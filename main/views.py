@@ -15,10 +15,7 @@ def home(request):
 	
 def rooms_main(request):
     form = RoomForm()
-    occ = []
-    for o in Occupancy.objects.all():
-        if o.room.building.name == 'main':
-            occ.append(o)
+    occ = Occupancy.objects.filter(room__building__name="main")
     context = {
         'url_name': 'ROOMS',
 		'form': form,
@@ -28,10 +25,7 @@ def rooms_main(request):
 	
 def rooms_annex(request):
     form = RoomForm()
-    occ = []
-    for o in Occupancy.objects.all():
-        if o.room.building.name == 'annex':
-            occ.append(o)
+    occ = Occupancy.objects.filter(room__building__name="annex")
     context = {
         'url_name': 'ROOMS',
 		'form': form,
