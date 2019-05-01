@@ -189,13 +189,13 @@
                 </thead>
 
                 <tbody>
-                    {% for patient in patients %}
+                    {% for room in rooms %}
                     <tr>
-                        <td class="col-1">{{ patient.room_no }}</td>
-                        <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
-                        <td class="col-3">{{ patient.middle_initial }}</td>
-                        {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
-                        <td class="col-5">{{ patient.date_of_stay }}</td>
+                        <td class="col-1">{{ room.room.display_name }}</td>
+                        <td class="col-2">{{ room.visit.patient.last_name }}, {{ room.visit.patient.first_name }} {{ room.visit.patient.middle_initial }}.</td>
+                        <td class="col-3">???</td>
+                        <td class="col-4">ex-father</td>
+                        <td class="col-5">{{ room.visit.assigned_end_date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
