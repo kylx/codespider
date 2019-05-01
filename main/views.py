@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from .models import Patient
 from .enums import Enums
 from .forms import PatientForm, RoomForm, FilterForm
+from .models import Diagnosis
 
 from django.http import HttpResponse
 
@@ -35,6 +36,7 @@ def patients(request):
         'url_name': 'PATIENTS',
         'patients': patient_list,
 		'form': form
+
     }
     return render(request, 'main/patients.html', context)
 
@@ -65,13 +67,15 @@ def inquiry_part2(request):
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     if request.method == 'POST':
+        requester = request.POST.get('diagnosis')
         post = Patient()
         post.last_name = request.POST.get('last_name')
         post.first_name = request.POST.get('first_name')
         post.middle_initial = request.POST.get('middle_initial')
         post.age = request.POST.get('age')
         post.sex = request.POST.get('sex')
-        # post.diagnosis = request.POST.get('diagnosis')
+        object_diagnosis = Diagnosis.objects.get(pk = requester)
+        post.diagnosis = object_diagnosis
         post.region = request.POST.get('region')
         post.province = request.POST.get('province')
         post.city = request.POST.get('city')
