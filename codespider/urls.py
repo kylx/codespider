@@ -38,6 +38,7 @@ class MonthConverter:
 
     def to_url(self, value):
         return '%02d' % value
+        
 		
 register_converter(YearConverter, 'yyyy')
 register_converter(MonthConverter, 'mm')
@@ -45,7 +46,8 @@ register_converter(MonthConverter, 'mm')
 urlpatterns = [
     # main pages
 	path('asd', tmp_date, name='asd'),
-	path('asd/<yyyy:year>/<mm:month>', tmp_date),
+	re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
+	# path('asd/<yyyy:year>/<mm:month>', tmp_date),
 	re_path(r'^fish$', regex, name='fish'),
 	re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
 	

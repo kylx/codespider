@@ -125,10 +125,11 @@ def regex(request, test='wtf'):
 	}
 	return render(request, 'tmp/regex.html', context)
 	
-def tmp_date(request, year=9999, month=99):
+def tmp_date(request, year=9999, month=99, day=0):
 
 	context = {
 		'year': year,
 		'month': month,
+		'day': day,
 	}
 	return render(request, 'tmp/asd.html', context)
