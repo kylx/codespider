@@ -3,10 +3,6 @@
 {% block title %}Patients{% endblock title %}
 
 {% load staticfiles %}
-
-
-
-{% load location %}
         
 {% block page_titleicon %}
     <link rel="icon" type="image/png" href="{% static 'images/icons/patients_titleicon.png' %}">
@@ -66,7 +62,7 @@
                             <div class="modal-header modal-title">
                                 Patient Information
                             </div>
-                            <form method="post" action="{% url 'forms/create-patient' %}">
+                            <form method="post" action="">
                                 <div class="modal-body">
                                     {% csrf_token %}
                                     <div class="row">

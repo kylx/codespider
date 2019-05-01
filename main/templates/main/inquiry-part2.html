@@ -50,7 +50,7 @@
 				<div class="filter-wrap">
 					<div class="filter-content">
 						<div class="filter-header filter-title">
-							Filter
+							Sort
 						</div>
 						<form method="post" action="">
 							<div class="filter-body">
@@ -69,38 +69,21 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-4">
-										{{ form.patient }}
-									</div>
-									<div class="col-lg-4">
-										{{ form.watcher }}
-									</div>
-									<div class="col-lg-4">
-										{{ form.building }}
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12">
+									<div class="col-lg-12 mt-3">
 										{{ form.diagnosis }}
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-4">
+									<div class="col-lg-12">
 										{{ form.region }}
-									</div>
-									<div class="col-lg-4">
-										{{ form.province }}
-									</div>
-									<div class="col-lg-4">
-										{{ form.city }}
 									</div>
 								</div>
 							</div>
 							<div class="filter-footer">
 								<button type="submit" class="btn btn-success">
 									<span>
-										Search
-										<i class="fa fa-search" aria-hidden="true"></i>
+										Sort
+										<i class="fa fa-sort" aria-hidden="true"></i>
 									</span>
 								</button>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -131,18 +114,10 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-12">
 							Region
 							{{ result.region }}
-						</div>
-						<div class="col-lg-4">
-							Province
-							{{ result.province }}
-						</div>
-						<div class="col-lg-4">
-							City
-							{{ result.city }}
-						</div>
+						</div>	
 					</div>
 				</div>
 			</div>
