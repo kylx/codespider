@@ -101,7 +101,7 @@ def tmp_assign_room(request):
 
 def login(request):
     context = {}
-    return render(request, 'tmp/todo.html', context)
+    return render(request, 'main/login.html', context)
     
 from django.urls import get_resolver
 
