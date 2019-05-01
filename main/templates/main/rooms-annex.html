@@ -38,16 +38,34 @@
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Inquiry</a>
 		<div class="dropdown-menu dropdown-menu-right">
-			<a class="nav-link" href="{% url 'inquiry/part1' %}">Part 1</a>
-			<a class="nav-link" href="{% url 'inquiry/part2' %}">Part 2</a>
+			<a class="nav-link" href="{% url 'inquiry/filter' %}">Filter</a>
+			<a class="nav-link" href="{% url 'inquiry/sort' %}">Sort</a>
 		</div>
 	</li>
 {% endblock nav_bar %}
 
+{% block nav_bar_right %}
+	<ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
+		<button type="submit" class="btn btn-success mr-2">
+			<i class="fa fa-save" aria-hidden="true"></i>
+			Save Day
+		</button>
+		<button type="button" class="btn btn-outline-secondary">
+			<i class="fa fa-power-off" aria-hidden="true"></i>
+			Logout
+		</button>
+	</ul>
+{% endblock nav_bar_right %}
+
 {% block page_body %}
 <div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 room-title-container room-title text-center">
+			Annex
+		</div>
+	</div>
     <div class="row">
-        <div class="col-lg-12 date-container" >
+        <div class="col-lg-12 date-container">
             <div class="row">
                 <div class="col-lg-6 text-right">
                     {# {{ chosen_date|date:"d" }} #}
@@ -171,13 +189,13 @@
                 </thead>
 
                 <tbody>
-                    {% for patient in patients %}
+                    {% for room in rooms %}
                     <tr>
-                        <td class="col-1">{{ patient.room_no }}</td>
-                        <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
-                        <td class="col-3">{{patient.middle_initial}}</td>
-                        {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
-                        <td class="col-5">{{ patient.date_of_stay }}</td>
+                        <td class="col-1">{{ room.room.display_name }}</td>
+                        <td class="col-2">{{ room.visit.patient.last_name }}, {{ room.visit.patient.first_name }} {{ room.visit.patient.middle_initial }}.</td>
+                        <td class="col-3">???</td>
+                        <td class="col-4">ex-father</td>
+                        <td class="col-5">{{ room.date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -187,8 +205,14 @@
         </div>
     </div>
 </div>
+
+<script>
+<!-- var fff = ''; -->
+<!-- var rrr = JSON.parse(fff); -->
+<!-- console.log(rrr); -->
+</script>
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/x/date.js' %}"></script>    
+    <script src="{% static 'js/temp/date.js' %}"></script>    
 {% endblock page_js %}
