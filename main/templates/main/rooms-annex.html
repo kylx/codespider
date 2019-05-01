@@ -195,7 +195,7 @@
                         <td class="col-2">{{ room.visit.patient.last_name }}, {{ room.visit.patient.first_name }} {{ room.visit.patient.middle_initial }}.</td>
                         <td class="col-3">???</td>
                         <td class="col-4">ex-father</td>
-                        <td class="col-5">{{ room.visit.assigned_end_date }}</td>
+                        <td class="col-5">{{ room.date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -205,6 +205,12 @@
         </div>
     </div>
 </div>
+
+<script>
+<!-- var fff = ''; -->
+<!-- var rrr = JSON.parse(fff); -->
+<!-- console.log(rrr); -->
+</script>
 {% endblock page_body %}
 
 {% block page_js %}

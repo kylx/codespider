@@ -5,6 +5,7 @@ from .models import *
 from .enums import Enums
 from .forms import PatientForm, RoomForm, FilterForm
 from .models import Diagnosis
+import datetime
 
 from django.http import HttpResponse
 
@@ -25,7 +26,9 @@ def rooms_main(request):
 	
 def rooms_annex(request):
     form = RoomForm()
-    occ = Occupancy.objects.filter(room__building__name="annex")
+    start_date = datetime.date(2019, 4, 29)
+    end_date = datetime.date(2019, 4, 30)
+    occ = Occupancy.objects.filter(room__building__name="annex", date__range=(start_date, end_date))
     context = {
         'url_name': 'ROOMS',
 		'form': form,
