@@ -3,6 +3,26 @@ from django.forms import ModelForm
 from .models import Patient
 from .enums import Enums
 
+class UserForm(ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['username', 'password']
+        
+    username = forms.CharField (
+        label = 'Username',
+        widget = forms.TextInput ( attrs = {
+            'class' : 'input',
+            'placeholder' : 'Username'
+        })
+    )
+    
+    password = forms.CharField (
+        widget = forms.PasswordInput ( attrs = {
+            'class' : 'input',
+            'placeholder' : 'Password'
+        })
+    )
+
 class PatientForm(ModelForm):
     class Meta:
         model = Patient

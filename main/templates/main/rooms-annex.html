@@ -46,8 +46,13 @@
 
 {% block page_body %}
 <div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 room-title-container room-title text-center">
+			Annex
+		</div>
+	</div>
     <div class="row">
-        <div class="col-lg-12 date-container" >
+        <div class="col-lg-12 date-container">
             <div class="row">
                 <div class="col-lg-6 text-right">
                     {# {{ chosen_date|date:"d" }} #}
@@ -175,7 +180,7 @@
                     <tr>
                         <td class="col-1">{{ patient.room_no }}</td>
                         <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
-                        <td class="col-3">{{patient.middle_initial}}</td>
+                        <td class="col-3">{{ patient.middle_initial }}</td>
                         {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
                         <td class="col-5">{{ patient.date_of_stay }}</td>
                     </tr>
@@ -190,5 +195,5 @@
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/x/date.js' %}"></script>    
+    <script src="{% static 'js/temp/date.js' %}"></script>    
 {% endblock page_js %}

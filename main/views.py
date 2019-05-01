@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Patient
 from .enums import Enums
-from .forms import PatientForm, RoomForm, FilterForm
+from .forms import PatientForm, RoomForm, FilterForm, UserForm
 
 from django.http import HttpResponse
 
@@ -11,7 +11,6 @@ def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
-	
 def rooms_main(request):
     form = RoomForm()
     context = {
@@ -71,8 +70,12 @@ def tmp_assign_room(request):
     return render(request, 'main/forms/roomform.html', context)
 
 def login(request):
-    context = {}
-    return render(request, 'tmp/todo.html', context)
+    form = UserForm()
+    context = {
+		'url_name': 'LOGIN',
+		'form': form
+	}
+    return render(request, 'main/login.html', context)
     
 from django.urls import get_resolver
 
