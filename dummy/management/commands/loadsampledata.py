@@ -39,6 +39,11 @@ class Command(BaseCommand):
                 }
             },
             diagnosis('Henlo HSA', 'HHSA'),
+            diagnosis('bagagnawowngitis', 'aa'),
+            diagnosis('kulang sa gugma', 'dd'),
+            diagnosis('fishisloveparinmgaulol', 'sdsd'),
+            diagnosis('imong mama', 'sd'),
+            diagnosis('dislocated neck', 'sd'),
             watcher('mother'),
             watcher('father'),
             watcher('grandmother'),
