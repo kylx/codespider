@@ -25,8 +25,8 @@ urlpatterns = [
     path('patients' 		, patients  , name='patients'),
     path('summary/daily'  	, summary_daily   , name='summary/daily'),
     path('summary/monthly'  , summary_monthly   , name='summary/monthly'),
-    path('inquiry/part1'  	, inquiry_part1   , name='inquiry/part1'),
-    path('inquiry/part2'  	, inquiry_part2   , name='inquiry/part2'),
+    path('inquiry/filter'  	, inquiry_filter   , name='inquiry/filter'),
+    path('inquiry/sort'  	, inquiry_sort   , name='inquiry/sort'),
     path('login'  			, login   , name='login'),
 
     # temporary
