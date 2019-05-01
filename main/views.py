@@ -124,3 +124,11 @@ def regex(request, test='wtf'):
 		'aaa': test,
 	}
 	return render(request, 'tmp/regex.html', context)
+	
+def tmp_date(request, year=9999, month=99):
+
+	context = {
+		'year': year,
+		'month': month,
+	}
+	return render(request, 'tmp/asd.html', context)

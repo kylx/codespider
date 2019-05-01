@@ -14,11 +14,38 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, register_converter
 from main.views import *
+
+class YearConverter:
+    regex = '[0-9]{4}'
+
+    def to_python(self, value):
+        return int(value)
+
+    def to_url(self, value):
+        return '%04d' % value
+		
+class MonthConverter:
+    regex = '[0-9]{2}'
+
+    def to_python(self, value):
+        m = int(value)
+        if (m == 0 or m > 12):
+            raise ValueError()
+		
+        return m 
+
+    def to_url(self, value):
+        return '%02d' % value
+		
+register_converter(YearConverter, 'yyyy')
+register_converter(MonthConverter, 'mm')
 
 urlpatterns = [
     # main pages
+	path('asd', tmp_date, name='asd'),
+	path('asd/<yyyy:year>/<mm:month>', tmp_date),
 	re_path(r'^fish$', regex, name='fish'),
 	re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
 	
