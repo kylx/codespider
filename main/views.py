@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import Patient
+from .models import *
 from .enums import Enums
 from .forms import PatientForm, RoomForm, FilterForm
 
@@ -14,17 +14,27 @@ def home(request):
 	
 def rooms_main(request):
     form = RoomForm()
+    occ = []
+    for o in Occupancy.objects.all():
+        if o.room.building.name == 'main':
+            occ.append(o)
     context = {
         'url_name': 'ROOMS',
-		'form': form
+		'form': form,
+		'rooms': occ,
     }
     return render(request, 'main/rooms-main.html', context)
 	
 def rooms_annex(request):
     form = RoomForm()
+    occ = []
+    for o in Occupancy.objects.all():
+        if o.room.building.name == 'annex':
+            occ.append(o)
     context = {
         'url_name': 'ROOMS',
-		'form': form
+		'form': form,
+		'rooms': occ,
     }
     return render(request, 'main/rooms-annex.html', context)
 
