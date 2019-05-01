@@ -2,6 +2,8 @@ from django import forms
 from django.forms import ModelForm
 from .models import Patient
 from .enums import Enums
+from .helpers import get_diagnosis_list
+from .models import Diagnosis
 
 class UserForm(ModelForm):
     class Meta:
@@ -76,11 +78,7 @@ class PatientForm(ModelForm):
 			attrs = {
 				'class' : 'form-control, input'
 			},
-		    choices = [
-				['default', 'Diagnosis'],
-			    ['all', 'Acute Lymphoblastic Leukemia'],
-		        ['bg', 'Brainstem Glioma'],
-	        ]
+	         choices = get_diagnosis_list()
             # choices = DIAGNOSIS
         )
     )
