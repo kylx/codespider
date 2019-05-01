@@ -44,6 +44,19 @@
 	</li>
 {% endblock nav_bar %}
 
+{% block nav_bar_right %}
+	<ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
+		<button type="submit" class="btn btn-success mr-2">
+			<i class="fa fa-save" aria-hidden="true"></i>
+			Save Day
+		</button>
+		<button type="button" class="btn btn-outline-secondary">
+			<i class="fa fa-power-off" aria-hidden="true"></i>
+			Logout
+		</button>
+	</ul>
+{% endblock nav_bar_right %}
+
 {% block page_body %}
 <div class="container-fluid">
 	<div class="row">
