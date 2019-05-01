@@ -58,21 +58,21 @@ def summary_monthly(request):
     context = {'url_name': 'SUMMARY'}
     return render(request, 'main/summary-monthly.html', context)
 
-def inquiry_part1(request):
+def inquiry_filter(request):
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
         'form': form
     }
-    return render(request, 'main/inquiry-part1.html', context)
+    return render(request, 'main/inquiry-filter.html', context)
 	
-def inquiry_part2(request):
+def inquiry_sort(request):
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
         'form': form
     }
-    return render(request, 'main/inquiry-part2.html', context)
+    return render(request, 'main/inquiry-sort.html', context)
     
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
