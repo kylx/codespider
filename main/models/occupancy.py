@@ -7,4 +7,4 @@ class Occupancy(models.Model):
 	watcher = models.ManyToManyField("Watcher")
 	date = models.DateTimeField()
 	def __str__(self):
-		return self.visit
+		return f'{self.room.display_name} - {self.visit.patient.last_name}'
