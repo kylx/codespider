@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import *
 from .enums import Enums
 from .forms import PatientForm, RoomForm, FilterForm
-from .models import Diagnosis
+from .models.diagnosis import Diagnosis
+from .models.occupancy import Occupancy
+from .models.patient import Patient
 import datetime
+
 
 from django.http import HttpResponse
 
@@ -37,7 +39,7 @@ def rooms_annex(request):
     return render(request, 'main/rooms-annex.html', context)
 
 def patients(request):
-    patient_list = Patient.objects.all()
+    patient_list = Patient.objects.get_list_names()
     form = PatientForm()
     context = {
         'url_name': 'PATIENTS',
