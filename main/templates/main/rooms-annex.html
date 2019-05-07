@@ -199,10 +199,10 @@
                     {% for room in rooms %}
                     <tr>
                         <td class="col-1">{{ room.room.display_name }}</td>
-                        <td class="col-2">{{ room.visit.patient.last_name }}, {{ room.visit.patient.first_name }} {{ room.visit.patient.middle_initial }}.</td>
-                        <td class="col-3">???</td>
-                        <td class="col-4">ex-father</td>
-                        <td class="col-5">{{ room.date }}</td>
+                        <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
+                        <td class="col-3">{{ room.watchers.count }}</td>
+                        <td class="col-4">{{ room.watchers.list }}</td>
+                        <td class="col-5">{{ room.date_of_stay.current }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -213,11 +213,6 @@
     </div>
 </div>
 
-<script>
-<!-- var fff = ''; -->
-<!-- var rrr = JSON.parse(fff); -->
-<!-- console.log(rrr); -->
-</script>
 {% endblock page_body %}
 
 {% block page_js %}
