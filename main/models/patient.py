@@ -1,15 +1,16 @@
 from django.db import models
 
-def simplify_patient_name(patient):
-    return {
-        'pk': patient.pk,
-        'first_name': 'OFF',
-        'last_name': patient.last_name,
-        'middle_initial': patient.middle_initial,
-    };
+
 
 class PatientsManager(models.Manager):
 	def get_list_names(self):
+		def simplify_patient_name(patient):
+			return {
+				'pk': patient.pk,
+				'first_name': patient.first_name,
+				'last_name': patient.last_name,
+				'middle_initial': patient.middle_initial,
+			}
 		return map(simplify_patient_name, super().get_queryset())
 
 class Patient(models.Model):

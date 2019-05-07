@@ -1,7 +1,13 @@
 
 import random
 import time
-from main.models import *
+
+from main.models.patient import Patient
+from main.models.watcher import Watcher
+from main.models.occupancy import Occupancy
+from main.models.visit import Visit
+from main.models.room import Room
+
 from faker import Faker
 
 ids = {
