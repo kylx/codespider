@@ -14,36 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path, register_converter
+from django.urls import path, re_path, register_converter, include
 from main.views import *
 
-class YearConverter:
-    regex = '[0-9]{4}'
-
-    def to_python(self, value):
-        return int(value)
-
-    def to_url(self, value):
-        return '%04d' % value
-		
-class MonthConverter:
-    regex = '[0-9]{2}'
-
-    def to_python(self, value):
-        m = int(value)
-        if (m == 0 or m > 12):
-            raise ValueError()
-		
-        return m 
-
-    def to_url(self, value):
-        return '%02d' % value
-        
-		
-register_converter(YearConverter, 'yyyy')
-register_converter(MonthConverter, 'mm')
+import debug_toolbar
 
 urlpatterns = [
+    path('debug', include(debug_toolbar.urls)),
+
     # main pages
 	path('asd', tmp_date, name='asd'),
 	re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
@@ -52,9 +30,10 @@ urlpatterns = [
 	re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
 	
     path('home'     		, home      	, name='home'),
+    re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
     re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
-    path('rooms/main'    	, rooms_main     , name='rooms/main'),
-    path('rooms/annex'    	, rooms_annex     , name='rooms/annex'),
+    path('rooms/main'    	, test     , name='rooms/main'),
+    path('rooms/annex'    	, test     , name='rooms/annex'),
     path('patients' 		, patients  , name='patients'),
     path('summary/daily'  	, summary_daily   , name='summary/daily'),
     path('summary/monthly'  , summary_monthly   , name='summary/monthly'),

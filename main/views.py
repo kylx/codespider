@@ -7,6 +7,7 @@ from .models.diagnosis import Diagnosis
 from .models.occupancy import Occupancy
 from .models.patient import Patient
 import datetime
+import json
 
 
 from django.http import HttpResponse
@@ -16,14 +17,25 @@ def home(request):
     return render(request, 'main/home.html', context)
 
 
-def rooms(request, building, year, month, day):
+def rooms(request, building, year=-1, month=-1, day=-1):
+    print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
     form = RoomForm()
+
+    if year == -1 and month == -1 and day == -1:
+        date = datetime.datetime.now()
+        year = date.year
+        month = date.month
+        day = date.day
+
+    # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
+    occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
 
     context = {
         'url_name': 'ROOMS',
 		'form': form,
         'building': building,
-		'rooms': Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day)),
+		# 'rooms': occ,
+		'rooms_json': json.dumps(occ),
         
 		# 'rooms': ['fish','is', 'love'],
     }
@@ -39,7 +51,7 @@ def rooms_main(request):
     }
     return render(request, 'main/rooms-main.html', context)
 
-import json
+
 def rooms_annex(request):
     form = RoomForm()
     # start_date = datetime.date(2019, 4, 29)

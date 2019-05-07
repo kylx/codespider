@@ -8,23 +8,21 @@ class OccupancyManager(models.Manager):
 			room = occu.room
 			visit = occu.visit
 			patient = visit.patient
-			watchers_set = occu.watcher.all()
+			watchers_set = occu.watcher.all().only('relationship')
 
 			return {
-				'room': {
-					'pk': occu.room.pk,
-					'display_name': occu.room.display_name,
+				'pk': {
+					'room': occu.room.pk,
+					'patient': patient.pk,
+					'visit': visit.pk,
 				},
-				'patient': {
-					'pk': patient.pk,
-					# 'full_name': f'{patient.last_name}, {patient.first_name} {patient.middle_initial}.'
-					'first_name': patient.last_name,
-					'last_name': patient.first_name,
-					'middle_initial': patient.middle_initial,
-				},
+				'room': occu.room.display_name,
+				'first_name': patient.last_name,
+				'last_name': patient.first_name,
+				'middle_initial': patient.middle_initial,
 				'watchers': {
 					'list': ', '.join([w.relationship for w in watchers_set]),
-					'count': len(watchers_set),
+					'count': watchers_set.count(),
 				},
 				'date_of_stay': {
 					'start': visit.start_date.strftime('%b %d'),
@@ -34,7 +32,19 @@ class OccupancyManager(models.Manager):
 			}
 		start_date = datetime.date(year, month, date)
 		end_date = datetime.date(year, month, date + 1)
-		occ = Occupancy.objects.filter(room__building__name=building, date__range=(start_date, end_date))
+		occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(room__building__name=building, date__range=(start_date, end_date))
+		# occ = super().only(
+		# 	'room',
+		# 	'visit__patient__id',
+		# 	'visit__patient__first_name',
+		# 	'visit__patient__last_name',
+		# 	'visit__patient__middle_initial',
+		# 	'watcher',
+		# 	'visit__id',
+		# 	'visit__start_date',
+		# 	'visit__assigned_end_date',
+		# 	'date'
+		# ).filter(room__building__name=building, date__range=(start_date, end_date))
 		return list(map(simplify_occupancy, occ))
 
 
