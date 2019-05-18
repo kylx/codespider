@@ -1,5 +1,8 @@
 from main.enums import Enums
-from main.models import *
+from main.models.diagnosis import Diagnosis
+from main.models.patient import Patient
+from main.models.building import Building
+from main.models.room import Room
 from dummy.management.commands._randomdata import *
 import random
 
@@ -35,8 +38,6 @@ def patient():
     fname = random.choice(fnames)
     rr = random.random()
     if (rr < 0.7):
-        fname += ' ' + random.choice(fnames)
-    elif (random.random() < 0.1):
         fname += ' ' + random.choice(fnames)
     return {
         "model": "main.patient",
@@ -87,20 +88,7 @@ def room(building, num):
         "pk": pk,
         "fields": {
             'building': Building.objects.get(name=building).id,
-            "display_name": 'Room ' + str(num),
+            "display_number": num,
         }
     }
 
-def occupancy():
-    pk = ids['occupancy']
-    ids['occupancy'] += 1
-    
-    return {
-        'model': 'main.occupancy',
-        'pk': pk,
-        'fields': {
-            'visit': Visit.objects.order_by('?').first().id,
-            'room': Room.objects.order_by('?').first().id,
-            'watcher': [Watcher.objects.order_by('?').first().id,Watcher.objects.order_by('?').first().id,],
-        }
-    }
