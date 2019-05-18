@@ -16,7 +16,7 @@ class OccupancyManager(models.Manager):
 					'patient': patient.pk,
 					'visit': visit.pk,
 				},
-				'room': occu.room.display_name,
+				'room': occu.room.display_number,
 				'first_name': patient.last_name,
 				'last_name': patient.first_name,
 				'middle_initial': patient.middle_initial,

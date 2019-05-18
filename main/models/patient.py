@@ -15,8 +15,8 @@ class PatientsManager(models.Manager):
 
 class Patient(models.Model):
 	objects = PatientsManager()
-	first_name = models.CharField(max_length=20)
-	last_name = models.CharField(max_length=20)
+	first_name = models.TextField(max_length=50)
+	last_name = models.TextField(max_length=30)
 	middle_initial = models.CharField(max_length=1)
 	age = models.SmallIntegerField()
 	sex = models.CharField(max_length=1)

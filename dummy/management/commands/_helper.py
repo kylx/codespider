@@ -88,7 +88,7 @@ def room(building, num):
         "pk": pk,
         "fields": {
             'building': Building.objects.get(name=building).id,
-            "display_name": 'Room ' + str(num),
+            "display_number": num,
         }
     }
 
