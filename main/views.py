@@ -39,31 +39,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         
 		# 'rooms': ['fish','is', 'love'],
     }
-    return render(request, 'main/rooms-annex.html', context)
-
-def rooms_main(request):
-    form = RoomForm()
-    # occ = Occupancy.objects.filter(room__building__name="main")
-    context = {
-        'url_name': 'ROOMS',
-		'form': form,
-		'rooms': Occupancy.objects.get_list_for_day('main', 2019, 5, 5),
-    }
-    return render(request, 'main/rooms-main.html', context)
-
-
-def rooms_annex(request):
-    form = RoomForm()
-    # start_date = datetime.date(2019, 4, 29)
-    # end_date = datetime.date(2019, 4, 30)
-    # occ = Occupancy.objects.filter(room__building__name="annex", date__range=(start_date, end_date))
-    context = {
-        'url_name': 'ROOMS',
-		'form': form,
-		'rooms': Occupancy.objects.get_list_for_day('annex', 2019, 5, 2),
-		# 'rooms': ['fish','is', 'love'],
-    }
-    return render(request, 'main/rooms-annex.html', context)
+    return render(request, 'main/rooms.html', context)
 
 def patients(request):
     patient_list = Patient.objects.get_list_names()

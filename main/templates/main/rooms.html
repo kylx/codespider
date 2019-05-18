@@ -51,7 +51,7 @@
 
 {% block nav_bar_right %}
 	<ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
-		<button type="submit" class="btn btn-success mr-2">
+		<button type="submit" onclick="getdate()" class="btn btn-success mr-2">
 			<i class="fa fa-save" aria-hidden="true"></i>
 			Save Day
 		</button>
@@ -65,8 +65,10 @@
 {% block page_body %}
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-12 room-title-container room-title text-center">
-			{{ building }}
+		<div class="col-lg-12 room-title-container">
+			<div class="room-title text-center">
+				{{ building }}
+			</div>
 		</div>
 	</div>
     <div class="row">
@@ -120,19 +122,32 @@
         </div>
     </div>
 	<div class="row text-center">
-		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#RoomsModal">
-			<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-			Assign to Room
-		</button>
-		
-		<div class="col-lg-4">
+		<div class="col-lg-3">
+			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#AssignRoomModal">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+				Assign to Room
+			</button>
+		</div>
+		<div class="col-lg-3">
+			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#TransferRoomModal">
+				<i class="fa fa-exchange" aria-hidden="true"></i>
+				Transfer Room
+			</button>
+		</div>
+		<div class="col-lg-3">
+			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#CheckoutRoomModal">
+				<i class="fa fa-minus" aria-hidden="true"></i>
+				Checkout
+			</button>
+		</div>
+		<div class="col-lg-3">
 			<button type="submit" class="print-btn btn btn-light">
 				<i class="fa fa-print" aria-hidden="true"></i>
 				Print
 			</button>
 		</div>
 		
-		<div class="modal" id="RoomsModal">
+		<div class="modal" id="AssignRoomModal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header modal-title">
@@ -141,6 +156,11 @@
 					<form method="post" action="">
 						<div class="modal-body">
 							{% csrf_token %}
+							<div class="row">
+								<div class="col-lg-4">
+									{{ form.room_num }}
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-lg-5">
 									{{ form.last_name }}
@@ -170,7 +190,102 @@
 							<button type="submit" class="btn btn-success">
 								<span>
 									Assign
-									<i class="fa fa-save" aria-hidden="true"></i>
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</span>
+							</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">
+								<span>
+									Cancel
+									<i class="fa fa-window-close" aria-hidden="true"></i>
+								</span>
+							</button>
+						</div>
+					</form> 
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="TransferRoomModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header modal-title">
+						Transfer Room
+					</div>
+					<form method="post" action="">
+						<div class="modal-body">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-lg-4">
+									{{ form.room_num }}
+								</div>							
+							</div>
+							<div class="row">
+								<div class="col-lg-4">
+									{{ form.room_num }}
+								</div>							
+							</div>
+							<div class="row">
+								<div class="col-lg-5">
+									{{ form.last_name }}
+								</div>
+								<div class="col-lg-5">
+									{{ form.first_name }}
+								</div>
+								<div class="col-lg-2">
+									{{ form.middle_initial }}
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">
+								<span>
+									Transfer
+									<i class="fa fa-exchange" aria-hidden="true"></i>
+								</span>
+							</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">
+								<span>
+									Cancel
+									<i class="fa fa-window-close" aria-hidden="true"></i>
+								</span>
+							</button>
+						</div>
+					</form> 
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="CheckoutRoomModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header modal-title">
+						Checkout Patient
+					</div>
+					<form method="post" action="">
+						<div class="modal-body">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-lg-4">
+									{{ form.room_num }}
+								</div>							
+							</div>
+							<div class="row">
+								<div class="col-lg-5">
+									{{ form.last_name }}
+								</div>
+								<div class="col-lg-5">
+									{{ form.first_name }}
+								</div>
+								<div class="col-lg-2">
+									{{ form.middle_initial }}
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">
+								<span>
+									Checkout
+									<i class="fa fa-minus" aria-hidden="true"></i>
 								</span>
 							</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -201,17 +316,15 @@
                 </thead>
 
                 <tbody>
-					{% comment %}
-                    {% for room in rooms %}
+                    {% for patient in patients %}
                     <tr>
-                        <td class="col-1">{{ room.room.display_name }}</td>
-                        <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
-                        <td class="col-3">{{ room.watchers.count }}</td>
-                        <td class="col-4">{{ room.watchers.list }}</td>
-                        <td class="col-5">{{ room.date_of_stay.current | date:"M d" }}</td>
+                        <td class="col-1">{{ patient.room_no }}</td>
+                        <td class="col-2">{{ patient.last_name }, { patient.first_name } { patient.middle_initial }. }</td>
+                        <td class="col-3">{{ patient.middle_initial }}</td>
+                        {# <!-- <td class="col-4">{{ patient.relationship1 }, { patient.relationship2 }}</td> --> #}
+                        <td class="col-5">{{ patient.date_of_stay }}</td>
                     </tr>
-					{% endfor %} 
-					{% endcomment %}
+                    {% endfor %}
                 </tbody>
                 
                 </table>
@@ -219,54 +332,6 @@
         </div>
     </div>
 </div>
-<script>
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-
-window.onload = function() {
-	var raw = '{{ rooms_json | escapejs }}';
-	var raw_json = JSON.parse(raw);
-
-
-	var body = document.getElementsByTagName('tbody')[0];
-	var fragment = document.createDocumentFragment();
-	// console.log(body);
-	console.time('loop');
-	raw_json.forEach(occ => {
-		var {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
-		let row = document.createElement('tr');
-		let td_room = document.createElement('td');
-		let td_patient = document.createElement('td');
-		let td_num_watchers = document.createElement('td');
-		let td_relationships = document.createElement('td');
-		let td_date = document.createElement('td');
-		row.appendChild(td_room);
-		row.appendChild(td_patient);
-		row.appendChild(td_num_watchers);
-		row.appendChild(td_relationships);
-		row.appendChild(td_date);
-		fragment.appendChild(row);
-		// td_room.className = ""
-
-		td_room.textContent = room;
-		td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
-		td_num_watchers.textContent = String(watchers.count);
-		td_relationships.textContent = watchers.list;
-		td_date.textContent = date_of_stay.current;
-
-		// await sleep(5000);
-		// console.log(room, patient, watchers, date_of_stay);
-	});
-	body.appendChild(fragment);
-	console.timeEnd('loop');
-};
-	
-</script>
-
 {% endblock page_body %}
 
 {% block page_js %}
