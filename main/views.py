@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import *
 from .enums import Enums
 from .forms import PatientForm, RoomForm, FilterForm
-from .models import Diagnosis
+from .models.diagnosis import Diagnosis
+from .models.occupancy import Occupancy
+from .models.patient import Patient
 import datetime
+import json
+
 
 from django.http import HttpResponse
 
@@ -13,31 +16,57 @@ def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
-	
+
+def rooms(request, building, year=-1, month=-1, day=-1):
+    print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
+    form = RoomForm()
+
+    if year == -1 and month == -1 and day == -1:
+        date = datetime.datetime.now()
+        year = date.year
+        month = date.month
+        day = date.day
+
+    # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
+    occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
+
+    context = {
+        'url_name': 'ROOMS',
+		'form': form,
+        'building': building,
+		# 'rooms': occ,
+		'rooms_json': json.dumps(occ),
+        
+		# 'rooms': ['fish','is', 'love'],
+    }
+    return render(request, 'main/rooms-annex.html', context)
+
 def rooms_main(request):
     form = RoomForm()
-    occ = Occupancy.objects.filter(room__building__name="main")
+    # occ = Occupancy.objects.filter(room__building__name="main")
     context = {
         'url_name': 'ROOMS',
 		'form': form,
-		'rooms': occ,
+		'rooms': Occupancy.objects.get_list_for_day('main', 2019, 5, 5),
     }
     return render(request, 'main/rooms-main.html', context)
-	
+
+
 def rooms_annex(request):
     form = RoomForm()
-    start_date = datetime.date(2019, 4, 29)
-    end_date = datetime.date(2019, 4, 30)
-    occ = Occupancy.objects.filter(room__building__name="annex", date__range=(start_date, end_date))
+    # start_date = datetime.date(2019, 4, 29)
+    # end_date = datetime.date(2019, 4, 30)
+    # occ = Occupancy.objects.filter(room__building__name="annex", date__range=(start_date, end_date))
     context = {
         'url_name': 'ROOMS',
 		'form': form,
-		'rooms': occ,
+		'rooms': Occupancy.objects.get_list_for_day('annex', 2019, 5, 2),
+		# 'rooms': ['fish','is', 'love'],
     }
     return render(request, 'main/rooms-annex.html', context)
 
 def patients(request):
-    patient_list = Patient.objects.all()
+    patient_list = Patient.objects.get_list_names()
     form = PatientForm()
     context = {
         'url_name': 'PATIENTS',

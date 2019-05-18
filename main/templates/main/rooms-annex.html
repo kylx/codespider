@@ -196,15 +196,17 @@
                 </thead>
 
                 <tbody>
+					{% comment %}
                     {% for room in rooms %}
                     <tr>
                         <td class="col-1">{{ room.room.display_name }}</td>
-                        <td class="col-2">{{ room.visit.patient.last_name }}, {{ room.visit.patient.first_name }} {{ room.visit.patient.middle_initial }}.</td>
-                        <td class="col-3">???</td>
-                        <td class="col-4">ex-father</td>
-                        <td class="col-5">{{ room.date }}</td>
+                        <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
+                        <td class="col-3">{{ room.watchers.count }}</td>
+                        <td class="col-4">{{ room.watchers.list }}</td>
+                        <td class="col-5">{{ room.date_of_stay.current | date:"M d" }}</td>
                     </tr>
-                    {% endfor %}
+					{% endfor %} 
+					{% endcomment %}
                 </tbody>
                 
                 </table>
@@ -212,12 +214,54 @@
         </div>
     </div>
 </div>
-
 <script>
-<!-- var fff = ''; -->
-<!-- var rrr = JSON.parse(fff); -->
-<!-- console.log(rrr); -->
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+window.onload = function() {
+	var raw = '{{ rooms_json | escapejs }}';
+	var raw_json = JSON.parse(raw);
+
+
+	var body = document.getElementsByTagName('tbody')[0];
+	var fragment = document.createDocumentFragment();
+	// console.log(body);
+	console.time('loop');
+	raw_json.forEach(occ => {
+		var {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+		let row = document.createElement('tr');
+		let td_room = document.createElement('td');
+		let td_patient = document.createElement('td');
+		let td_num_watchers = document.createElement('td');
+		let td_relationships = document.createElement('td');
+		let td_date = document.createElement('td');
+		row.appendChild(td_room);
+		row.appendChild(td_patient);
+		row.appendChild(td_num_watchers);
+		row.appendChild(td_relationships);
+		row.appendChild(td_date);
+		fragment.appendChild(row);
+		// td_room.className = ""
+
+		td_room.textContent = room;
+		td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
+		td_num_watchers.textContent = String(watchers.count);
+		td_relationships.textContent = watchers.list;
+		td_date.textContent = date_of_stay.current;
+
+		// await sleep(5000);
+		// console.log(room, patient, watchers, date_of_stay);
+	});
+	body.appendChild(fragment);
+	console.timeEnd('loop');
+};
+	
 </script>
+
 {% endblock page_body %}
 
 {% block page_js %}

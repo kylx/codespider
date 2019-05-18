@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import Patient, Diagnosis, Watcher, Room, Building, Visit, Extension, Occupancy
+from .models.patient import Patient
+from .models.diagnosis import Diagnosis
+from .models.watcher import Watcher
+from .models.room import Room
+from .models.building import Building
+from .models.visit import Visit
+from .models.extension import Extension
+from .models.occupancy import Occupancy
 
 admin.site.register(Patient)
 admin.site.register(Diagnosis)	
