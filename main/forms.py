@@ -122,6 +122,14 @@ class RoomForm(ModelForm):
     class Meta:
         model = Patient
         fields = ['last_name', 'first_name', 'middle_initial', 'date_from', 'date_to']
+		
+    room_num = forms.IntegerField (
+        label = 'Room No.',
+		widget = forms.NumberInput ( attrs = {
+            'class' : 'form-control, input',
+			'placeholder' : 'Room No.'
+        })
+    )
         
     last_name = forms.CharField (
         label = 'Last Name',

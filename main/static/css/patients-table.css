@@ -81,6 +81,12 @@ tbody tr {
     color: #000;
 }
 
+.table-head th:hover {
+	color: #000;
+    background-color: #ffb7a6;
+    cursor: pointer;
+}
+
 tbody tr:hover {
     color: #000;
     background-color: rgba(255,112,77,0.5);
