@@ -30,8 +30,8 @@ urlpatterns = [
 	re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
 	
     path('home'     		, home      	, name='home'),
-    re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
     re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
+    re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
     path('rooms/main'    	, test     , name='rooms/main'),
     path('rooms/annex'    	, test     , name='rooms/annex'),
     path('patients' 		, patients  , name='patients'),

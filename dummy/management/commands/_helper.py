@@ -39,8 +39,6 @@ def patient():
     rr = random.random()
     if (rr < 0.7):
         fname += ' ' + random.choice(fnames)
-    elif (random.random() < 0.1):
-        fname += ' ' + random.choice(fnames)
     return {
         "model": "main.patient",
         "pk": pk,
