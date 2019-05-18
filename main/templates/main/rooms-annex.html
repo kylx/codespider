@@ -20,13 +20,8 @@
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
 		<div class="dropdown-menu dropdown-menu-right">
-		{% if building == "main" %}
-			<a class="nav-link active" href="{% url 'rooms/main' %}">Main</a>
-			<a class="nav-link" href="{% url 'rooms/annex' %}">Annex</a>
-		{% elif building == "annex" %}
 			<a class="nav-link" href="{% url 'rooms/main' %}">Main</a>
 			<a class="nav-link active" href="{% url 'rooms/annex' %}">Annex</a>
-		{% endif %}
 		</div>
 	</li>
 	
@@ -51,7 +46,7 @@
 
 {% block nav_bar_right %}
 	<ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
-		<button type="submit" onclick="getdate()" class="btn btn-success mr-2">
+		<button type="submit" class="btn btn-success mr-2">
 			<i class="fa fa-save" aria-hidden="true"></i>
 			Save Day
 		</button>
@@ -65,29 +60,27 @@
 {% block page_body %}
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-12 room-title-container">
-			<div class="room-title text-center">
-				{{ building }}
-			</div>
+		<div class="col-lg-12 room-title-container room-title text-center">
+			Annex
 		</div>
 	</div>
     <div class="row">
         <div class="col-lg-12 date-container">
             <div class="row">
                 <div class="col-lg-6 text-right">
-                    {{year}}
+                    {{ year }}
                     <div class="day" id="theDay"></div>
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-12">
-                            {{weekday}}
+                            {{ weekday }}
                             <div class="day-week" id="theDayWeek"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            {{month_name}}
+                            {{ month_name }}
                             <div class="month-year" id="theMonthYear"></div> 
                         </div>
                     </div>
@@ -114,40 +107,27 @@
                                 <div class="col-lg-6 cnum-2">{{count.girls}}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cnum-1">{{count.total}}</div>
+                        <div class="col-lg-6 cnum-1">{{count.total}}weqw</div>
                     </div>
                 </div>
-                <div class="col-lg-6 cnum-1">{{count.watchers}}</div>
+                <div class="col-lg-6 cnum-1">{{count.watchers}}assad</div>
             </div>
         </div>
     </div>
 	<div class="row text-center">
-		<div class="col-lg-3">
-			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#AssignRoomModal">
-				<i class="fa fa-plus" aria-hidden="true"></i>
-				Assign to Room
-			</button>
-		</div>
-		<div class="col-lg-3">
-			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#TransferRoomModal">
-				<i class="fa fa-exchange" aria-hidden="true"></i>
-				Transfer Room
-			</button>
-		</div>
-		<div class="col-lg-3">
-			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#CheckoutRoomModal">
-				<i class="fa fa-minus" aria-hidden="true"></i>
-				Checkout
-			</button>
-		</div>
-		<div class="col-lg-3">
+		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#RoomsModal">
+			<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+			Assign to Room
+		</button>
+		
+		<div class="col-lg-4">
 			<button type="submit" class="print-btn btn btn-light">
 				<i class="fa fa-print" aria-hidden="true"></i>
 				Print
 			</button>
 		</div>
 		
-		<div class="modal" id="AssignRoomModal">
+		<div class="modal" id="RoomsModal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header modal-title">
@@ -156,11 +136,6 @@
 					<form method="post" action="">
 						<div class="modal-body">
 							{% csrf_token %}
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-lg-5">
 									{{ form.last_name }}
@@ -190,102 +165,7 @@
 							<button type="submit" class="btn btn-success">
 								<span>
 									Assign
-									<i class="fa fa-plus" aria-hidden="true"></i>
-								</span>
-							</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">
-								<span>
-									Cancel
-									<i class="fa fa-window-close" aria-hidden="true"></i>
-								</span>
-							</button>
-						</div>
-					</form> 
-				</div>
-			</div>
-		</div>
-		
-		<div class="modal" id="TransferRoomModal">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header modal-title">
-						Transfer Room
-					</div>
-					<form method="post" action="">
-						<div class="modal-body">
-							{% csrf_token %}
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
-							<div class="row">
-								<div class="col-lg-5">
-									{{ form.last_name }}
-								</div>
-								<div class="col-lg-5">
-									{{ form.first_name }}
-								</div>
-								<div class="col-lg-2">
-									{{ form.middle_initial }}
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-success">
-								<span>
-									Transfer
-									<i class="fa fa-exchange" aria-hidden="true"></i>
-								</span>
-							</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">
-								<span>
-									Cancel
-									<i class="fa fa-window-close" aria-hidden="true"></i>
-								</span>
-							</button>
-						</div>
-					</form> 
-				</div>
-			</div>
-		</div>
-		
-		<div class="modal" id="CheckoutRoomModal">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header modal-title">
-						Checkout Patient
-					</div>
-					<form method="post" action="">
-						<div class="modal-body">
-							{% csrf_token %}
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
-							<div class="row">
-								<div class="col-lg-5">
-									{{ form.last_name }}
-								</div>
-								<div class="col-lg-5">
-									{{ form.first_name }}
-								</div>
-								<div class="col-lg-2">
-									{{ form.middle_initial }}
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-success">
-								<span>
-									Checkout
-									<i class="fa fa-minus" aria-hidden="true"></i>
+									<i class="fa fa-save" aria-hidden="true"></i>
 								</span>
 							</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -323,7 +203,7 @@
                         <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
                         <td class="col-3">{{ room.watchers.count }}</td>
                         <td class="col-4">{{ room.watchers.list }}</td>
-                        <td class="col-5">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+                        <td class="col-5">{{ room.date_of_stay.current | date:"M d" }}</td>
                     </tr>
 					{% endfor %} 
 					{% endcomment %}
@@ -334,7 +214,6 @@
         </div>
     </div>
 </div>
-
 <script>
 
 function sleep(ms) {
@@ -353,11 +232,7 @@ window.onload = function() {
 	// console.log(body);
 	console.time('loop');
 	raw_json.forEach(occ => {
-		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
-        let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
-        date_string += date_of_stay.start.month_name + ' ';
-        date_string += date_of_stay.end.day;
-        console.log(date_string);
+		var {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
 		let row = document.createElement('tr');
 		let td_room = document.createElement('td');
 		let td_patient = document.createElement('td');
@@ -376,7 +251,7 @@ window.onload = function() {
 		td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
 		td_num_watchers.textContent = String(watchers.count);
 		td_relationships.textContent = watchers.list;
-		td_date.textContent = date_string;
+		td_date.textContent = date_of_stay.current;
 
 		// await sleep(5000);
 		// console.log(room, patient, watchers, date_of_stay);
@@ -386,6 +261,7 @@ window.onload = function() {
 };
 	
 </script>
+
 {% endblock page_body %}
 
 {% block page_js %}

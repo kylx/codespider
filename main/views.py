@@ -26,6 +26,9 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         year = date.year
         month = date.month
         day = date.day
+    date = datetime.datetime(int(year), int(month), int(day))
+        
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
     occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
@@ -35,7 +38,13 @@ def rooms(request, building, year=-1, month=-1, day=-1):
 		'form': form,
         'building': building,
 		# 'rooms': occ,
-		'rooms_json': json.dumps(occ),
+		'rooms_json': json.dumps(occ['list']),
+        'year': year,
+        'month': month,
+        'day': day,
+        'weekday': weekdays[date.weekday()],
+        'month_name': date.strftime("%B"),
+        'count': occ['count'],
         
 		# 'rooms': ['fish','is', 'love'],
     }
