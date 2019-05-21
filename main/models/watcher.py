@@ -1,7 +1,12 @@
 from django.db import models
 
+class WatcherManager(models.Manager):
+	def get_relationship_list(self):
+		return [(r.pk, r.relationship) for r in super().all()]
+
 
 class Watcher(models.Model):
+	objects = WatcherManager()
 	relationship = models.CharField(max_length=15)
 	def __str__(self):
 		return self.relationship

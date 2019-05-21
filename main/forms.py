@@ -4,6 +4,7 @@ from .models import Patient
 from .enums import Enums
 from .helpers import get_diagnosis_list
 from .models import Diagnosis
+from .models.watcher import Watcher
 
 class UserForm(ModelForm):
     class Meta:
@@ -155,10 +156,7 @@ class RoomForm(ModelForm):
     relationship = forms.MultipleChoiceField (
         label = 'Relationship',
 		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['rel-1', 'Mother'],
-			['rel-2', 'Father'],
-		]
+		choices = Watcher.objects.get_relationship_list(),
     )
 	
     date_from = forms.DateField(

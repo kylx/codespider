@@ -6,6 +6,7 @@ from .forms import PatientForm, RoomForm, FilterForm
 from .models.diagnosis import Diagnosis
 from .models.occupancy import Occupancy
 from .models.patient import Patient
+from .models.watcher import Watcher
 import datetime
 import json
 
@@ -45,6 +46,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'weekday': weekdays[date.weekday()],
         'month_name': date.strftime("%B"),
         'count': occ['count'],
+        'relationships': Watcher.objects.get_relationship_list(),
         
 		# 'rooms': ['fish','is', 'love'],
     }
