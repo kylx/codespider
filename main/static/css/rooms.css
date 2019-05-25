@@ -1,3 +1,5 @@
+@media screen {
+
 .row {
     margin: 0;
 }
@@ -65,4 +67,77 @@
 	height: 50px;
 	width: 125px;
 	align-items: right;
+}
+}
+
+@media print {
+
+.row {
+    margin: 0;
+}
+
+.col-lg-1,
+.col-lg-4,
+.col-lg-6,
+.col-lg-12 {
+    padding: 0;
+}
+
+.room-title-container {
+	padding: 2% 0% 0% 0%;
+}
+
+.room-title {
+	font-size: 1000px;
+}
+
+.date-container {
+    padding: 3% 10% 3% 10%;
+}
+
+.day {
+	font-size: 50px;
+	font-weight: 600;
+    padding: 0% 15% 0% 0%;
+}
+
+.day-week {
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.month-year {
+	font-size: 20px;
+}
+
+.counter-container {
+    padding: 1% 25% 1% 25%;
+}
+
+.cname {
+    font-size: 25px;
+}
+
+.cnum-1 {
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.cnum-2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.cnum-2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.print-btn {
+	border-radius: 30px;
+	height: 50px;
+	width: 125px;
+	align-items: right;
+}
 }
