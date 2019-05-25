@@ -78,7 +78,10 @@ class PatientForm(ModelForm):
 			attrs = {
 				'class' : 'form-control, input'
 			},
-	         choices = get_diagnosis_list()
+	        choices = [
+                # [0, 'fish'],
+                # [1, 'duck'],
+            ]
             # choices = DIAGNOSIS
         )
     )

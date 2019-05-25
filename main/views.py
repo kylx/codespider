@@ -56,7 +56,9 @@ def patients(request):
     context = {
         'url_name': 'PATIENTS',
         'patients': patient_list,
-		'form': form
+		'form': form,
+        'diagnosis': Diagnosis.objects.get_diagnosis_list(),
+        
 
     }
     return render(request, 'main/patients.html', context)
