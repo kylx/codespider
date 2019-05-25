@@ -1,3 +1,7 @@
+ul {
+	list-style: none;
+}
+
 .row {
     margin: 0;
 }
@@ -47,11 +51,6 @@
 
 .cnum-1 {
     font-size: 60px;
-    font-weight: 600;
-}
-
-.cnum-2 {
-    font-size: 28px;
     font-weight: 600;
 }
 
