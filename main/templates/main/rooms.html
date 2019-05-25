@@ -9,9 +9,12 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/rooms.css' %}">
-    <link rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
-	<link rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link media="screen" rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
