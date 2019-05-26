@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
-    {% load staticfiles %}
-    <link rel="icon" type="image/png" href="{% static 'images/icons/login_titleicon.png' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-</head>
-
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 login-container" style="background-image: url({% static 'images/login_bg01.jpg' %});">
-                <div class="row">
-                    <div class="col-lg-4">
-                    </div>
-                    <div class="col-lg-4 login-form-container">
-                        <form method="post" action="">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="login-title">House of Hope Foundation Occupancy Status</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 wrap-input">
-                                    <div class="input"> {{ form.username }} </div>
-                                    <span class="input-focus"></span>
-                                    <span class="input-symbol">
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 wrap-input">
-                                    <div class="input"> {{ form.password }} </div>
-                                    <span class="input-focus"></span>
-                                    <span class="input-symbol">
-                                        <i class="fa fa-lock" aria-hidden="true"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="login-form-btn-container">
-                                <button class="login-form-btn">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-4">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{% static 'js/jquery.js' %}"></script>
-</body>
-
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login</title>
+        {% load staticfiles %}
+        
+        <link rel="icon" type="image/png" href="{% static 'images/icons/login_titleicon.png' %}">
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" href="{% static 'css/login.css' %}">
+    </head>
+    
+    <body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 login-container" style="background-image: url({% static 'images/login_bg01.jpg' %});">
+				<div class="row">
+					<div class="col-lg-4">
+					</div>
+					<div class="col-lg-4 login-form-container">
+						<form method="post" action="">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="login-title">House of Hope Foundation Occupancy Status</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 wrap-input">
+									<div class="input"> {{ form.username }} </div>
+									<span class="input-focus"></span>
+									<span class="input-symbol">
+										<i class="fa fa-user" aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 wrap-input">
+									<div class="input"> {{ form.password }} </div>
+									<span class="input-focus"></span>
+									<span class="input-symbol">
+										<i class="fa fa-lock" aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>
+							<div class="login-form-btn-container">
+								<button class="login-form-btn">Login</button>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-4">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+        <script src="{% static 'js/jquery.js' %}"></script>
+    </body>
 </html>
