@@ -1,21 +1,28 @@
- 
+
 """
  Helper functions for easier encoding of locations
     'name' is what is displayed in combo/selection boxes
  """
 
+
 def region(psgcCode, name):
-    return (psgcCode[:2], name) # use 1st 2 characters of code
-    
-# TODO: def province(psgcCode, name)
-def province(psgcCode, name):
-    return (psgcCode[:4], name) # use 1st 4 characters of code
+    return (psgcCode[:2], name)  # use 1st 2 characters of code
 
 # TODO: def province(psgcCode, name)
+
+
+def province(psgcCode, name):
+    return (psgcCode[:4], name)  # use 1st 4 characters of code
+
+# TODO: def province(psgcCode, name)
+
+
 def city(psgcCode, name):
-    return (psgcCode[:6], name) # use 1st 6 characters of code
-    
+    return (psgcCode[:6], name)  # use 1st 6 characters of code
+
 # ----- Encode information here -----
+
+
 class Enums():
 
     SEX = [
@@ -24,7 +31,7 @@ class Enums():
     ]
 
     REGIONS = [
-		('', 'Choose Region...'), # initial empty value in combobox
+        ('', 'Choose Region...'),  # initial empty value in combobox
         # region('psgcCode', 'name'),
         region('010000000', 'r1 - Ilocos Region'),
         region('020000000', 'r2 - Cagayan Valley'),
@@ -45,9 +52,9 @@ class Enums():
         region('160000000', 'r13 - Caraga Region'),
 
     ]
-    
+
     PROVINCES = [
-		('', 'Choose Province...'), # initial empty value in combobox
+        ('', 'Choose Province...'),  # initial empty value in combobox
         # province('psgcCode', 'name'),
         province('012800000', 'ILOCOS NORTE'),
         province('012900000', 'ILOCOS SUR'),
@@ -137,13 +144,10 @@ class Enums():
         province('166700000', 'SURIGAO DEL NORTE'),
         province('166800000', 'SURIGAO DEL SUR'),
         province('168500000', 'DINAGAT ISLANDS')
-
-
-
     ]
-    
+
     CITIES = [
-		('', 'Choose City...'),  # initial empty value in combobox
+        ('', 'Choose City...'),  # initial empty value in combobox
         # city('psgcCode', 'name'),
         city('012801000', 'ADAMS'),
         city('012802000', 'BACARRA'),
@@ -1797,4 +1801,7 @@ class Enums():
 
 
     ]
-    
+
+
+
+    ]

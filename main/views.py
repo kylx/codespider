@@ -1,16 +1,18 @@
-from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
-from .enums import Enums
-from .forms import PatientForm, RoomForm, FilterForm
-from .models.diagnosis import Diagnosis
-from .models.occupancy import Occupancy
-from .models.patient import Patient
-import datetime
-import json
-
-
+from django.core import serializers
+from django.urls import get_resolver
+from django.http import JsonResponse
 from django.http import HttpResponse
+import json
+import datetime
+from .models.patient import Patient
+from .models.occupancy import Occupancy
+from .models.diagnosis import Diagnosis
+from .forms import PatientForm, RoomForm, FilterForm
+from .enums import Enums
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
+zfrom django.shortcuts import render, redirect
+
 
 def home(request):
     context = {'url_name': 'HOME'}
@@ -27,28 +29,31 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         month = date.month
         day = date.day
     date = datetime.datetime(int(year), int(month), int(day))
-        
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    weekdays = ["Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday", "Sunday"]
 
     # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
-    occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
+    occ = Occupancy.objects.get_list_for_day(
+        building, int(year), int(month), int(day))
 
     context = {
         'url_name': 'ROOMS',
-		'form': form,
+        'form': form,
         'building': building,
-		# 'rooms': occ,
-		'rooms_json': json.dumps(occ['list']),
+        # 'rooms': occ,
+        'rooms_json': json.dumps(occ['list']),
         'year': year,
         'month': month,
         'day': day,
         'weekday': weekdays[date.weekday()],
         'month_name': date.strftime("%B"),
         'count': occ['count'],
-        
-		# 'rooms': ['fish','is', 'love'],
+
+        # 'rooms': ['fish','is', 'love'],
     }
     return render(request, 'main/rooms.html', context)
+
 
 def patients(request):
     patient_list = Patient.objects.get_list_names()
@@ -56,20 +61,23 @@ def patients(request):
     context = {
         'url_name': 'PATIENTS',
         'patients': patient_list,
-		'form': form,
+        'form': form,
         'diagnosis': Diagnosis.objects.get_diagnosis_list(),
-        
+
 
     }
     return render(request, 'main/patients.html', context)
 
+
 def summary_daily(request):
     context = {'url_name': 'SUMMARY'}
     return render(request, 'main/summary-daily.html', context)
-	
+
+
 def summary_monthly(request):
     context = {'url_name': 'SUMMARY'}
     return render(request, 'main/summary-monthly.html', context)
+
 
 def inquiry_filter(request):
     form = FilterForm()
@@ -78,7 +86,8 @@ def inquiry_filter(request):
         'form': form
     }
     return render(request, 'main/inquiry-filter.html', context)
-	
+
+
 def inquiry_sort(request):
     form = FilterForm()
     context = {
@@ -86,7 +95,8 @@ def inquiry_sort(request):
         'form': form
     }
     return render(request, 'main/inquiry-sort.html', context)
-    
+
+
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     if request.method == 'POST':
@@ -97,7 +107,7 @@ def tmp_create_patient(request):
         post.middle_initial = request.POST.get('middle_initial')
         post.age = request.POST.get('age')
         post.sex = request.POST.get('sex')
-        object_diagnosis = Diagnosis.objects.get(pk = requester)
+        object_diagnosis = Diagnosis.objects.get(pk=requester)
         post.diagnosis = object_diagnosis
         post.region = request.POST.get('region')
         post.province = request.POST.get('province')
@@ -108,34 +118,38 @@ def tmp_create_patient(request):
     else:
         return render(request, 'main/forms/patientform.html', context)
 
+
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
 
+
 def login(request):
     context = {}
     return render(request, 'main/login.html', context)
-    
-from django.urls import get_resolver
+
 
 def show_urls(request):
-    is_string   = lambda obj : isinstance(obj, str)
-    is_forms    = lambda url : url.startswith('forms');
-    is_action   = lambda url : url.startswith('action');
-    is_dev      = lambda url : url.startswith('dev');
-    is_main     = lambda url : not (is_forms(url) or is_action(url) or is_dev(url))
+    def is_string(obj): return isinstance(obj, str)
+
+    def is_forms(url): return url.startswith('forms')
+
+    def is_action(url): return url.startswith('action')
+
+    def is_dev(url): return url.startswith('dev')
+
+    def is_main(url): return not (
+        is_forms(url) or is_action(url) or is_dev(url))
 
     # get url list, returns urlpattern strings as well as function pointers
     raw_url_list = list(get_resolver(None).reverse_dict.keys())
     # since only need urlpatterns, filter out non-strings
     url_list = list(filter(is_string, raw_url_list))
 
-    url_main     = list(filter(is_main   , url_list))
-    url_forms    = list(filter(is_forms  , url_list))
-    url_actions  = list(filter(is_action , url_list))
-    url_devs     = list(filter(is_dev    , url_list))
-
-    
+    url_main = list(filter(is_main, url_list))
+    url_forms = list(filter(is_forms, url_list))
+    url_actions = list(filter(is_action, url_list))
+    url_devs = list(filter(is_dev, url_list))
 
     context = {
         'url_list':     url_list,
@@ -148,30 +162,33 @@ def show_urls(request):
 
     return render(request, 'tmp/show_urls.html', context)
 
+
 def test(request):
     context = {}
     return render(request, 'tmp/todo.html', context)
-from django.core import serializers
-from django.http import JsonResponse
+
+
 def rand_patient(request):
     data = {
         'rand_patient': serializers.serialize('json', [Patient.objects.order_by('?').first()]),
         'regions': Enums.REGIONS,
     }
     return JsonResponse(data)
-	
+
+
 def regex(request, test='wtf'):
 
-	context = {
-		'aaa': test,
-	}
-	return render(request, 'tmp/regex.html', context)
-	
+    context = {
+        'aaa': test,
+    }
+    return render(request, 'tmp/regex.html', context)
+
+
 def tmp_date(request, year=9999, month=99, day=0):
 
-	context = {
-		'year': year,
-		'month': month,
-		'day': day,
-	}
-	return render(request, 'tmp/asd.html', context)
+    context = {
+        'year': year,
+        'month': month,
+        'day': day,
+    }
+    return render(request, 'tmp/asd.html', context)

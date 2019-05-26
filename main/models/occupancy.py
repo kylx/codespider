@@ -4,6 +4,7 @@ from .patient import Patient
 
 import datetime
 
+
 class OccupancyManager(models.Manager):
     def get_list_for_day(self, building, year, month, date):
         def simplify_occupancy(occu):
@@ -48,12 +49,13 @@ class OccupancyManager(models.Manager):
             }
         start_date = datetime.date(year, month, date)
         end_date = datetime.date(year, month, date + 1)
-        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(room__building__name=building, date__range=(start_date, end_date))
+        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related(
+            'watcher').filter(room__building__name=building, date__range=(start_date, end_date))
         llll = list(map(simplify_occupancy, occ))
         watchers = 0
         male = 0
         female = 0
-        
+
         for o in llll:
             watchers += o['watchers']['count']
             if o['sex'] == 'm':
