@@ -1,74 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock title %}</title>
-        {% load staticfiles %}
-        
-        {% block page_titleicon %}{% endblock page_titleicon %}
-        
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-        <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
-        
-        {% block page_stylesheet %}{% endblock page_stylesheet %}
-    </head>
-    
-    <body>
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <a class="navbar-brand mr-0" href="#"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
-            <button class="navbar-toggler ml-1" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsibleNavbar">
-                <ul class="navbar-nav mx-auto text-center">
-                    {% block nav_bar %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="nav-link" href="{% url 'rooms/main' %}">Main</a>
-                            <a class="nav-link" href="{% url 'rooms/annex' %}">Annex</a>
-                        </div>
-                    </li>
-                    
-                    <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
-					
-					<li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Summary</a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="nav-link" href="{% url 'summary/monthly' %}">Monthly</a>
-                            <a class="nav-link" href="{% url 'summary/daily' %}">Daily</a>
-                        </div>
-                    </li>
-					
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Inquiry</a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="nav-link" href="{% url 'inquiry/filter' %}">Filter</a>
-                            <a class="nav-link" href="{% url 'inquiry/sort' %}">Sort</a>
-                        </div>
-                    </li>
-                    {% endblock nav_bar %}
-                </ul>
-				{% block nav_bar_right %}
-                <ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
-                    <button type="button" class="btn btn-outline-secondary">
-                        <i class="fa fa-power-off" aria-hidden="true"></i>
-                        Logout
-                    </button>
-                </ul>
-				{% endblock nav_bar_right %}
-            </div>
-        </nav>
-        
-        {% block page_body %}{% endblock page_body %}
 
-        <script src="{% static 'js/jquery.js' %}"></script>
-        <script src="{% static 'js/bootstrap/popper.js' %}"></script>
-        <script src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
-        
-        {% block page_js %}{% endblock page_js %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    {% load staticfiles %}
+    {% block page_titleicon %}{% endblock page_titleicon %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    {% block page_stylesheet %}{% endblock page_stylesheet %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <a class="navbar-brand mr-0" href="#"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
+        <button class="navbar-toggler ml-1" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsibleNavbar">
+            <ul class="navbar-nav mx-auto text-center">
+                {% block nav_bar %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Rooms</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="nav-link" href="{% url 'rooms/main' %}">Main</a>
+                        <a class="nav-link" href="{% url 'rooms/annex' %}">Annex</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'patients' %}">Patients</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Summary</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="nav-link" href="{% url 'summary/monthly' %}">Monthly</a>
+                        <a class="nav-link" href="{% url 'summary/daily' %}">Daily</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Inquiry</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="nav-link" href="{% url 'inquiry/filter' %}">Filter</a>
+                        <a class="nav-link" href="{% url 'inquiry/sort' %}">Sort</a>
+                    </div>
+                </li>
+                {% endblock nav_bar %}
+            </ul>
+            {% block nav_bar_right %}
+            <ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
+                <button type="button" class="btn btn-outline-secondary">
+                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                    Logout
+                </button>
+            </ul>
+            {% endblock nav_bar_right %}
+        </div>
+    </nav>
+    {% block page_body %}{% endblock page_body %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
+    {% block page_js %}{% endblock page_js %}
+</body>
+
 </html>
