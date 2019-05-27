@@ -6,6 +6,10 @@ from .forms import PatientForm, RoomForm, FilterForm, SummaryForm
 from .models.diagnosis import Diagnosis
 from .models.occupancy import Occupancy
 from .models.patient import Patient
+from .models.visit import Visit
+from .models.occupancy import Occupancy
+from .models.room import Room
+from .models.watcher import Watcher
 import datetime
 import json
 
@@ -16,6 +20,65 @@ def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
+
+def assign_room(request):
+    
+    
+    post = request.POST
+    room_number = post.get('room_num', 1)
+    last_name = post.get('last_name', 1)
+    # room_number = post.get('room_number', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    # room_number = post.get('room_num', 1)
+    # date_from = post['last_name']
+    # date_to = post['first_name']
+    # middle_initial = post['middle_initial']
+    # date_from = post['date_from']
+    # date_to = post['date_to']
+    date_to = datetime.datetime.now()
+    date_from = datetime.datetime.now()
+    
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    
+    # Get visit
+    
+    if len(visit) == 0:
+        # create new visit
+        visit = Visit(
+            patient=pat,
+            start_date=date_from,
+            actual_end_date=date_to,
+            assigned_end_date=date_to,
+            is_ongoing=True
+        )
+        visit.save()
+    else:
+        visit = visit[0] # get first element
+        
+    # Get room
+    room = Room.objects.filter(building__name='main', display_number=room_number)[0]
+    
+    watcher=Watcher.objects.order_by('?').first(),
+    occu = Occupancy(
+        visit=visit,
+        room=room,
+        # watcher=watcher,
+        date=date_to
+        
+    )
+    occu.save()
+    occu.watcher.add(watcher[0])
+    
+    
+    context = {
+        'post_stuff': occu
+    }
+    
+    
+    
+    return render(request, 'tmp/assign-room.html', context)
 
 def rooms(request, building, year=-1, month=-1, day=-1):
     print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])

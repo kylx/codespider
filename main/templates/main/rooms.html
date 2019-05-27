@@ -144,7 +144,7 @@
 					<div class="modal-header modal-title">
 						Assign to Room
 					</div>
-					<form method="post" action="">
+					<form method="post" action="{% url 'action/assign-room'%}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
