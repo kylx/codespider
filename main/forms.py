@@ -106,27 +106,47 @@ class RoomForm(ModelForm):
             })
 		}
 		
+    building_transfer = forms.CharField (
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+				['b1', 'Main'],
+				['b2', 'Annex']
+			]
+		)
+	)
+		
     room_num = forms.IntegerField (
-		widget = forms.NumberInput ( attrs = {
-            'class' : 'form-control, input',
-			'placeholder' : 'Room No.',
-			'min': 1
-        })
-    )
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+				['room1', '1'],
+				['room2', '2']
+			]
+		)
+	)
 	
     room_num_transfer = forms.IntegerField (
-        widget = forms.NumberInput ( attrs = {
-            'class' : 'form-control, input',
-			'placeholder' : 'Transfer to Room No.',
-			'min': 1
-        })
-    )
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+				['room1', '1'],
+				['room2', '2']
+			]
+		)
+	)
 
     relationship = forms.MultipleChoiceField (
 		widget = forms.CheckboxSelectMultiple,
 		choices = [
 			['rel-1', 'Mother'],
-			['rel-2', 'Father'],
+			['rel-2', 'Father']
 		]
     )
 	
@@ -227,6 +247,7 @@ class FilterForm(ModelForm):
 		
 class SummaryForm(ModelForm):
 	class Meta:
+		# TEMPORARY
 		model = Patient
 		fields = ['city']
 		
