@@ -89,41 +89,32 @@ class RoomForm(ModelForm):
     class Meta:
         model = Patient
         fields = ['last_name', 'first_name', 'middle_initial']
+        widgets = {
+            'last_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Last Name'
+            }),
+			
+			'first_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'First Name'
+            }),
+			
+			'middle_initial': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Middle Initial'
+            })
+		}
 		
     room_num = forms.IntegerField (
-        label = 'Room No.',
 		widget = forms.NumberInput ( attrs = {
             'class' : 'form-control, input',
-			'placeholder' : 'Room No.'
+			'placeholder' : 'Room No.',
+			'min': 1
         })
     )
-        
-    last_name = forms.CharField (
-        label = 'Last Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Last Name'
-        })
-    )
-    
-    first_name = forms.CharField (
-        label = 'First Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'First Name'
-        })
-    )
-    
-    middle_initial = forms.CharField (
-        label = 'Middle Initial',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Middle Initial'
-        })
-    )
-	
+
     relationship = forms.MultipleChoiceField (
-        label = 'Relationship',
 		widget = forms.CheckboxSelectMultiple,
 		choices = [
 			['rel-1', 'Mother'],
@@ -131,15 +122,23 @@ class RoomForm(ModelForm):
 		]
     )
 	
-    date_from = forms.DateField(
-        widget=forms.DateInput( format = '%m/%d/%Y' ),
-        input_formats = ( '%m/%d/%Y' )
-    )
+    date_from = forms.DateField (
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
     
     date_to = forms.DateField(
-        widget=forms.DateInput( format = '%m/%d/%Y' ),
-        input_formats = ( '%m/%d/%Y' )
-    )
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
 	
 class FilterForm(ModelForm):
     class Meta:

@@ -49,6 +49,24 @@
     box-shadow: none;
 }
 
+.form-label {
+	font-size: 18px;
+	font-weight: 500;
+	padding-left: 0px;
+}
+
+#id_relationship {
+	padding: 10px;
+}
+
+#id_date_from.form-control {
+	width: 50%;
+}
+
+#id_date_to.form-control {
+	width: 50%;
+}
+
 .modal-footer .btn {
     width: 50%;
     height: 50px;
