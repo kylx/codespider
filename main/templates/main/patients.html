@@ -280,7 +280,6 @@ $(document).ready(function() {
 
     resetProv();
 	
-	
 	var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
 	console.log(diagnosis);
 	let dropdown = document.getElementById('id_diagnosis');
@@ -293,7 +292,6 @@ $(document).ready(function() {
 		dropdown.appendChild(option); // add option to dropdown
 	}
 });
-
 </script>
 {% endblock page_body %}
 

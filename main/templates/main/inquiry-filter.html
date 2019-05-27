@@ -149,4 +149,62 @@
 		</div>
 	</div>
 </div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+	let reg = $('select[name=region]');
+	let prov = $('select[name=province]');
+	let city = $('select[name=city]');
+
+    let provinces = prov.children('option').detach();
+    let cities = city.children('option').detach();
+
+    function resetProv(){
+        prov.children('option').detach();
+        prov.append(provinces[0]);
+        prov.val('');
+        resetCity();
+    }
+    function resetCity(){
+        city.children('option').detach();
+        city.append(cities[0]);
+        city.val('');
+    }
+
+    function doFilter(options, select, filter) {
+        if (filter === '') return;
+        options.filter((index, element) => {
+            let val = $(element).val();
+            return val.startsWith(filter) || val === '';
+        }).appendTo(select);
+        select.val('');
+    }
+
+	reg.change(function() {
+		let filter = $(this).val();
+        resetProv();
+        doFilter(provinces, prov, filter);
+	});
+    prov.change(function() {
+		let filter = $(this).val();
+        resetCity();
+        doFilter(cities, city, filter);
+	});
+
+    resetProv();
+	
+	var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
+	console.log(diagnosis);
+	let dropdown = document.getElementById('id_diagnosis');
+	
+	diagnosis.forEach(arrayopt);
+	function arrayopt(diagnosis){
+		let option = document.createElement('option'); // create option element
+		option.value = diagnosis[0]; // assign id/value
+		option.innerText = diagnosis[1]; // assign text
+		dropdown.appendChild(option); // add option to dropdown
+	}
+});
+</script>
 {% endblock page_body %}
