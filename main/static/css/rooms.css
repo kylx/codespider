@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 ul {
 	list-style: none;
 }
@@ -58,13 +59,22 @@ ul {
 
 @media print {
 
+=======
+>>>>>>> e2be4e64eaf580ed885b75537d147d1bb183e89e
 .row {
     margin: 0;
 }
 
+<<<<<<< HEAD
 .col-lg-1,
 =======
 >>>>>>> daming changes
+=======
+.col-lg-1 {
+    padding: 0;
+}
+
+>>>>>>> e2be4e64eaf580ed885b75537d147d1bb183e89e
 .col-lg-4,
 .col-lg-6,
 .col-lg-12 {
