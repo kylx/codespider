@@ -1,18 +1,7 @@
+
 ul {
 	list-style: none;
 }
-
-.row {
-    margin: 0;
-}
-
-.col-lg-1,
-.col-lg-4,
-.col-lg-6,
-.col-lg-12 {
-    padding: 0;
-}
-
 .room-title-container {
 	padding: 2% 0% 0% 0%;
 }
@@ -74,6 +63,8 @@ ul {
 }
 
 .col-lg-1,
+=======
+>>>>>>> daming changes
 .col-lg-4,
 .col-lg-6,
 .col-lg-12 {
@@ -85,7 +76,8 @@ ul {
 }
 
 .room-title {
-	font-size: 1000px;
+	font-size: 50px;
+    text-transform: uppercase;
 }
 
 .date-container {
@@ -136,5 +128,4 @@ ul {
 	height: 50px;
 	width: 125px;
 	align-items: right;
-}
 }
