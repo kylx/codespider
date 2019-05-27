@@ -1,5 +1,8 @@
 from django.db import models
 
+class BuildingManager(models.Manager):
+    def get_as_list(self):
+        return [[b.pk, b.name] for b in super().get_queryset()]
 	
 class Building(models.Model):
 	name = models.CharField(max_length=20)

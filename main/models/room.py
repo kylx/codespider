@@ -1,5 +1,11 @@
 from django.db import models
 
+class RoomManager(models.Manager):
+    def get_room_list(self):
+        return [
+            [r.pk, r.building.pk, r.display_number]
+            for r in super().get_queryset()
+        ]
 
 class Room(models.Model):
 	building = models.ForeignKey("Building", on_delete=models.CASCADE)
