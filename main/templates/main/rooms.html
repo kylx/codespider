@@ -144,7 +144,7 @@
 					<div class="modal-header modal-title">
 						Assign to Room
 					</div>
-					<form id="assign_room" method="post" action="{% url 'action/assign-room'%}">
+					<form id="assign_room" method="post" action="{% url 'action/assign-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -210,11 +210,6 @@
 							{% csrf_token %}
 							<div class="row">
 								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
-							<div class="row">
-								<div class="col-lg-4">
 									{{ form.room_num_transfer }}
 								</div>							
 							</div>
@@ -258,11 +253,6 @@
 					<form id="checkout" method="post" action="{% url 'action/checkout' %}">
 						<div class="modal-body">
 							{% csrf_token %}
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
 							<div class="row">
 								<div class="col-lg-5">
 									{{ form.last_name }}
@@ -338,7 +328,7 @@ function sleep(ms) {
 window.onload = function() {
 
     // add building to forms
-    function addBuildingAndDate(formId){
+    function addBuildingAndDate(formId) {
         let form = document.getElementById(formId);
         let building = document.createElement("input");
         building.setAttribute("type", "hidden");
@@ -356,9 +346,6 @@ window.onload = function() {
     addBuildingAndDate('transfer_room');
     addBuildingAndDate('checkout');
     
-
-    
-
 	var raw = '{{ rooms_json | escapejs }}';
 	var raw_json = JSON.parse(raw);
 
