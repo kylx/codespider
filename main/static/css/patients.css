@@ -29,3 +29,12 @@
 .btn-outline-dark {
     border-radius: 20px;
 }
+
+.modal-body .patient-label {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.modal-body .date-list {
+	padding: 0px 30px 0px 30px !important;
+}

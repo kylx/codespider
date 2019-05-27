@@ -162,47 +162,47 @@
 							<div class="modal-body">
 								<div class="row">
 									<div class="col-lg-12">
-										Name: {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.
+										<span class="patient-label">Name: </span>{{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Age: {{ patient.age }}
+										<span class="patient-label">Age: </span>{{ patient.age }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Sex: {{ patient.sex }}
+										<span class="patient-label">Sex: </span>{{ patient.sex }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Address: {{ patient.region }} | {{ patient.province }} | {{ patient.city }}
+										<span class="patient-label">Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Diagnosis: {{ patient.diagnosis }}
+										<span class="patient-label">Diagnosis: </span>{{ patient.diagnosis }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Total No. of Days: {{ patient.total_days }}
+										<span class="patient-label">Total No. of Days: </span>{{ patient.total_days }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Frequency: {{ patient.frequency }}
+										<span class="patient-label">Frequency: </span>{{ patient.frequency }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Date/s of Stay
+										<span class="patient-label">Date/s of Stay: </span>
 										<div class="row">
-											<div class="col-lg-6">
+											<div class="col-lg-6 date-list">
 												From
 											</div>
-											<div class="col-lg-6">
+											<div class="col-lg-6 date-list">
 												To
 											</div>
 										</div>
