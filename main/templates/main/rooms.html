@@ -332,18 +332,58 @@ function capFirst(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-window.onload = function() {
-
-    let rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
-    let buildings = JSON.parse("{{buildings | escapejs}}".replace(/'/g, '"'));
-    let building = "{{building}}";
-    console.log('building', building);
-    let iii = buildings.find((bb)=>{
+var rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
+var buildings = JSON.parse("{{buildings | escapejs}}".replace(/'/g, '"'));
+var building = "{{building}}";
+let iii = buildings.find((bb)=>{
         console.log('bbname', bb[1]);
         return bb[1] == building;
     });
     console.log('iii', iii);
-    <!-- let buildingIndex = buildings[iii][0]; // get pk, at 0 index -->
+    
+function updateTransferRooms(e){
+    console.log('aaaaa');
+    let newId = document.getElementById('id_building_transfer').value;
+    if (!newId){
+        <!-- console.log(iii[0]); -->
+        document.getElementById('id_building_transfer').value = newId = iii[0];
+        console.log('new Id', newId);
+    }
+    
+    let rr = document.getElementById('id_room_num_transfer');
+    rr.innerHTML = '';
+    
+    rooms.forEach((room)=>{
+        <!-- console.log('rr', room, 'newId', newId); -->
+        if (room[1] != newId) return;
+        console.log('fasffas', room);
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", room[0]);
+        op.innerText = "Room "+room[2];
+        rr.appendChild(op);
+        
+    });
+    
+}
+
+
+<!-- window.addEventListener("load", function(){ -->
+    <!-- updateTransferRooms(); -->
+<!-- }); -->
+
+window.onload = function() {
+    <!-- $('#id_building_transfer>option:eq(2)').prop('selected', true); -->
+    $('#id_building_transfer').change(updateTransferRooms);
+    $("#id_building_transfer").val("1");
+    <!-- $('#id_building_transfer').prop('selectedIndex', 1); // select 4th option -->
+    $('#id_building_transfer').trigger('change');
+    <!-- document.getElementById('id_building_transfer').addEventListener('change', updateTransferRooms); -->
+    <!-- console.log('sel', document.getElementById('id_building_transfer').options); -->
+    <!-- document.getElementById('id_building_transfer').options[0].selected = true; -->
+    <!-- document.getElementById('id_building_transfer').dispatchEvent(new Event('change', { 'bubbles': true })); -->
+   
+    <!-- console.log('building', building); -->
     
     
     // dynamic rooms for assign rooms

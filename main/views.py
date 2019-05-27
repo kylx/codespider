@@ -37,7 +37,7 @@ def transfer_room(request):
     visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
     
     # check if room is valid
-    room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
+    room = Room.objects.filter(pk=room_number)[0]
     occu = Occupancy.objects.filter(
         visit=visit,
         date=date,
