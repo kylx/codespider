@@ -49,6 +49,7 @@ urlpatterns = [
     # requires input
     path('tmp/action/create-patient', test, name='action/create-patient'),
     path('action/assign-room', assign_room, name='action/assign-room'),
+    path('action/checkout', checkout, name='action/checkout'),
 
      
     path('', show_urls, name='dev/show-urls'),

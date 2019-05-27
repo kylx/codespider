@@ -255,7 +255,7 @@
 					<div class="modal-header modal-title">
 						Checkout Patient
 					</div>
-					<form id="checkout" method="post" action="">
+					<form id="checkout" method="post" action="{% url 'action/checkout' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">

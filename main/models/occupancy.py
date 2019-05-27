@@ -48,7 +48,7 @@ class OccupancyManager(models.Manager):
             }
         start_date = datetime.date(year, month, date)
         end_date = datetime.date(year, month, date + 1)
-        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(room__building__name=building, date__range=(start_date, end_date))
+        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True, room__building__name=building, date__range=(start_date, end_date))
         llll = list(map(simplify_occupancy, occ))
         watchers = 0
         male = 0

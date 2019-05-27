@@ -28,6 +28,25 @@ def transfer_room(request):
     middle_initial = post.get('middle_initial', 1)
     
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    
+def checkout(request):
+    post = request.POST
+    # room_number = post.get('room_num', 1)
+    last_name = post.get('last_name', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
+    visit.is_ongoing = False
+    visit.save()
+    context = {
+        'post_stuff': post
+    }
+    
+    
+    
+    return render(request, 'tmp/checkout.html', context)
 
 def assign_room(request):
     
