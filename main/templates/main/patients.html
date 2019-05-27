@@ -126,33 +126,24 @@
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
-				<div class="row">
-					<div class="col-lg-6">
-					</div>
-					<div class="col-lg-6">
-					</div>
-				</div>
-			
                 <table class="table" id="table">
-                
-                <thead>
-                    <tr class="table-head">
-                        <th class="col-1" onclick="sortTable(0)">Last Name</th>
-                        <th class="col-2" onclick="sortTable(1)">First Name</th>
-                        <th class="col-3" onclick="sortTable(0)">Middle Initial</th>
-                    </tr>
-                </thead>
+					<thead>
+						<tr class="table-head">
+							<th class="col-1" onclick="sortTable(0)">Last Name</th>
+							<th class="col-2" onclick="sortTable(1)">First Name</th>
+							<th class="col-3" onclick="sortTable(0)">Middle Initial</th>
+						</tr>
+					</thead>
 
-                <tbody id="app">
-                    {% for patient in patients %}
-                    <tr>
-                        <td class="col-1">{{ patient.last_name }}</td>
-                        <td class="col-2">{{ patient.first_name }}</td>
-                        <td class="col-3">{{ patient.middle_initial }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-                
+					<tbody id="app">
+						{% for patient in patients %}
+						<tr>
+							<td class="col-1">{{ patient.last_name }}</td>
+							<td class="col-2">{{ patient.first_name }}</td>
+							<td class="col-3">{{ patient.middle_initial }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
                 </table>
 				
 				<div class="modal" id="PatientsInfoModal">

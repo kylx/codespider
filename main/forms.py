@@ -130,7 +130,7 @@ class RoomForm(ModelForm):
 		]
     )
 	
-    date_from = forms.DateField (
+    date_from = forms.DateField(
         widget = forms.DateInput (
 			format = '%m/%d/%Y',
 			attrs = {
@@ -148,11 +148,7 @@ class RoomForm(ModelForm):
 			})
 		)
 	
-class FilterForm(ModelForm):
-    class Meta:
-        model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
-		
+class FilterForm(ModelForm):		
     date_from = forms.DateField (
         widget = forms.DateInput (
 			format = '%m/%d/%Y',
@@ -228,3 +224,17 @@ class FilterForm(ModelForm):
                 choices = Enums.CITIES
             )
 		}
+		
+class SummaryForm(ModelForm):
+	class Meta:
+		model = Patient
+		fields = ['city']
+		
+	monthYearChosen = forms.DateField (
+        widget = forms.DateInput (
+			format = '%m/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)

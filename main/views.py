@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .enums import Enums
-from .forms import PatientForm, RoomForm, FilterForm
+from .forms import PatientForm, RoomForm, FilterForm, SummaryForm
 from .models.diagnosis import Diagnosis
 from .models.occupancy import Occupancy
 from .models.patient import Patient
@@ -57,9 +57,7 @@ def patients(request):
         'url_name': 'PATIENTS',
         'patients': patient_list,
 		'form': form,
-        'diagnosis': Diagnosis.objects.get_diagnosis_list(),
-        
-
+        'diagnosis': Diagnosis.objects.get_diagnosis_list()
     }
     return render(request, 'main/patients.html', context)
 
@@ -68,7 +66,11 @@ def summary_daily(request):
     return render(request, 'main/summary-daily.html', context)
 	
 def summary_monthly(request):
-    context = {'url_name': 'SUMMARY'}
+    form = SummaryForm()
+    context = {
+        'url_name': 'SUMMARY',
+		'form': form
+    }
     return render(request, 'main/summary-monthly.html', context)
 
 def inquiry_filter(request):
