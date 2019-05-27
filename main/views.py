@@ -128,16 +128,22 @@ def assign_room(request):
             i += 1
         
         watcher=Watcher.objects.order_by('?').first(),
-        occu = Occupancy(
-            visit=visit,
-            room=room,
-            # watcher=watcher,
-            date=date
-            
-        )
-        occu.save()
-        for w in watchers:
-            occu.watcher.add(w)
+        
+        occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
+        if len(occu) == 0:
+            occu = Occupancy(
+                visit=visit,
+                room=room,
+                # watcher=watcher,
+                date=date
+                
+            )
+            occu.save()
+        else:
+            occu = occu.first()
+            # occu.watcher_set.all().delete()
+        
+        occu.watcher.set(watchers)
         occu.save()
     
     
