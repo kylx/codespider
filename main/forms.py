@@ -6,10 +6,7 @@ from .helpers import get_diagnosis_list
 from .models import Diagnosis
 
 class UserForm(ModelForm):
-    class Meta:
-        model = Patient
-        fields = ['username', 'password']
-        
+	# Temporary unless no model for form
     username = forms.CharField (
         label = 'Username',
         widget = forms.TextInput ( attrs = {
@@ -28,95 +25,65 @@ class UserForm(ModelForm):
 class PatientForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
-        
-    last_name = forms.CharField (
-        label = 'Last Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Last Name'
-        })
-    )
-    
-    first_name = forms.CharField (
-        label = 'First Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'First Name'
-        })
-    )
-    
-    middle_initial = forms.CharField (
-        label = 'Middle Initial',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Middle Initial'
-        })
-    )
-	
-    age = forms.IntegerField (
-        label = 'Age',
-		widget = forms.NumberInput ( attrs = {
-            'class' : 'form-control, input',
-			'placeholder' : 'Age'
-        })
-    )
-    
-    sex = forms.CharField (
-        label = 'Sex',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            choices = Enums.SEX
-        )
-    )
-    
-    diagnosis = forms.CharField (
-        label = 'Diagnosis',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-	        choices = [
-                # [0, 'fish'],
-                # [1, 'duck'],
-            ]
-            # choices = DIAGNOSIS
-        )
-    )
-    
-    region = forms.CharField (
-        label = 'Region',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            
-			choices = Enums.REGIONS
-        )
-    )
-    
-    province = forms.CharField (
-        label = 'Province',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-		    
-            choices = Enums.PROVINCES
-        )
-    )
-    
-    city = forms.CharField (
-        label = 'City',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            choices = Enums.CITIES
-        )
-    )
+        fields = ['last_name', 'first_name', 'middle_initial', 'age', 'sex', 'diagnosis', 'region', 'province', 'city']
+        widgets = {
+            'last_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Last Name'
+            }),
+			
+			'first_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'First Name'
+            }),
+			
+			'middle_initial': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Middle Initial'
+            }),
+			
+			'age': forms.NumberInput ( attrs = {
+                'class' : 'form-control, input',
+			    'placeholder' : 'Age',
+				'min': 0,
+				'max': 100
+            }),
+			
+			'sex': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.SEX
+            ),
+
+            'diagnosis': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = get_diagnosis_list(),
+            ),
+			
+			'region': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input',
+			    },
+                choices = Enums.REGIONS,
+            ),
+			
+			'province': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.PROVINCES
+            ),
+			
+			'city': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.CITIES
+            )
+		}
 	
 class RoomForm(ModelForm):
     class Meta:
