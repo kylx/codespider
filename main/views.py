@@ -20,22 +20,24 @@ def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
+def transfer_room(request):
+    post = request.POST
+    room_number = post.get('room_num', 1)
+    last_name = post.get('last_name', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
 
 def assign_room(request):
     
     
     post = request.POST
+    building_name = post.get('building_name', 1)
     room_number = post.get('room_num', 1)
     last_name = post.get('last_name', 1)
-    # room_number = post.get('room_number', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
-    # room_number = post.get('room_num', 1)
-    # date_from = post['last_name']
-    # date_to = post['first_name']
-    # middle_initial = post['middle_initial']
-    # date_from = post['date_from']
-    # date_to = post['date_to']
     date_to = datetime.datetime.now()
     date_from = datetime.datetime.now()
     
@@ -58,7 +60,7 @@ def assign_room(request):
         visit = visit[0] # get first element
         
     # Get room
-    room = Room.objects.filter(building__name='main', display_number=room_number)[0]
+    room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
     
     watcher=Watcher.objects.order_by('?').first(),
     occu = Occupancy(
