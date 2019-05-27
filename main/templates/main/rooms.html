@@ -205,7 +205,7 @@
 					<div class="modal-header modal-title">
 						Transfer Room
 					</div>
-					<form method="post" action="">
+					<form id="transfer_room" method="post" action="">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -255,7 +255,7 @@
 					<div class="modal-header modal-title">
 						Checkout Patient
 					</div>
-					<form method="post" action="">
+					<form id="checkout" method="post" action="">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -338,13 +338,26 @@ function sleep(ms) {
 window.onload = function() {
 
     // add building to forms
-    let assign_room = document.getElementById('assign_room');
-    var building1 = document.createElement("input");
+    function addBuildingAndDate(formId){
+        let form = document.getElementById(formId);
+        let building = document.createElement("input");
+        building.setAttribute("type", "hidden");
+        building.setAttribute("name", "building_name");
+        building.setAttribute("value", "{{building}}");
+        form.appendChild(building);
+        <!-- let form = document.getElementById('formId'); -->
+        let date = document.createElement("input");
+        date.setAttribute("type", "hidden");
+        date.setAttribute("name", "date");
+        date.setAttribute("value", "{{year}}-{{month}}-{{day}}");
+        form.appendChild(date);
+    }
+    addBuildingAndDate('assign_room');
+    addBuildingAndDate('transfer_room');
+    addBuildingAndDate('checkout');
+    
 
-    building1.setAttribute("type", "hidden");
-    building1.setAttribute("name", "building_name");
-    building1.setAttribute("value", "{{building}}");
-    assign_room.appendChild(building1);
+    
 
 	var raw = '{{ rooms_json | escapejs }}';
 	var raw_json = JSON.parse(raw);

@@ -40,6 +40,7 @@ def assign_room(request):
     middle_initial = post.get('middle_initial', 1)
     date_to = datetime.datetime.now()
     date_from = datetime.datetime.now()
+    date = post.get('date', None)
     
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
     visit = Visit.objects.filter(patient=pat, is_ongoing=True)
@@ -67,7 +68,7 @@ def assign_room(request):
         visit=visit,
         room=room,
         # watcher=watcher,
-        date=date_to
+        date=date
         
     )
     occu.save()
