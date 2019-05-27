@@ -327,6 +327,28 @@ function sleep(ms) {
 
 window.onload = function() {
 
+    let ul = document.querySelector('ul#id_relationship');
+    let relas = JSON.parse("{{relationships | escapejs}}".replace(/'/g, '"'));
+    console.log(relas);
+    function addRelationship(rela){
+        console.log(rela[0], rela[1]);
+        
+        let li = document.createElement('li');
+        let label = document.createElement('label');
+        let checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("name", "relationship_"+rela[0]);
+        checkbox.setAttribute("id", "id_relationship_"+rela[0]);
+        checkbox.setAttribute("value", rela[0]);
+        label.setAttribute("for", "id_relationship_"+rela[0]);
+        <!-- checkbox.setAttribute("value", rel[0]); -->
+        label.textContent = ' '+rela[1];
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        ul.appendChild(li);
+    }
+    relas.forEach(addRelationship);
+
     // add building to forms
     function addBuildingAndDate(formId) {
         let form = document.getElementById(formId);

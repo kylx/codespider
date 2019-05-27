@@ -29,8 +29,13 @@ def transfer_room(request):
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
     
+    # check if patient exists
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    
+    # check if patient is currently visiting
     visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
+    
+    # check if room is valid
     room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
     occu = Occupancy.objects.filter(
         visit=visit,
@@ -52,7 +57,10 @@ def checkout(request):
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
     
+    # check if patient exists
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    
+    # check if patient is currently visiting/assigned to a room
     visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
     visit.is_ongoing = False
     visit.save()
@@ -65,9 +73,11 @@ def checkout(request):
     return render(request, 'tmp/checkout.html', context)
 
 def assign_room(request):
-    
+    type = 'assign room'
+    error = None
     
     post = request.POST
+    ll = post.getlist('id_relationship')
     building_name = post.get('building_name', 1)
     room_number = post.get('room_num', 1)
     last_name = post.get('last_name', 1)
@@ -77,41 +87,65 @@ def assign_room(request):
     date_from = datetime.datetime.now()
     date = post.get('date', None)
     
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
-    visit = Visit.objects.filter(patient=pat, is_ongoing=True)
-    
-    # Get visit
-    
-    if len(visit) == 0:
-        # create new visit
-        visit = Visit(
-            patient=pat,
-            start_date=date_from,
-            actual_end_date=date_to,
-            assigned_end_date=date_to,
-            is_ongoing=True
-        )
-        visit.save()
+    # check if patient exists
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
     else:
-        visit = visit[0] # get first element
-        
-    # Get room
-    room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
+        pat = pat[0]
     
-    watcher=Watcher.objects.order_by('?').first(),
-    occu = Occupancy(
-        visit=visit,
-        room=room,
-        # watcher=watcher,
-        date=date
+        # check if patient is currently visiting
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
         
-    )
-    occu.save()
-    occu.watcher.add(watcher[0])
+        # Get visit
+        if len(visit) == 0:
+            # create new visit if none
+            visit = Visit(
+                patient=pat,
+                start_date=date_from,
+                actual_end_date=date_to,
+                assigned_end_date=date_to,
+                is_ongoing=True
+            )
+            visit.save()
+        else:
+            visit = visit[0] # get first element
+            
+        # Get room
+        room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
+        
+        # get list of watchers
+        i = 1
+        watchers = []
+        # print(post.get(f'relationship_{i}', None))
+        for key, value in request.POST.items():
+        # while post.get(f'relationship_{i}', None) is not None:
+            # rel = f'relationship_{i}'
+            if key.startswith('relationship_'):
+                
+            # rel = Watcher.objects.get(id=i).relationship
+                watchers.append(int(key.split('_')[1]))
+            i += 1
+        
+        watcher=Watcher.objects.order_by('?').first(),
+        occu = Occupancy(
+            visit=visit,
+            room=room,
+            # watcher=watcher,
+            date=date
+            
+        )
+        occu.save()
+        for w in watchers:
+            occu.watcher.add(w)
+        occu.save()
     
     
     context = {
-        'post_stuff': occu
+        'type': type,
+        'error': error,
+        'watchers': watchers,
+        'post': post,
     }
     
     
@@ -146,6 +180,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'weekday': weekdays[date.weekday()],
         'month_name': date.strftime("%B"),
         'count': occ['count'],
+        'relationships': Watcher.objects.get_relationship_list(),
         
 		# 'rooms': ['fish','is', 'love'],
     }

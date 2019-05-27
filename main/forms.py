@@ -125,8 +125,6 @@ class RoomForm(ModelForm):
     relationship = forms.MultipleChoiceField (
 		widget = forms.CheckboxSelectMultiple,
 		choices = [
-			['rel-1', 'Mother'],
-			['rel-2', 'Father'],
 		]
     )
 	
