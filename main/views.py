@@ -22,12 +22,28 @@ def home(request):
 
 def transfer_room(request):
     post = request.POST
-    room_number = post.get('room_num', 1)
+    building_name = post.get('building_name', 1)
+    room_number = post.get('room_num_transfer', 1)
+    date = post.get('date', None)
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
     
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
+    room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
+    occu = Occupancy.objects.filter(
+        visit=visit,
+        date=date,
+    )[0]
+    occu.room = room
+    occu.save()
+    
+    context = {
+    
+    }
+    
+    return render(request, 'tmp/transfer-room.html', context)
     
 def checkout(request):
     post = request.POST

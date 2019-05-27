@@ -205,7 +205,7 @@
 					<div class="modal-header modal-title">
 						Transfer Room
 					</div>
-					<form id="transfer_room" method="post" action="">
+					<form id="transfer_room" method="post" action="{% url 'action/transfer-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
