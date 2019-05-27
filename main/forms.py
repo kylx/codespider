@@ -113,6 +113,14 @@ class RoomForm(ModelForm):
 			'min': 1
         })
     )
+	
+    room_num_transfer = forms.IntegerField (
+        widget = forms.NumberInput ( attrs = {
+            'class' : 'form-control, input',
+			'placeholder' : 'Transfer to Room No.',
+			'min': 1
+        })
+    )
 
     relationship = forms.MultipleChoiceField (
 		widget = forms.CheckboxSelectMultiple,
