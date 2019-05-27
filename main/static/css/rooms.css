@@ -23,6 +23,7 @@ ul {
 
 .room-title {
 	font-size: 50px;
+    text-transform: uppercase;
 }
 
 .date-container {
@@ -46,7 +47,7 @@ ul {
 }
 
 .counter-container {
-    padding: 1% 25% 1% 25%;
+    padding: 0% 25% 1% 25%;
 }
 
 .cname {
@@ -68,4 +69,10 @@ ul {
 	height: 50px;
 	width: 125px;
 	align-items: right;
+}
+
+#row-1,
+#row-3,
+#row-5 {
+    text-align: center;
 }
