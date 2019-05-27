@@ -328,6 +328,10 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function capFirst(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 window.onload = function() {
 
     let rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
@@ -356,6 +360,21 @@ window.onload = function() {
         
     });
     
+    // dynamic buildings for transfer roomslet 
+    sel = document.getElementById('id_building_transfer');
+    buildings.forEach((bb)=>{
+        console.log('bb', bb);
+        <!-- if (room[1] != iii[0]) return; -->
+        <!-- console.log('fasffas', room); -->
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", bb[0]);
+        <!-- bb[1].charAt(0).toUpperCase(); -->
+        op.innerText = capFirst(bb[1]);
+        <!-- op.innerText.charAt(0).toUpperCase(); -->
+        sel.appendChild(op);
+        
+    });
     
     console.log(rooms);
     console.log(buildings);
