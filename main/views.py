@@ -57,9 +57,8 @@ def patients(request):
         'url_name': 'PATIENTS',
         'patients': patient_list,
 		'form': form,
-        'diagnosis': Diagnosis.objects.get_diagnosis_list(),
-        
-
+        'diagnosis': Diagnosis.objects.get_diagnosis_list(),    
+        'patient_info': Patient.objects.all()
     }
     return render(request, 'main/patients.html', context)
 
