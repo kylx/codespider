@@ -9,6 +9,7 @@ from .models.patient import Patient
 from .models.visit import Visit
 from .models.occupancy import Occupancy
 from .models.room import Room
+from .models.building import Building
 from .models.watcher import Watcher
 import datetime
 import json
@@ -187,6 +188,8 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'month_name': date.strftime("%B"),
         'count': occ['count'],
         'relationships': Watcher.objects.get_relationship_list(),
+        'rooms': Room.objects.get_list(),
+        'buildings': Building.objects.get_list(),
         
 		# 'rooms': ['fish','is', 'love'],
     }

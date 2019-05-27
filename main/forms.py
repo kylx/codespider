@@ -124,8 +124,6 @@ class RoomForm(ModelForm):
 				'class' : 'form-control, input'
 			},
 			choices = [
-				['room1', '1'],
-				['room2', '2']
 			]
 		)
 	)

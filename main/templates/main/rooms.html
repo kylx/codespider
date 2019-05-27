@@ -330,6 +330,35 @@ function sleep(ms) {
 
 window.onload = function() {
 
+    let rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
+    let buildings = JSON.parse("{{buildings | escapejs}}".replace(/'/g, '"'));
+    let building = "{{building}}";
+    console.log('building', building);
+    let iii = buildings.find((bb)=>{
+        console.log('bbname', bb[1]);
+        return bb[1] == building;
+    });
+    console.log('iii', iii);
+    <!-- let buildingIndex = buildings[iii][0]; // get pk, at 0 index -->
+    
+    
+    // dynamic rooms for assign rooms
+    let sel = document.getElementById('id_room_num');
+    rooms.forEach((room)=>{
+        console.log('rr', room);
+        if (room[1] != iii[0]) return;
+        console.log('fasffas', room);
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", room[0]);
+        op.innerText = "Room "+room[2];
+        sel.appendChild(op);
+        
+    });
+    
+    
+    console.log(rooms);
+    console.log(buildings);
     let ul = document.querySelector('ul#id_relationship');
     let relas = JSON.parse("{{relationships | escapejs}}".replace(/'/g, '"'));
     console.log(relas);
