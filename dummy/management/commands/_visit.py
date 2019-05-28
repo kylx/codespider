@@ -52,7 +52,7 @@ def visit_start(tag):
             'start_date': start,
             'assigned_end_date': end,
             'actual_end_date': end,
-            'is_ongoing': False,
+            'is_ongoing': True,
         }
     }
 

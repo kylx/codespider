@@ -60,7 +60,7 @@ class PatientForm(ModelForm):
 			    attrs = {
 				    'class' : 'form-control, input'
 			    },
-                choices = get_diagnosis_list(),
+                choices = [
             ),
 			
 			'region': forms.Select (
