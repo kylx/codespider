@@ -90,6 +90,7 @@ tbody tr:hover {
 
 .col-1 {
     width: 120px;
+    text-align: center;
 }
 
 .col-2 {
@@ -98,6 +99,7 @@ tbody tr:hover {
 
 .col-3 {
     width: 120px;
+    text-align: center;
 }
 
 .col-4 {

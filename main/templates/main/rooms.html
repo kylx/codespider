@@ -9,9 +9,12 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/rooms.css' %}">
-    <link rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
-	<link rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link media="screen" rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-print.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-table-print.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/rooms-form-print.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -95,26 +98,26 @@
     <div class="row text-center">
         <div class="col-lg-12 counter-container">
             <div class="row">
-                <div class="col-lg-6 cname">Patients</div>
-                <div class="col-lg-6 cname">Watchers</div>
+                <div id="patient" class="col-lg-6 cname" >Patients</div>
+                <div id="watchers" class="col-lg-6 cname" >Watchers</div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row">
-                                <div class="col-lg-6 cname">Boys</div>
-                                <div class="col-lg-6 cnum-2">{{ count.boys }}</div>
+                                <div id="boys" class="col-lg-6 cname">Boys</div>
+                                <div id="boysN" class="col-lg-6 cnum-2">{{ count.boys }}</div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 cname">Girls</div>
-                                <div class="col-lg-6 cnum-2">{{ count.girls }}</div>
+                                <div id="girls" class="col-lg-6 cname">Girls</div>
+                                <div id="girlsN" class="col-lg-6 cnum-2">{{ count.girls }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cnum-1">{{ count.total }}</div>
+                        <div id="total" class="col-lg-6 cnum-1">{{ count.total }}</div>
                     </div>
                 </div>
-                <div class="col-lg-6 cnum-1">{{ count.watchers }}</div>
+                <div id="watch" class="col-lg-6 cnum-1">{{ count.watchers }}</div>
             </div>
         </div>
     </div>
@@ -321,6 +324,11 @@
         </div>
     </div>
 </div>
+{% endblock page_body %}
+
+{% block page_js %}   
+
+<script src="{% static 'js/x/date.js' %}"></script>
 
 <script>
 
@@ -474,10 +482,13 @@ window.onload = function() {
         console.log(date_string);
 		let row = document.createElement('tr');
 		let td_room = document.createElement('td');
+		td_room.setAttribute("id" , "row-1");
 		let td_patient = document.createElement('td');
 		let td_num_watchers = document.createElement('td');
+		td_num_watchers.setAttribute("id" , "row-3");
 		let td_relationships = document.createElement('td');
 		let td_date = document.createElement('td');
+		td_date.setAttribute("id" , "row-5");
 		row.appendChild(td_room);
 		row.appendChild(td_patient);
 		row.appendChild(td_num_watchers);
@@ -498,9 +509,9 @@ window.onload = function() {
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
+
+
 	
 </script>
-{% endblock page_body %}
 
-{% block page_js %}   
 {% endblock page_js %}
