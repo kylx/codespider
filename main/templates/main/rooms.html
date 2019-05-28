@@ -309,11 +309,11 @@
 					{% comment %}
                     {% for room in rooms %}
                     <tr>
-                        <td class="col-1">{{ room.room.display_name }}</td>
+                        <td class="col-1 text-center">{{ room.room.display_name }}</td>
                         <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
-                        <td class="col-3">{{ room.watchers.count }}</td>
+                        <td class="col-3 text-center">{{ room.watchers.count }}</td>
                         <td class="col-4">{{ room.watchers.list }}</td>
-                        <td class="col-5">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+                        <td class="col-5 text-center">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
                     </tr>
 					{% endfor %} 
 					{% endcomment %}
