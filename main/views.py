@@ -117,7 +117,7 @@ def assign_room(request):
             visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
             visit.save()
         # Get room
-        room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
+        room = Room.objects.filter(building__name=building_name, pk=room_number)[0]
         
         # get list of watchers
         i = 1
@@ -151,12 +151,13 @@ def assign_room(request):
         occu.watcher.set(watchers)
         occu.save()
     
+    # sum = [Occupancy.objects.get_count_for_date(2019, 5, d) for d in range(1, 32)] 
     
     context = {
         'type': type,
         'error': error,
-        'watchers': watchers,
-        'post': post,
+        'watchers': sum,
+        'post': Occupancy.objects.get_count_for_month(2019, 5),
     }
     
     
