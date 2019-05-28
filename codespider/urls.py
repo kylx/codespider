@@ -23,11 +23,11 @@ urlpatterns = [
     path('debug', include(debug_toolbar.urls)),
 
     # main pages
-    path('asd', tmp_date, name='asd'),
-    re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
+    # path('asd', tmp_date, name='asd'),
+    # re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
     # path('asd/<yyyy:year>/<mm:month>', tmp_date),
-    re_path(r'^fish$', regex, name='fish'),
-    re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
+    # re_path(r'^fish$', regex, name='fish'),
+    # re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
     
     path('home'             , home          , name='home'),
     re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),

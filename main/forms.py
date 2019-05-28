@@ -60,7 +60,7 @@ class PatientForm(ModelForm):
 			    attrs = {
 				    'class' : 'form-control, input'
 			    },
-                choices = get_diagnosis_list(),
+                choices = []
             ),
 			
 			'region': forms.Select (
@@ -243,9 +243,9 @@ class SummaryForm(ModelForm):
 		model = Patient
 		fields = ['city']
 		
-	monthYearChosen = forms.DateField (
+	DateChosen = forms.DateField (
         widget = forms.DateInput (
-			format = '%m/%Y',
+			format = '%m/d%/%Y',
 			attrs = {
 				'type': 'date',
 				'class': 'form-control'

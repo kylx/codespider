@@ -325,12 +325,15 @@
         </div>
     </div>
 </div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	Fish
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
 {% endblock page_body %}
 
-{% block page_js %}   
-
-<script src="{% static 'js/x/date.js' %}"></script>
-
+{% block page_js %}
 <script>
 
 function sleep(ms) {
@@ -510,6 +513,6 @@ window.onload = function() {
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
-</script>
 
+</script>
 {% endblock page_js %}
