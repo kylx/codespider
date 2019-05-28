@@ -160,11 +160,12 @@ def assign_room(request):
         'type': type,
         'error': error,
         'watchers': sum,
-        'post': Occupancy.objects.get_count_for_month(2019, 5),
+        # 'post': Occupancy.objects.get_count_for_month(2019, 5),
     }
     
     
-    
+    request.session['error'] = error;
+    return redirect('rooms/main')
     return render(request, 'tmp/assign-room.html', context)
 
 def rooms(request, building, year=-1, month=-1, day=-1):
@@ -198,6 +199,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'relationships': Watcher.objects.get_relationship_list(),
         'rooms': Room.objects.get_list(),
         'buildings': Building.objects.get_list(),
+        'error': request.GET.get('error', 'fish'),
         
 		# 'rooms': ['fish','is', 'love'],
     }
