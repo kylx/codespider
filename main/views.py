@@ -11,8 +11,10 @@ from .models.occupancy import Occupancy
 from .models.room import Room
 from .models.building import Building
 from .models.watcher import Watcher
+from django.utils.http import urlencode
 import datetime
 import json
+from django.contrib import messages
 
 from django.contrib import messages
 from django.shortcuts import render
@@ -97,7 +99,11 @@ def assign_room(request):
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
     if len(pat) == 0:
         error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
     else:
+        # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        
+        
         pat = pat[0]
     
         # check if patient is currently visiting
@@ -164,8 +170,9 @@ def assign_room(request):
     }
     
     
-    request.session['error'] = error;
-    return redirect('rooms/main')
+    request.session['error_msg'] = error
+    request.session.modified = True
+    return redirect("rooms/main")
     return render(request, 'tmp/assign-room.html', context)
 
 def rooms(request, building, year=-1, month=-1, day=-1):
@@ -183,7 +190,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
 
     # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
     occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
-
+    request.session['error'] = 'haha'
     context = {
         'url_name': 'ROOMS',
 		'form': form,
@@ -199,7 +206,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'relationships': Watcher.objects.get_relationship_list(),
         'rooms': Room.objects.get_list(),
         'buildings': Building.objects.get_list(),
-        'error': request.GET.get('error', 'fish'),
+        'error': request.session.get('error_msg', 'fish'),
         
 		# 'rooms': ['fish','is', 'love'],
     }

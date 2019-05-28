@@ -291,6 +291,21 @@
 			</div>
 		</div>
 	</div>
+    
+{% if messages %}
+
+<!-- <ul class="messages"> -->
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+    {% endfor %}
+<!-- </ul> -->
+{% endif %}
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
@@ -325,13 +340,7 @@
         </div>
     </div>
 </div>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{error}}
-  fish {{fish}} is love
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+
 {% endblock page_body %}
 
 {% block page_js %}
