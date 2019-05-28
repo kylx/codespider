@@ -18,6 +18,7 @@ from django.contrib import messages
 
 from django.contrib import messages
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 
 from django.http import HttpResponse
@@ -46,25 +47,43 @@ def transfer_room(request):
     middle_initial = post.get('middle_initial', 1)
     
     # check if patient exists
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    else:
+        pat = pat.first()
     
-    # check if patient is currently visiting
-    visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
+        # check if patient is currently visiting
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+        
+        if len(visit) == 0:
+            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
+        else:
+            
+            visit = visit.first()
+            # visit.is_ongoing = False
+            visit.save()
+        
+        
+        
+        
+            # check if room is valid
+            room = Room.objects.filter(pk=room_number)[0]
+            occu = Occupancy.objects.filter(
+                visit=visit,
+                date=date,
+            )[0]
+            if occu.room == room:
+                messages.success(request, 'Transfering to the same room!')
+            else:
+                messages.success(request, 'Room transfer succesful!')
+            occu.room = room
+            occu.save()
+            
+        
     
-    # check if room is valid
-    room = Room.objects.filter(pk=room_number)[0]
-    occu = Occupancy.objects.filter(
-        visit=visit,
-        date=date,
-    )[0]
-    occu.room = room
-    occu.save()
     
-    context = {
-    
-    }
-    
-    return render(request, 'tmp/transfer-room.html', context)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
 def checkout(request):
     post = request.POST
@@ -74,19 +93,30 @@ def checkout(request):
     middle_initial = post.get('middle_initial', 1)
     
     # check if patient exists
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)[0]
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    else:
+        pat = pat.first()
+        # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        # msg_success = f'Room assignment successful!'
     
     # check if patient is currently visiting/assigned to a room
-    visit = Visit.objects.filter(patient=pat, is_ongoing=True)[0]
-    visit.is_ongoing = False
-    visit.save()
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+        if len(visit) == 0:
+            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
+        else:
+            messages.success(request, 'Checkout succesful!')
+            visit = visit.first()
+            visit.is_ongoing = False
+            visit.save()
     context = {
         'post_stuff': post
     }
     
     
     
-    return render(request, 'tmp/checkout.html', context)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def assign_room(request):
     type = 'assign room'
@@ -103,7 +133,7 @@ def assign_room(request):
     date_from = post.get('date_from', None)
     date = post.get('date', None)
     
-    
+    msg_success = None
     
     # check if patient exists
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
@@ -112,6 +142,7 @@ def assign_room(request):
         messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
     else:
         # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        msg_success = f'Room assignment successful!'
         
         
         pat = pat[0]
@@ -164,11 +195,15 @@ def assign_room(request):
             )
             occu.save()
         else:
+            msg_success = f'Re-assigning to the same room. Old table values have been updated.'
             occu = occu.first()
             # occu.watcher_set.all().delete()
         
         occu.watcher.set(watchers)
         occu.save()
+        
+    if msg_success:
+        messages.success(request, msg_success)
     
     # sum = [Occupancy.objects.get_count_for_date(2019, 5, d) for d in range(1, 32)] 
     
@@ -182,8 +217,8 @@ def assign_room(request):
     
     request.session['error_msg'] = error
     request.session.modified = True
-    return redirect("rooms/main")
-    return render(request, 'tmp/assign-room.html', context)
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def rooms(request, building, year=-1, month=-1, day=-1):
     print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
@@ -221,6 +256,8 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         
 		# 'rooms': ['fish','is', 'love'],
     }
+    # messages.success(request, f'ss')
+    # messages.error(request, f'ee')
     return render(request, 'main/rooms.html', context)
 
 def patients(request):

@@ -66,6 +66,23 @@
 {% endblock nav_bar_right %}
 
 {% block page_body %}
+
+{% if messages %}
+								{% for message in messages %}
+                                {% if message.tags == "error" %}
+                                <div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
+                                {% else %}
+                                <div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
+                                {% endif %}
+                                {{ message }}
+                                  <!-- {{ message }} -->
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                
+                                {% endfor %}
+							{% endif %}
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12 room-title-container">
@@ -291,20 +308,6 @@
 		</div>
 	</div>
     
-{% if messages %}
-
-<!-- <ul class="messages"> -->
-    {% for message in messages %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
-    {% endfor %}
-<!-- </ul> -->
-{% endif %}
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
