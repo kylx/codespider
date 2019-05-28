@@ -10,6 +10,12 @@
 
 {% block page_stylesheet %}
 	<link media="screen" rel="stylesheet" href="{% static 'css/summary-daily.css' %}">
+	<link media="screen" rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link media="screen" rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-print.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-table-print.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/rooms-form-print.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -74,6 +80,106 @@
 			</form>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-lg-12 room-title-container">
+			<div class="room-title text-center">
+				{{ building }}
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-lg-12 date-container">
+            <div class="row">
+                <div class="col-lg-6 text-right">
+                    <div class="day" id="theDay">{{ day }}</div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="day-week" id="theDayWeek">{{ weekday }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="month-year" id="theMonthYear">{{ month_name }} {{ year }}</div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-12 counter-container">
+            <div class="row">
+                <div id="patient" class="col-lg-6 cname" >Patients</div>
+                <div id="watchers" class="col-lg-6 cname" >Watchers</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div id="boys" class="col-lg-6 cname">Boys</div>
+                                <div id="boysN" class="col-lg-6 cnum-2">{{ count.boys }}</div>
+                            </div>
+                            <div class="row">
+                                <div id="girls" class="col-lg-6 cname">Girls</div>
+                                <div id="girlsN" class="col-lg-6 cnum-2">{{ count.girls }}</div>
+                            </div>
+                        </div>
+                        <div id="total" class="col-lg-6 cnum-1">{{ count.total }}</div>
+                    </div>
+                </div>
+                <div id="watch" class="col-lg-6 cnum-1">{{ count.watchers }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-table">
+            <div class="wrap-table">
+                <table class="table" id="table">
+                
+                <thead>
+                    <tr class="table-head text-center">
+                        <th class="col-1">Room #</th>
+                        <th class="col-2">Patient's Name</th>
+                        <th class="col-3">No. of Watcher(s)</th>
+                        <th class="col-4">Relationship(s)</th>
+                        <th class="col-5">Date of Stay</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+					{% comment %}
+                    {% for patient in daily %}
+                    <tr>
+						#Room #
+                        <td class="col-1">{{ room.room.display_name }}</td>
+						#Patient's Name
+                        <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
+                        #Age
+						<td class="col-3">{{ room.watchers.count }}</td>
+                        #Sex
+						<td class="col-4">{{ room.watchers.list }}</td>
+                        #Diagnosis
+						<td class="col-5">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						#Watcher #
+						<td class="col-6">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						#Relationship
+						<td class="col-7">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						#Date of Stay
+						<td class="col-8">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						#Address
+						<td class="col-9">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+                    </tr>
+					{% endfor %} 
+					{% endcomment %}
+                </tbody>
+                
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock page_body %}
 
