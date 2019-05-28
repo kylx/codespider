@@ -14,6 +14,9 @@ from .models.watcher import Watcher
 import datetime
 import json
 
+from django.contrib import messages
+from django.shortcuts import render
+
 
 from django.http import HttpResponse
 
@@ -209,6 +212,18 @@ def patients(request):
 		'form': form,
         'diagnosis': Diagnosis.objects.get_diagnosis_list()
     }
+	
+	# For message after submit validation 
+    if request.method == "POST":
+        patient_form = PatientForm(request.POST)
+		
+        if patient_form.is_valid():
+            patient_form.save()
+            messages.success(request, 'Patient created successfully.')
+            return render(request,"main/patients.html", context)
+        else:
+            messages.error(request, patient_form.errors)
+
     return render(request, 'main/patients.html', context)
 
 def summary_daily(request):
