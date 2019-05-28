@@ -326,10 +326,7 @@
 </div>
 {% endblock page_body %}
 
-{% block page_js %}   
-
-<script src="{% static 'js/x/date.js' %}"></script>
-
+{% block page_js %}
 <script>
 
 function sleep(ms) {
@@ -508,10 +505,6 @@ window.onload = function() {
 	});
 	body.appendChild(fragment);
 	console.timeEnd('loop');
-};
-
-
-	
+};	
 </script>
-
 {% endblock page_js %}
