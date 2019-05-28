@@ -54,7 +54,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<form method="post" action="">
+			<form id="search_form">
 				<div class="summaryM-date">
 					{% csrf_token %}
 					<div class="row">
@@ -65,7 +65,7 @@
 							{{ form.DateChosen }}
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success">
+					<button type="submit" class="btn btn-success" id="search_button">
 						<span>
 							Search
 							<i class="fa fa-search" aria-hidden="true"></i>
@@ -102,4 +102,64 @@
 {% endblock page_body %}
 
 {% block page_js %}
+
+<script>
+
+<!-- document.onLoad = function(){ -->
+console.log("AAAA");
+    
+<!-- $('#search_form').on('submit', function(e){ -->
+$('#search_form').submit(function(e){
+    let date =  $('#id_DateChosen')[0].value;
+    let doc = document;
+    
+    // clear table and add loading
+    let tbody = doc.getElementById('app');
+    tbody.innerHTML = '';
+    let tr = doc.createElement('tr');
+    let td = doc.createElement('td');
+    td.setAttribute('colspan', 3);
+    td.innerText = 'Loading...';
+    tbody.appendChild(tr);
+    tr.appendChild(td);
+    
+    date = date.split('-');
+    console.log(date);
+    Pace.restart();
+    
+    var loading = true;
+    fetch("summary/monthly/"+date[0]+"/"+date[1])
+        .then((response)=>{
+            return response.json();
+        }).then((json)=>{
+            <!-- console.log(json); -->
+            
+            tbody.innerHTML = '';
+            
+            json.forEach((row)=>{
+                <!-- console.log(row); -->
+                let tr = doc.createElement('tr');
+                let day = doc.createElement('td');
+                let numPatients = doc.createElement('td');
+                let numWatchers = doc.createElement('td');
+                tr.appendChild(day);
+                tr.appendChild(numPatients);
+                tr.appendChild(numWatchers);
+                tbody.appendChild(tr);
+                
+                day.innerText = row[0];
+                numPatients.innerText = row[1].patients;
+                numWatchers.innerText = row[1].watchers;
+            });
+        });
+    
+    <!-- e.prevenDefault(); -->
+    return false;
+});
+
+
+
+<!-- } -->
+
+</script>
 {% endblock page_js %}
