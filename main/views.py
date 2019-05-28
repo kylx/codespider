@@ -234,16 +234,18 @@ def patients(request):
     }
 	
 	# For message after submit validation 
-    if request.method == "POST":
-        patient_form = PatientForm(request.POST)
+    # if request.method == "POST":
+        # patient_form = PatientForm(request.POST)
 		
-        if patient_form.is_valid():
-            patient_form.save()
-            messages.success(request, 'Patient created successfully.')
-            return render(request,"main/patients.html", context)
-        else:
-            messages.error(request, patient_form.errors)
-
+        # if patient_form.is_valid():
+            # patient_form.save()
+            # messages.success(request, 'Patient created successfully.')
+            # return render(request,"main/patients.html", context)
+        # else:
+            # messages.error(request, patient_form.errors)
+    # messages.error(request, f'HAHAHAHA')
+    # messages.success(request, f'ss')
+    # messages.error(request, f'ee')
     return render(request, 'main/patients.html', context)
 
 def summary_daily(request):
@@ -293,11 +295,19 @@ def tmp_create_patient(request):
         post.region = request.POST.get('region')
         post.province = request.POST.get('province')
         post.city = request.POST.get('city')
-        post.save()
-        return render(request, 'main/forms/patientform.html', context)
+        
+        if len(Patient.objects.filter(first_name= post.first_name,middle_initial= post.middle_initial,last_name=post.last_name)) == 0:
+            post.save()
+            messages.success(request, f'Patient creation successful')
+        else:
+            messages.error(request, f'ERROR: Patient {post.last_name}, {post.first_name} {post.middle_initial}. already exists')
+        # return render(request, 'main/forms/patientform.html', context)
 
-    else:
-        return render(request, 'main/forms/patientform.html', context)
+    # else:
+    # messages.error(request, f'a{post.last_name}')
+    # messages.error(request, f'b{post.first_name}')
+    # messages.error(request, f'c{post.middle_initial}')
+    return redirect('patients')
 
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
