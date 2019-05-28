@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Count
 
 from .patient import Patient
+# from .building import Building
+from .room import Room
 
 import datetime
 import calendar
@@ -81,7 +83,8 @@ class OccupancyManager(models.Manager):
                 'boys': male,
                 'girls': female,
                 'total': male+female,
-            }
+            },
+            'num_rooms': Room.objects.filter(building__name=building).count()
         }
     
     

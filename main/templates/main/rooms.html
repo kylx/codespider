@@ -355,6 +355,7 @@ function capFirst(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+var num_rooms = {{num_rooms}};
 var rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
 var buildings = JSON.parse("{{buildings | escapejs}}".replace(/'/g, '"'));
 var building = "{{building}}";
@@ -489,12 +490,62 @@ window.onload = function() {
 	var fragment = document.createDocumentFragment();
 	// console.log(body);
 	console.time('loop');
-	raw_json.forEach(occ => {
+    var room_num = 1;
+    var last_room = 0;
+	raw_json.forEach((occ, i, occs) => {
 		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+        
+        // add empty rooms
+        console.log('pre', parseInt(room), room_num);
+        while (room_num < parseInt(room)){
+            let row = document.createElement('tr');
+            let td_room = document.createElement('td');
+            td_room.setAttribute("id" , "row-1");
+            let td_patient = document.createElement('td');
+            let td_num_watchers = document.createElement('td');
+            td_num_watchers.setAttribute("id" , "row-3");
+            let td_relationships = document.createElement('td');
+            let td_date = document.createElement('td');
+            td_date.setAttribute("id" , "row-5");
+            row.appendChild(td_room);
+            row.appendChild(td_patient);
+            row.appendChild(td_num_watchers);
+            row.appendChild(td_relationships);
+            row.appendChild(td_date);
+            fragment.appendChild(row);
+            // td_room.className = ""
+
+            td_room.textContent = room_num;
+            if (room_num < parseInt(room))
+            <!-- room_num--; -->
+                room_num++;
+            <!-- td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.'; -->
+            <!-- td_num_watchers.textContent = String(watchers.count); -->
+            <!-- td_relationships.textContent = watchers.list; -->
+            <!-- td_date.textContent = date_string; -->
+            console.log('skip', parseInt(room), room_num);
+        }
+        if (i+1 < occs.length){
+            let next_room = parseInt(occs[i+1].room);
+            if (room_num+1 == next_room){
+                room_num = next_room;
+            }
+            else if(room_num == next_room){
+                // magic ambot
+            }
+            else if (room_num+1 < num_rooms) {
+                room_num++;
+                console.log('ssss', room_num);
+                
+            }
+        }
+        
+        last_room = parseInt(room);
+        
         let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
         date_string += date_of_stay.end.month_name + ' ';
         date_string += date_of_stay.end.day;
-        console.log(date_string);
+        <!-- console.log(date_string); -->
 		let row = document.createElement('tr');
 		let td_room = document.createElement('td');
 		td_room.setAttribute("id" , "row-1");
@@ -517,10 +568,40 @@ window.onload = function() {
 		td_num_watchers.textContent = String(watchers.count);
 		td_relationships.textContent = watchers.list;
 		td_date.textContent = date_string;
+        
+        
+        console.log('last', parseInt(room), room_num);
 
 		// await sleep(5000);
 		// console.log(room, patient, watchers, date_of_stay);
 	});
+    if (room_num == last_room)
+        room_num++;
+    while (room_num <= num_rooms){
+        let row = document.createElement('tr');
+        let td_room = document.createElement('td');
+        td_room.setAttribute("id" , "row-1");
+        let td_patient = document.createElement('td');
+        let td_num_watchers = document.createElement('td');
+        td_num_watchers.setAttribute("id" , "row-3");
+        let td_relationships = document.createElement('td');
+        let td_date = document.createElement('td');
+        td_date.setAttribute("id" , "row-5");
+        row.appendChild(td_room);
+        row.appendChild(td_patient);
+        row.appendChild(td_num_watchers);
+        row.appendChild(td_relationships);
+        row.appendChild(td_date);
+        fragment.appendChild(row);
+        // td_room.className = ""
+
+        td_room.textContent = room_num;
+        room_num++;
+        <!-- td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.'; -->
+        <!-- td_num_watchers.textContent = String(watchers.count); -->
+        <!-- td_relationships.textContent = watchers.list; -->
+        <!-- td_date.textContent = date_string; -->
+    }
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };

@@ -216,6 +216,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'relationships': Watcher.objects.get_relationship_list(),
         'rooms': Room.objects.get_list(),
         'buildings': Building.objects.get_list(),
+        'num_rooms': occ['num_rooms'],
         'error': request.session.get('error_msg', 'fish'),
         
 		# 'rooms': ['fish','is', 'love'],
