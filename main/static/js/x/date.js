@@ -1,4 +1,4 @@
-var isDay = { day: 'numeric' } ;
+var isDay = { day: 'numeric' };
 var isDayWeek = { weekday: 'long' };
 var isMonthYear = { month: 'long', year: 'numeric' };
 
