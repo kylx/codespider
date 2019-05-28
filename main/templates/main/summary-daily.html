@@ -141,11 +141,15 @@
                 
                 <thead>
                     <tr class="table-head text-center">
-                        <th class="col-1">Room #</th>
-                        <th class="col-2">Patient's Name</th>
-                        <th class="col-3">No. of Watcher(s)</th>
-                        <th class="col-4">Relationship(s)</th>
-                        <th class="col-5">Date of Stay</th>
+                        <th class="col-1-d">Room #</th>
+                        <th class="col-2-d">Patient's Name</th>
+                        <th class="col-3-d">Age</th>
+                        <th class="col-4-d">Sex</th>
+                        <th class="col-5-d">Diagnosis</th>
+						<th class="col-6-d">Watcher #</th>
+						<th class="col-7-d">Relationship</th>
+						<th class="col-8-d">Date of Stay</th>
+						<th class="col-9-d">Address</th>
                     </tr>
                 </thead>
 
@@ -153,24 +157,15 @@
 					{% comment %}
                     {% for patient in daily %}
                     <tr>
-						#Room #
-                        <td class="col-1">{{ room.room.display_name }}</td>
-						#Patient's Name
-                        <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
-                        #Age
-						<td class="col-3">{{ room.watchers.count }}</td>
-                        #Sex
-						<td class="col-4">{{ room.watchers.list }}</td>
-                        #Diagnosis
-						<td class="col-5">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						#Watcher #
-						<td class="col-6">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						#Relationship
-						<td class="col-7">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						#Date of Stay
-						<td class="col-8">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						#Address
-						<td class="col-9">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+                        <td class="col-1-d">{{ room.room.display_name }}</td>
+                        <td class="col-2-d">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
+						<td class="col-3-d">{{ room.watchers.count }}</td>
+						<td class="col-4-d">{{ room.watchers.list }}</td>
+						<td class="col-5-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						<td class="col-6-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						<td class="col-7-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						<td class="col-8-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
+						<td class="col-9-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
                     </tr>
 					{% endfor %} 
 					{% endcomment %}
