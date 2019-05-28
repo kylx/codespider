@@ -477,7 +477,7 @@ window.onload = function() {
 	raw_json.forEach(occ => {
 		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
         let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
-        date_string += date_of_stay.start.month_name + ' ';
+        date_string += date_of_stay.end.month_name + ' ';
         date_string += date_of_stay.end.day;
         console.log(date_string);
 		let row = document.createElement('tr');

@@ -84,9 +84,11 @@ def assign_room(request):
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
-    date_to = datetime.datetime.now()
-    date_from = datetime.datetime.now()
+    date_to = post.get('date_to', None)
+    date_from = post.get('date_from', None)
     date = post.get('date', None)
+    
+    
     
     # check if patient exists
     pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
@@ -104,14 +106,16 @@ def assign_room(request):
             visit = Visit(
                 patient=pat,
                 start_date=date_from,
-                actual_end_date=date_to,
                 assigned_end_date=date_to,
                 is_ongoing=True
             )
             visit.save()
         else:
             visit = visit[0] # get first element
-            
+            visit.start_date = datetime.datetime.strptime(date_from, '%Y-%m-%d')
+            print(f'date to {date_to}')
+            visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
+            visit.save()
         # Get room
         room = Room.objects.filter(building__name=building_name, display_number=room_number)[0]
         
@@ -128,7 +132,7 @@ def assign_room(request):
                 watchers.append(int(key.split('_')[1]))
             i += 1
         
-        watcher=Watcher.objects.order_by('?').first(),
+        # watcher=Watcher.objects.order_by('?').first(),
         
         occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
         if len(occu) == 0:
