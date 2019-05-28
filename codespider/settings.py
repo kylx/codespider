@@ -118,13 +118,23 @@ WSGI_APPLICATION = 'codespider.wsgi.application'
 
 # Read more: https://docs.djangoproject.com/en/2.1/ref/databases/
 # settings.py
+
+# SQL
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'OPTIONS': {
+            # 'read_default_file': 'codespider/db.cnf',
+            # 'sql_mode': 'STRICT_TRANS_TABLES',
+        # },
+    # }
+# }
+
+# for sqLITE
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': 'codespider/db.cnf',
-            'sql_mode': 'STRICT_TRANS_TABLES',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
