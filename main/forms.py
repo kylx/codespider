@@ -243,9 +243,9 @@ class SummaryForm(ModelForm):
 		model = Patient
 		fields = ['city']
 		
-	monthYearChosen = forms.DateField (
+	DateChosen = forms.DateField (
         widget = forms.DateInput (
-			format = '%m/%Y',
+			format = '%m/d%/%Y',
 			attrs = {
 				'type': 'date',
 				'class': 'form-control'

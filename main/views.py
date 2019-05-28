@@ -212,7 +212,11 @@ def patients(request):
     return render(request, 'main/patients.html', context)
 
 def summary_daily(request):
-    context = {'url_name': 'SUMMARY'}
+    form = SummaryForm()
+    context = {
+        'url_name': 'SUMMARY',
+		'form': form
+    }
     return render(request, 'main/summary-daily.html', context)
 	
 def summary_monthly(request):

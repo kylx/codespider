@@ -1,0 +1,21 @@
+.col-lg-12 {
+    padding: 0;
+}
+
+.summaryM-title-container {
+	padding: 2% 0% 0% 0%;
+}
+
+.summaryM-title {
+	font-size: 50px;
+    text-transform: uppercase;
+}
+
+.summaryM-date {
+	text-align: center;
+}
+
+.summaryM-input {
+	width: 50%;
+	margin: 1% 40% 1% 40%;
+}
