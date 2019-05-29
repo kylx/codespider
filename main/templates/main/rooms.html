@@ -66,23 +66,20 @@
 {% endblock nav_bar_right %}
 
 {% block page_body %}
-
-{% if messages %}
-								{% for message in messages %}
-                                {% if message.tags == "error" %}
-                                <div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
-                                {% else %}
-                                <div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
-                                {% endif %}
-                                {{ message }}
-                                  <!-- {{ message }} -->
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                
-                                {% endfor %}
-							{% endif %}
+	{% if messages %}			
+		{% for message in messages %}
+			{% if message.tags == "error" %}
+				<div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
+			{% else %}
+				<div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
+			{% endif %}
+			{{ message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+		{% endfor %}
+	{% endif %}
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12 room-title-container">
@@ -346,10 +343,8 @@
 {% endblock page_body %}
 
 {% block page_js %}
-
 <script src="{% static 'js/x/date.js' %}"></script>
 <script>
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -608,6 +603,5 @@ window.onload = function() {
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
-
 </script>
 {% endblock page_js %}
