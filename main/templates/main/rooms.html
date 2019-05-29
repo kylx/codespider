@@ -346,10 +346,9 @@
 {% endblock page_body %}
 
 {% block page_js %}
-
-<script src="{% static 'js/x/date.js' %}"></script>
+	
 <script>
-
+	
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -609,5 +608,9 @@ window.onload = function() {
 	console.timeEnd('loop');
 };
 
+
+
 </script>
+
+<script src="{% static 'js/x/date.js' %}"></script>
 {% endblock page_js %}
