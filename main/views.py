@@ -9,6 +9,9 @@ from .models.patient import Patient
 import datetime
 import json
 
+from django.core import serializers
+
+
 
 from django.http import HttpResponse
 
@@ -55,10 +58,10 @@ def patients(request):
     form = PatientForm()
     context = {
         'url_name': 'PATIENTS',
-        'patients': patient_list,
+        'patients': list(patient_list),
 		'form': form,
-        'diagnosis': Diagnosis.objects.get_diagnosis_list(),    
-        'patient_info': Patient.objects.all()
+        'diagnosis': Diagnosis.objects.get_diagnosis_list(), 
+        'patient_info': serializers.serialize("json", Patient.objects.all())
     }
     return render(request, 'main/patients.html', context)
 

@@ -156,46 +156,46 @@
                 
                 </table>
 
-				<div class="modal" id="PatientsInfoModal" >
+				<div class="modal" id="PatientsInfoModal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 							
 							<div class="modal-body">
                                 
 								<div class="row">
-									<div class="col-lg-12" id = 'name'>
-										Name:   
-                                     </div>
+									<div class="col-lg-12">
+										Name:  {% for patient in patients %} {{ patient_hist.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.{% endfor %}
+									</div>
 								</div>
 
-								<div class="row" >
-									<div class="col-lg-12" id='age'>
-										Age: 
-									</div>
-								</div>
 								<div class="row">
-									<div class="col-lg-12" id = 'sex'>
-										Sex: 
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12" id= 'address'>
-										Address: 
-                                    </div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12" id= 'diagnosis'>
-										Diagnosis: 
+									<div class="col-lg-12">
+										Age: {{ patients.age }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Total No. of Days: 
-                                    </div>
+										Sex: {{ patient.sex }}
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Frequency: 
+										Address: {{ patient.region }} | {{ patient.province }} | {{ patient.city }}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										Diagnosis: {{ patient.diagnosis }}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										Total No. of Days: {{ patient.total_days }}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										Frequency: {{ patient.frequency }}
 									</div>
 								</div>
 								<div class="row">
@@ -250,56 +250,6 @@
 
 <script>
 $(document).ready(function() {
-    var raw = '{{ patient_info | escapejs }}';
-    var raw_json = JSON.parse(raw);
-    console.log(raw_json)
-
-
-    var body = document.getElementById('name');
-    var fragment = document.createDocumentFragment();
-
-        // console.log(body);
-    // console.time('loop');
-    raw_json.forEach(occ => {
-        // let {pk, first_name, last_name, middle_initial, age, sex, diagnosis, region, province, city} = occ;
-        // console.log(occ)
-        let first_name = document.getElementById('name');
-
-        // let last_name = document.getElementsById('name');
-        // let middle_initial = document.getElementsById('td');
-        // let age = document.getElementsById('age');
-        // let sex = document.getElementsById('sex');
-        // .appendChild(first_name);
-        // .appendChild(last_name);
-        // .appendChild(middle_initial);
-        // .appendChild(td_relationships);
-        // .appendChild(td_date);
-        // fragment.appendChild();
-        // td_room.className = ""
-
-        // td_room.textContent = room;
-        // td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
-        // td_num_watchers.textContent = String(watchers.count);
-        // td_relationships.textContent = watchers.list;
-        // td_date.textContent = date_string;
-
-        // await sleep(5000);
-        // console.log(room, patient, watchers, date_of_stay);
-        body.innerText = occ.fields.last_name;
-
-    });
-
-    raw_json.find(finder)
-    body.appendChild(fragment);
-    // console.timeEnd('loop');
-
-    function finder(patient)
-    {
-        console.log("Finder", patient);
-    }
-
-
-
 	let reg = $('select[name=region]');
 	let prov = $('select[name=province]');
 	let city = $('select[name=city]');
@@ -354,33 +304,18 @@ $(document).ready(function() {
 		dropdown.appendChild(option); // add option to dropdown
 	}
 
-});
-
-var lname, fname, mname;
-//onclclicksummarize
-$("tr").click(function()
-{
-    $("td", this).each(function(j) 
-    {
-        console.log(j, ($(this).text()));
-        if (j == 0)
-        {
-            lname = $(this).text();
-        }
-
-        if (j == 1)
-        {
-            fname = $(this).text();
-        }
-        if (j == 2)
-        {
-            mname = $(this).text();
-        }
+    function infogetter(patient){   
+        patient_hist = list(patient_info)
+        return patient_info;
     }
-  )
-
-console.log(lname, fname, mname);
-    ;
+});
+//onclclicksummarize
+$("tr").click(function() {
+   
+    $("td", this).each(function( j ) {
+    console.log("".concat("row: ", , ", col: ", j, ", value: ", $(this).text()));
+  });
+    console.log("Your data is: " , this(j));
 });
 </script>
 {% endblock page_body %}
