@@ -49,7 +49,7 @@ urlpatterns = [
     path('tmp/rand', rand_patient, name="rand"),
 
     # requires input
-    path('tmp/action/create-patient', test, name='action/create-patient'),
+    path('tmp/action/create-patient', tmp_create_patient, name='action/create-patient'),
     path('action/assign-room', assign_room, name='action/assign-room'),
     path('action/checkout', checkout, name='action/checkout'),
     path('action/transfer-room', transfer_room, name='action/transfer-room'),
