@@ -180,31 +180,6 @@ class FilterForm(ModelForm):
 			})
 		)
 	
-    patient = forms.MultipleChoiceField (
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['p-a', 'All Patients'],
-			['p-b', 'Boys'],
-			['p-g', 'Girls']
-		]
-    )
-	
-    watcher = forms.MultipleChoiceField (
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['w', 'Watchers'],
-		]
-    )
-	
-    building = forms.MultipleChoiceField (
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['b-al', 'All Buildings'],
-			['b-ma', 'Main'],
-			['b-an', 'Annex'],
-		]
-    )
-	
     class Meta:
         model = Patient
         fields = ['diagnosis', 'region', 'province', 'city']

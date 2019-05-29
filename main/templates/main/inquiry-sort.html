@@ -120,6 +120,23 @@
 						</div>	
 					</div>
 				</div>
+				<table class="table text-center">
+					<thead>
+						<tr class="table-head">
+							<th class="s-col-1"></th>
+							<th class="s-col-2">Number of Patients</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for patient in patients %}
+						<tr>
+							<td class="s-col-1">Diagnosis 1</td>
+							<td class="s-col-2">20</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+                </table>
 			</div>
 		</div>
 	</div>
