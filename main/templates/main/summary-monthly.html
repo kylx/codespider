@@ -10,6 +10,7 @@
 
 {% block page_stylesheet %}
 	<link media="screen" rel="stylesheet" href="{% static 'css/summary-monthly.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/summary-monthly-print.css' %}">
 	<link rel="stylesheet" href="{% static 'css/patients-table.css' %}">
 {% endblock page_stylesheet %}
 
@@ -58,7 +59,7 @@
 				<div class="summaryM-date">
 					{% csrf_token %}
 					<div class="row">
-						<div class="col-lg-12">
+						<div id="DateChooser" class="col-lg-12" >
 							Choose Date
 						</div>
 						<div class="summaryM-input">
@@ -79,18 +80,18 @@
                 <table class="table" id="table">
 					<thead>
 						<tr class="table-head">
-							<th class="col-1">Day</th>
-							<th class="col-2">No. of Patients</th>
-							<th class="col-3">No. of Watchers</th>
+							<th id="colu-1" class="col-1">Day</th>
+							<th id="colu-1" class="col-1">No. of Patients</th>
+							<th id="colu-1" class="col-1">No. of Watchers</th>
 						</tr>
 					</thead>
 
 					<tbody id="app">
 						{% for day in month %}
 						<tr>
-							<td class="col-1">{{ month.day }}</td>
-							<td class="col-2">{{ month.patient_num }}</td>
-							<td class="col-3">{{ month.watcher_num }}</td>
+							<td id="colu-1" class="col-1">{{ month.day }}</td>
+							<td id="colu-1" class="col-1">{{ month.patient_num }}</td>
+							<td id="colu-1" class="col-1">{{ month.watcher_num }}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
