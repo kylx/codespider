@@ -261,30 +261,7 @@ $(document).ready(function() {
         // console.log(body);
     // console.time('loop');
     raw_json.forEach(occ => {
-        // let {pk, first_name, last_name, middle_initial, age, sex, diagnosis, region, province, city} = occ;
-        // console.log(occ)
         let first_name = document.getElementById('name');
-
-        // let last_name = document.getElementsById('name');
-        // let middle_initial = document.getElementsById('td');
-        // let age = document.getElementsById('age');
-        // let sex = document.getElementsById('sex');
-        // .appendChild(first_name);
-        // .appendChild(last_name);
-        // .appendChild(middle_initial);
-        // .appendChild(td_relationships);
-        // .appendChild(td_date);
-        // fragment.appendChild();
-        // td_room.className = ""
-
-        // td_room.textContent = room;
-        // td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
-        // td_num_watchers.textContent = String(watchers.count);
-        // td_relationships.textContent = watchers.list;
-        // td_date.textContent = date_string;
-
-        // await sleep(5000);
-        // console.log(room, patient, watchers, date_of_stay);
         body.innerText = occ.fields.last_name;
 
     });
