@@ -1,3 +1,7 @@
+ul {
+	list-style: none;
+}
+
 .filter-body .col-lg-4 {
 	padding: 3% 1% 0% 1%;
 }
@@ -122,4 +126,27 @@
 .results-container .col-lg-4,
 .results-container .col-lg-12 {
 	padding: 0;
+}
+
+.f-col-1 {
+	width: 40%;
+}
+
+.f-col-2,
+.f-col-3,
+.f-col-4 {
+	width: 20%;
+}
+
+.s-col-1 {
+	width: 60%;
+	
+}
+
+.s-col-2 {
+	width: 40%;
+}
+
+#id_diagnosis {
+	margin-top: 20px;
 }

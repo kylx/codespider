@@ -1,0 +1,58 @@
+.col-lg-12 {
+    padding: 0;
+}
+
+.summaryD-title-container {
+	padding: 2% 0% 0% 0%;
+}
+
+.summaryD-title {
+	font-size: 50px;
+    text-transform: uppercase;
+}
+
+.summaryD-date {
+	text-align: center;
+	padding-bottom: 50px;
+}
+
+.summaryD-input {
+	width: 50%;
+	margin: 1% 40% 1% 40%;
+}
+
+.col-1-d {
+	width: 20px;
+}
+
+.col-2-d {
+	width: 268px;
+}
+
+.col-3-d {
+	width: 20px;
+}
+
+.col-4-d {
+	width: 20px;
+}
+
+.col-5-d {
+	width: 213px;
+}
+
+.col-6-d {
+	width: 20px;
+}
+
+.col-7-d {
+	width: 213px;
+}
+
+.col-8-d {
+	width: 213px;
+}
+
+.col-9-d {
+	width: 213px;
+}

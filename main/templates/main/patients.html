@@ -49,20 +49,33 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
+			{% if messages %}
+				{% for message in messages %}
+				{% if message.tags == "error" %}
+				<div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
+				{% else %}
+				<div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
+				{% endif %}
+				{{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				{% endfor %}
+			{% endif %}
             <div class="patient_add-container">
-            
                 <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#PatientsModal">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Add New Patient
                 </button>
-                
+
                 <div class="modal" id="PatientsModal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header modal-title">
                                 Patient Information
                             </div>
-                            <form method="post" action="{% url 'forms/create-patient' %}">
+                            <form method="post" action="{% url 'action/create-patient' %}">
                                 <div class="modal-body">
                                     {% csrf_token %}
                                     <div class="row">
@@ -88,7 +101,7 @@
                                         <div class="col-lg-12">
                                             {{ form.diagnosis }}
                                         </div>
-                                    </div>
+                                  </div>
                                     <div class="row">
                                         <div class="col-lg-4">
                                             {{ form.region }}
@@ -118,41 +131,31 @@
                             </form> 
                         </div>
                     </div>
-                </div>   
-                
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
-				<div class="row">
-					<div class="col-lg-6">
-					</div>
-					<div class="col-lg-6">
-					</div>
-				</div>
-			
                 <table class="table" id="table">
-                
-                <thead>
-                    <tr class="table-head">
-                        <th class="col-1" onclick="sortTable(0)">Last Name</th>
-                        <th class="col-2" onclick="sortTable(1)">First Name</th>
-                        <th class="col-3" onclick="sortTable(0)">Middle Initial</th>
-                    </tr>
-                </thead>
+					<thead>
+						<tr class="table-head">
+							<th class="col-1" onclick="sortTable(0)">Last Name</th>
+							<th class="col-2" onclick="sortTable(1)">First Name</th>
+							<th class="col-3" onclick="sortTable(0)">Middle Initial</th>
+						</tr>
+					</thead>
 
-                <tbody id="app">
-                    {% for patient in patients %}
-                    <tr>
-                        <td class="col-1">{{ patient.last_name }}</td>
-                        <td class="col-2">{{ patient.first_name }}</td>
-                        <td class="col-3">{{ patient.middle_initial }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-                
+					<tbody id="app">
+						{% for patient in patients %}
+						<tr>
+							<td class="col-1">{{ patient.last_name }}</td>
+							<td class="col-2">{{ patient.first_name }}</td>
+							<td class="col-3">{{ patient.middle_initial }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
                 </table>
 				
 				<div class="modal" id="PatientsInfoModal">
@@ -161,48 +164,58 @@
 							
 							<div class="modal-body">
 								<div class="row">
+									<div class="col-lg-12 text-right">
+										<button type="submit" class="btn btn-outline-warning">
+											<span>
+												Edit
+												<i class="fa fa-pencil" aria-hidden="true"></i>
+											</span>
+										</button>
+									</div>
+								</div>						
+								<div class="row">
 									<div class="col-lg-12">
-										Name: {{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.
+										<span class="patient-label">Name: </span>{{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Age: {{ patient.age }}
+										<span class="patient-label">Age: </span>{{ patient.age }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Sex: {{ patient.sex }}
+										<span class="patient-label">Sex: </span>{{ patient.sex }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Address: {{ patient.region }} | {{ patient.province }} | {{ patient.city }}
+										<span class="patient-label">Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Diagnosis: {{ patient.diagnosis }}
+										<span class="patient-label">Diagnosis: </span>{{ patient.diagnosis }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Total No. of Days: {{ patient.total_days }}
+										<span class="patient-label">Total No. of Days: </span>{{ patient.total_days }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Frequency: {{ patient.frequency }}
+										<span class="patient-label">Frequency: </span>{{ patient.frequency }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										Date/s of Stay
+										<span class="patient-label">Date/s of Stay: </span>
 										<div class="row">
-											<div class="col-lg-6">
+											<div class="col-lg-6 date-list">
 												From
 											</div>
-											<div class="col-lg-6">
+											<div class="col-lg-6 date-list">
 												To
 											</div>
 										</div>
@@ -279,8 +292,19 @@ $(document).ready(function() {
 	});
 
     resetProv();
+	
+	var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
+	console.log(diagnosis);
+	let dropdown = document.getElementById('id_diagnosis');
+	
+	diagnosis.forEach(arrayopt);
+	function arrayopt(diagnosis){
+		let option = document.createElement('option'); // create option element
+		option.value = diagnosis[0]; // assign id/value
+		option.innerText = diagnosis[1]; // assign text
+		dropdown.appendChild(option); // add option to dropdown
+	}
 });
-
 </script>
 {% endblock page_body %}
 

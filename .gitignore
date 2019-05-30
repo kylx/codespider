@@ -234,4 +234,6 @@ GitHub.sublime-settings
 # Ignore all local history of files
 .history
 
+db.json
+
 # End of https://www.gitignore.io/api/git,django,python,sublimetext,visualstudiocode

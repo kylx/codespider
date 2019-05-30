@@ -23,13 +23,15 @@ urlpatterns = [
     path('debug', include(debug_toolbar.urls)),
 
     # main pages
-    path('asd', tmp_date, name='asd'),
-    re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
+    # path('asd', tmp_date, name='asd'),
+    # re_path('asd/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', tmp_date),
     # path('asd/<yyyy:year>/<mm:month>', tmp_date),
-    re_path(r'^fish$', regex, name='fish'),
-    re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
+    # re_path(r'^fish$', regex, name='fish'),
+    # re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
     
     path('home'             , home          , name='home'),
+    re_path('summary/monthly/(?P<year>(\d{4}))/(?P<month>(\d{2}))', get_summary_monthly),
+    re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
     re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
     re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
     path('rooms/main'        , test     , name='rooms/main'),
@@ -47,8 +49,10 @@ urlpatterns = [
     path('tmp/rand', rand_patient, name="rand"),
 
     # requires input
-    path('tmp/action/create-patient', test, name='action/create-patient'),
-    path('tmp/action/assign-room', test, name='action/assign-room'),
+    path('tmp/action/create-patient', tmp_create_patient, name='action/create-patient'),
+    path('action/assign-room', assign_room, name='action/assign-room'),
+    path('action/checkout', checkout, name='action/checkout'),
+    path('action/transfer-room', transfer_room, name='action/transfer-room'),
 
      
     path('', show_urls, name='dev/show-urls'),

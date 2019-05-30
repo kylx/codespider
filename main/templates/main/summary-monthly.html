@@ -9,6 +9,9 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
+	<link media="screen" rel="stylesheet" href="{% static 'css/summary-monthly.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/summary-monthly-print.css' %}">
+	<link rel="stylesheet" href="{% static 'css/patients-table.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -42,8 +45,122 @@
 {% endblock nav_bar %}
 
 {% block page_body %}
-	Summary-monthly
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 summaryM-title-container">
+			<div class="summaryM-title text-center">
+				MONTHLY
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<form id="search_form">
+				<div class="summaryM-date">
+					{% csrf_token %}
+					<div class="row">
+						<div id="DateChooser" class="col-lg-12" >
+							Choose Date
+						</div>
+						<div class="summaryM-input">
+							{{ form.DateChosen }}
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success" id="search_button">
+						<span>
+							Search
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>	
+			</form>
+		</div>
+        <div class="container-table">
+            <div class="wrap-table">
+                <table class="table" id="table">
+					<thead>
+						<tr class="table-head">
+							<th id="colu-1" class="col-1">Day</th>
+							<th id="colu-1" class="col-1">No. of Patients</th>
+							<th id="colu-1" class="col-1">No. of Watchers</th>
+						</tr>
+					</thead>
+
+					<tbody id="app">
+						{% for day in month %}
+						<tr>
+							<td id="colu-1" class="col-1">{{ month.day }}</td>
+							<td id="colu-1" class="col-1">{{ month.patient_num }}</td>
+							<td id="colu-1" class="col-1">{{ month.watcher_num }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+                </table>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock page_body %}
 
 {% block page_js %}
+
+<script>
+
+<!-- document.onLoad = function(){ -->
+console.log("AAAA");
+    
+<!-- $('#search_form').on('submit', function(e){ -->
+$('#search_form').submit(function(e){
+    let date =  $('#id_DateChosen')[0].value;
+    let doc = document;
+    
+    // clear table and add loading
+    let tbody = doc.getElementById('app');
+    tbody.innerHTML = '';
+    let tr = doc.createElement('tr');
+    let td = doc.createElement('td');
+    td.setAttribute('colspan', 3);
+    td.innerText = 'Loading...';
+    tbody.appendChild(tr);
+    tr.appendChild(td);
+    
+    date = date.split('-');
+    console.log(date);
+    Pace.restart();
+    
+    var loading = true;
+    fetch("summary/monthly/"+date[0]+"/"+date[1])
+        .then((response)=>{
+            return response.json();
+        }).then((json)=>{
+            <!-- console.log(json); -->
+            
+            tbody.innerHTML = '';
+            
+            json.forEach((row)=>{
+                <!-- console.log(row); -->
+                let tr = doc.createElement('tr');
+                let day = doc.createElement('td');
+                let numPatients = doc.createElement('td');
+                let numWatchers = doc.createElement('td');
+                tr.appendChild(day);
+                tr.appendChild(numPatients);
+                tr.appendChild(numWatchers);
+                tbody.appendChild(tr);
+                
+                day.innerText = row[0];
+                numPatients.innerText = row[1].patients;
+                numWatchers.innerText = row[1].watchers;
+            });
+        });
+    
+    <!-- e.prevenDefault(); -->
+    return false;
+});
+
+
+
+<!-- } -->
+
+</script>
 {% endblock page_js %}

@@ -1,8 +1,12 @@
 from django.db import models
+from django.db.models import Count
 
 from .patient import Patient
+# from .building import Building
+from .room import Room
 
 import datetime
+import calendar
 
 class OccupancyManager(models.Manager):
     def get_list_for_day(self, building, year, month, date):
@@ -48,7 +52,7 @@ class OccupancyManager(models.Manager):
             }
         start_date = datetime.date(year, month, date)
         end_date = datetime.date(year, month, date + 1)
-        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(room__building__name=building, date__range=(start_date, end_date))
+        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True, room__building__name=building, date__range=(start_date, end_date)).order_by('room__display_number')
         llll = list(map(simplify_occupancy, occ))
         watchers = 0
         male = 0
@@ -79,9 +83,30 @@ class OccupancyManager(models.Manager):
                 'boys': male,
                 'girls': female,
                 'total': male+female,
-            }
+            },
+            'num_rooms': Room.objects.filter(building__name=building).count()
         }
-
+    
+    
+    def get_count_for_date(self, year, month, day):
+        date = datetime.date(year, month, day)
+        query = super().get_queryset().filter(date__year=year, date__month=month, date__day=day).annotate(wcount=Count('watcher'))
+        count_patients = query.count()
+        count_watchers = 0
+        for occ in query:
+            count_watchers += occ.wcount;
+            
+        return {
+            'patients': count_patients,
+            'watchers': count_watchers,
+        }
+        
+    def get_count_for_month(self, year, month):
+        return [
+            [d, Occupancy.objects.get_count_for_date(2019, 5, d)]
+            for d in range(1, calendar.monthrange(year, month)[1]+1)
+        ] 
+            
 
 class Occupancy(models.Model):
     objects = OccupancyManager()

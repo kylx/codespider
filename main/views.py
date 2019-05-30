@@ -2,21 +2,223 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .enums import Enums
-from .forms import PatientForm, RoomForm, FilterForm
+from .forms import PatientForm, RoomForm, FilterForm, SummaryForm
 from .models.diagnosis import Diagnosis
 from .models.occupancy import Occupancy
 from .models.patient import Patient
+from .models.visit import Visit
+from .models.occupancy import Occupancy
+from .models.room import Room
+from .models.building import Building
 from .models.watcher import Watcher
+from django.utils.http import urlencode
 import datetime
 import json
+from django.contrib import messages
+
+from django.contrib import messages
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 
 from django.http import HttpResponse
+
+def get_summary_monthly(request, year=-1, month=-1):
+    if year == -1 or month == -1:
+        date = datetime.datetime.now()
+        year = date.year
+        month = date.month
+    else:
+        year = int(year)
+        month = int(month)
+    return JsonResponse(Occupancy.objects.get_count_for_month(year, month), safe=False)
 
 def home(request):
     context = {'url_name': 'HOME'}
     return render(request, 'main/home.html', context)
 
+def transfer_room(request):
+    post = request.POST
+    building_name = post.get('building_name', 1)
+    room_number = post.get('room_num_transfer', 1)
+    date = post.get('date', None)
+    last_name = post.get('last_name', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    
+    # check if patient exists
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    else:
+        pat = pat.first()
+    
+        # check if patient is currently visiting
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+        
+        if len(visit) == 0:
+            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
+        else:
+            
+            visit = visit.first()
+            # visit.is_ongoing = False
+            visit.save()
+        
+        
+        
+        
+            # check if room is valid
+            room = Room.objects.filter(pk=room_number)[0]
+            occu = Occupancy.objects.filter(
+                visit=visit,
+                date=date,
+            )[0]
+            if occu.room == room:
+                messages.success(request, 'Transfering to the same room!')
+            else:
+                messages.success(request, 'Room transfer succesful!')
+            occu.room = room
+            occu.save()
+            
+        
+    
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+def checkout(request):
+    post = request.POST
+    # room_number = post.get('room_num', 1)
+    last_name = post.get('last_name', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    
+    # check if patient exists
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    else:
+        pat = pat.first()
+        # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        # msg_success = f'Room assignment successful!'
+    
+    # check if patient is currently visiting/assigned to a room
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+        if len(visit) == 0:
+            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
+        else:
+            messages.success(request, 'Checkout succesful!')
+            visit = visit.first()
+            visit.is_ongoing = False
+            visit.save()
+    context = {
+        'post_stuff': post
+    }
+    
+    
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def assign_room(request):
+    type = 'assign room'
+    error = None
+    
+    post = request.POST
+    ll = post.getlist('id_relationship')
+    building_name = post.get('building_name', 1)
+    room_number = post.get('room_num', 1)
+    last_name = post.get('last_name', 1)
+    first_name = post.get('first_name', 1)
+    middle_initial = post.get('middle_initial', 1)
+    date_to = post.get('date_to', None)
+    date_from = post.get('date_from', None)
+    date = post.get('date', None)
+    
+    msg_success = None
+    
+    # check if patient exists
+    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    if len(pat) == 0:
+        error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    else:
+        # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
+        msg_success = f'Room assignment successful!'
+        
+        
+        pat = pat[0]
+    
+        # check if patient is currently visiting
+        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+        
+        # Get visit
+        if len(visit) == 0:
+            # create new visit if none
+            visit = Visit(
+                patient=pat,
+                start_date=date_from,
+                assigned_end_date=date_to,
+                is_ongoing=True
+            )
+            visit.save()
+        else:
+            visit = visit[0] # get first element
+            visit.start_date = datetime.datetime.strptime(date_from, '%Y-%m-%d')
+            print(f'date to {date_to}')
+            visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
+            visit.save()
+        # Get room
+        room = Room.objects.filter(building__name=building_name, pk=room_number)[0]
+        
+        # get list of watchers
+        i = 1
+        watchers = []
+        # print(post.get(f'relationship_{i}', None))
+        for key, value in request.POST.items():
+        # while post.get(f'relationship_{i}', None) is not None:
+            # rel = f'relationship_{i}'
+            if key.startswith('relationship_'):
+                
+            # rel = Watcher.objects.get(id=i).relationship
+                watchers.append(int(key.split('_')[1]))
+            i += 1
+        
+        # watcher=Watcher.objects.order_by('?').first(),
+        
+        occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
+        if len(occu) == 0:
+            occu = Occupancy(
+                visit=visit,
+                room=room,
+                # watcher=watcher,
+                date=date
+                
+            )
+            occu.save()
+        else:
+            msg_success = f'Re-assigning to the same room. Old table values have been updated.'
+            occu = occu.first()
+            # occu.watcher_set.all().delete()
+        
+        occu.watcher.set(watchers)
+        occu.save()
+        
+    if msg_success:
+        messages.success(request, msg_success)
+    
+    # sum = [Occupancy.objects.get_count_for_date(2019, 5, d) for d in range(1, 32)] 
+    
+    context = {
+        'type': type,
+        'error': error,
+        'watchers': sum,
+        # 'post': Occupancy.objects.get_count_for_month(2019, 5),
+    }
+    
+    
+    request.session['error_msg'] = error
+    request.session.modified = True
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def rooms(request, building, year=-1, month=-1, day=-1):
     print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
@@ -33,7 +235,7 @@ def rooms(request, building, year=-1, month=-1, day=-1):
 
     # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
     occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
-
+    request.session['error'] = 'haha'
     context = {
         'url_name': 'ROOMS',
 		'form': form,
@@ -47,9 +249,18 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'month_name': date.strftime("%B"),
         'count': occ['count'],
         'relationships': Watcher.objects.get_relationship_list(),
+<<<<<<< HEAD
+=======
+        'rooms': Room.objects.get_list(),
+        'buildings': Building.objects.get_list(),
+        'num_rooms': occ['num_rooms'],
+        'error': request.session.get('error_msg', 'fish'),
+>>>>>>> 3a561ff59328552ce706d2eaab6cb1788d513cc1
         
 		# 'rooms': ['fish','is', 'love'],
     }
+    # messages.success(request, f'ss')
+    # messages.error(request, f'ee')
     return render(request, 'main/rooms.html', context)
 
 def patients(request):
@@ -58,17 +269,39 @@ def patients(request):
     context = {
         'url_name': 'PATIENTS',
         'patients': patient_list,
-		'form': form
-
+		'form': form,
+        'diagnosis': Diagnosis.objects.get_diagnosis_list()
     }
+	
+	# For message after submit validation 
+    # if request.method == "POST":
+        # patient_form = PatientForm(request.POST)
+		
+        # if patient_form.is_valid():
+            # patient_form.save()
+            # messages.success(request, 'Patient created successfully.')
+            # return render(request,"main/patients.html", context)
+        # else:
+            # messages.error(request, patient_form.errors)
+    # messages.error(request, f'HAHAHAHA')
+    # messages.success(request, f'ss')
+    # messages.error(request, f'ee')
     return render(request, 'main/patients.html', context)
 
 def summary_daily(request):
-    context = {'url_name': 'SUMMARY'}
+    form = SummaryForm()
+    context = {
+        'url_name': 'SUMMARY',
+		'form': form
+    }
     return render(request, 'main/summary-daily.html', context)
 	
 def summary_monthly(request):
-    context = {'url_name': 'SUMMARY'}
+    form = SummaryForm()
+    context = {
+        'url_name': 'SUMMARY',
+		'form': form
+    }
     return render(request, 'main/summary-monthly.html', context)
 
 def inquiry_filter(request):
@@ -102,11 +335,19 @@ def tmp_create_patient(request):
         post.region = request.POST.get('region')
         post.province = request.POST.get('province')
         post.city = request.POST.get('city')
-        post.save()
-        return render(request, 'main/forms/patientform.html', context)
+        
+        if len(Patient.objects.filter(first_name= post.first_name,middle_initial= post.middle_initial,last_name=post.last_name)) == 0:
+            post.save()
+            messages.success(request, f'Patient creation successful')
+        else:
+            messages.error(request, f'ERROR: Patient {post.last_name}, {post.first_name} {post.middle_initial}. already exists')
+        # return render(request, 'main/forms/patientform.html', context)
 
-    else:
-        return render(request, 'main/forms/patientform.html', context)
+    # else:
+    # messages.error(request, f'a{post.last_name}')
+    # messages.error(request, f'b{post.first_name}')
+    # messages.error(request, f'c{post.middle_initial}')
+    return redirect('patients')
 
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}

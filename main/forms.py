@@ -7,10 +7,7 @@ from .models import Diagnosis
 from .models.watcher import Watcher
 
 class UserForm(ModelForm):
-    class Meta:
-        model = Patient
-        fields = ['username', 'password']
-        
+	# Temporary unless no model for form
     username = forms.CharField (
         label = 'Username',
         widget = forms.TextInput ( attrs = {
@@ -29,245 +26,205 @@ class UserForm(ModelForm):
 class PatientForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
-        
-    last_name = forms.CharField (
-        label = 'Last Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Last Name'
-        })
-    )
-    
-    first_name = forms.CharField (
-        label = 'First Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'First Name'
-        })
-    )
-    
-    middle_initial = forms.CharField (
-        label = 'Middle Initial',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Middle Initial'
-        })
-    )
-	
-    age = forms.IntegerField (
-        label = 'Age',
-		widget = forms.NumberInput ( attrs = {
-            'class' : 'form-control, input',
-			'placeholder' : 'Age'
-        })
-    )
-    
-    sex = forms.CharField (
-        label = 'Sex',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            choices = Enums.SEX
-        )
-    )
-    
-    diagnosis = forms.CharField (
-        label = 'Diagnosis',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-	         choices = get_diagnosis_list()
-            # choices = DIAGNOSIS
-        )
-    )
-    
-    region = forms.CharField (
-        label = 'Region',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            
-			choices = Enums.REGIONS
-        )
-    )
-    
-    province = forms.CharField (
-        label = 'Province',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-		    
-            choices = Enums.PROVINCES
-        )
-    )
-    
-    city = forms.CharField (
-        label = 'City',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            choices = Enums.CITIES
-        )
-    )
+        fields = ['last_name', 'first_name', 'middle_initial', 'age', 'sex', 'diagnosis', 'region', 'province', 'city']
+        widgets = {
+            'last_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Last Name'
+            }),
+			
+			'first_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'First Name'
+            }),
+			
+			'middle_initial': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Middle Initial'
+            }),
+			
+			'age': forms.NumberInput ( attrs = {
+                'class' : 'form-control, input',
+			    'placeholder' : 'Age',
+				'min': 0,
+				'max': 100
+            }),
+			
+			'sex': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.SEX
+            ),
+
+            'diagnosis': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = [
+				]
+            ),
+			
+			'region': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input',
+			    },
+                choices = Enums.REGIONS,
+            ),
+			
+			'province': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.PROVINCES
+            ),
+			
+			'city': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.CITIES
+            )
+		}
 	
 class RoomForm(ModelForm):
     class Meta:
         model = Patient
         fields = ['last_name', 'first_name', 'middle_initial']
+        widgets = {
+            'last_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Last Name'
+            }),
+			
+			'first_name': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'First Name'
+            }),
+			
+			'middle_initial': forms.TextInput ( attrs = {
+                'class' : 'input',
+                'placeholder' : 'Middle Initial'
+            })
+		}
+		
+    building_transfer = forms.CharField (
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+			]
+		)
+	)
 		
     room_num = forms.IntegerField (
-        label = 'Room No.',
-		widget = forms.NumberInput ( attrs = {
-            'class' : 'form-control, input',
-			'placeholder' : 'Room No.'
-        })
-    )
-        
-    last_name = forms.CharField (
-        label = 'Last Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Last Name'
-        })
-    )
-    
-    first_name = forms.CharField (
-        label = 'First Name',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'First Name'
-        })
-    )
-    
-    middle_initial = forms.CharField (
-        label = 'Middle Initial',
-        widget = forms.TextInput ( attrs = {
-            'class' : 'input',
-            'placeholder' : 'Middle Initial'
-        })
-    )
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+			]
+		)
+	)
 	
+    room_num_transfer = forms.IntegerField (
+		widget = forms.Select (
+			attrs = {
+				'class' : 'form-control, input'
+			},
+			choices = [
+			]
+		)
+	)
+
     relationship = forms.MultipleChoiceField (
-        label = 'Relationship',
 		widget = forms.CheckboxSelectMultiple,
-		choices = Watcher.objects.get_relationship_list(),
+		choices = [
+		]
     )
 	
     date_from = forms.DateField(
-        widget=forms.DateInput( format = '%m/%d/%Y' ),
-        input_formats = ( '%m/%d/%Y' )
-    )
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
     
     date_to = forms.DateField(
-        widget=forms.DateInput( format = '%m/%d/%Y' ),
-        input_formats = ( '%m/%d/%Y' )
-    )
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
 	
-class FilterForm(ModelForm):
+class FilterForm(ModelForm):		
+    date_from = forms.DateField (
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
+    
+    date_to = forms.DateField(
+        widget = forms.DateInput (
+			format = '%m/%d/%Y',
+			attrs = {
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)
+	
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'middle_initial']
+        fields = ['diagnosis', 'region', 'province', 'city']
+        widgets = {
+            'diagnosis': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = [],
+            ),
+			
+			'region': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input',
+			    },
+                choices = Enums.REGIONS,
+            ),
+			
+			'province': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.PROVINCES
+            ),
+			
+			'city': forms.Select (
+			    attrs = {
+				    'class' : 'form-control, input'
+			    },
+                choices = Enums.CITIES
+            )
+		}
 		
-    date_from = forms.DateField(
-	widget=forms.DateInput( format = '%m/%d/%Y' ),
-	input_formats = ( '%m/%d/%Y' )
-    )
-    
-    date_to = forms.DateField(
-        widget=forms.DateInput( format = '%m/%d/%Y' ),
-        input_formats = ( '%m/%d/%Y' )
-    )
-	
-    patient = forms.MultipleChoiceField (
-        label = 'Relationship',
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['p-a', 'All Patients'],
-			['p-b', 'Boys'],
-			['p-g', 'Girls']
-		]
-    )
-	
-    watcher = forms.MultipleChoiceField (
-        label = 'Relationship',
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['w', 'Watchers'],
-		]
-    )
-	
-    building = forms.MultipleChoiceField (
-        label = 'Relationship',
-		widget = forms.CheckboxSelectMultiple,
-		choices = [
-			['b-al', 'All Buildings'],
-			['b-ma', 'Main'],
-			['b-an', 'Annex'],
-		]
-    )
-	
-    diagnosis = forms.CharField (
-        label = 'Diagnosis',
-        widget = forms.Select (
+class SummaryForm(ModelForm):
+	class Meta:
+		# TEMPORARY
+		model = Patient
+		fields = ['city']
+		
+	DateChosen = forms.DateField (
+        widget = forms.DateInput (
+			format = '%m/d%/%Y',
 			attrs = {
-				'class' : 'form-control, input'
-			},
-		    choices = [
-				['default', 'Diagnosis'],
-			    ['all', 'Acute Lymphoblastic Leukemia'],
-		        ['bg', 'Brainstem Glioma'],
-	        ]
-            # choices = DIAGNOSIS
-        )
-    )
-    
-    region = forms.CharField (
-        label = 'Region',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-            choices = [
-				['default', 'Region'],
-			    ['r1', 'Region I (Ilocos Region)'],
-		        ['r2', 'Region II (Cagayan Valley)'],
-	        ]
-			# choices = Enums.REGIONS
-        )
-    )
-    
-    province = forms.CharField (
-        label = 'Province',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-		    choices = [
-				['default', 'Province'],
-			    ['r1-1', 'Ilocos Norte'],
-		        ['r1-2', 'Ilocos Sur'],
-	        ]
-            # choices = Enums.PROVINCES
-        )
-    )
-    
-    city = forms.CharField (
-        label = 'City',
-        widget = forms.Select (
-			attrs = {
-				'class' : 'form-control, input'
-			},
-		    choices = [
-				['default', 'City'],
-			    ['r1-1-1', 'Batac'],
-		        ['r1-1-2', 'Laoag'],
-	        ]
-            # choices = Enums.CITIES
-        )
-    )	
+				'type': 'date',
+				'class': 'form-control'
+			})
+		)

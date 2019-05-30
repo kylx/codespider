@@ -52,20 +52,17 @@
         <div class="col-lg-6 date-container">
             <div class="row">
                 <div class="col-lg-4">
-                    {# {{ chosen_date|date:"d" }} #}
-                    <div class="day" id="theDay"></div>
+                    <div class="day">{{ day }}</div>
                 </div>
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-lg-12">
-                            {# {{ chosen_date|date:"l" }} #}
-                            <div class="day-week" id="theDayWeek"></div>
+                            <div class="day-week">{{ weekday }}</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            {# {{ chosen_date|date:"F Y" }} #}
-                            <div class="month-year" id="theMonthYear"></div>
+							<div class="month-year">{{ month_name }} {{ year }}</div>
                         </div>
                     </div>
                 </div>
@@ -105,10 +102,7 @@
 {% endblock page_body %}
 
 {% block page_js %}
-    <script src="{% static 'js/progressbar.js' %}"></script>
-    
-    <script src="{% static 'js/x/date.js' %}"></script>
-    
+    <script src="{% static 'js/progressbar.js' %}"></script>  
     <script src="{% static 'js/plugins/TweenMax.js' %}"></script>
 	<script src="{% static 'js/plugins/ScrollMagic.js' %}"></script>
 	<script src="{% static 'js/counter.js' %}"></script>

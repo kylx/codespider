@@ -1,0 +1,44 @@
+.col-1{
+	text-align: center;
+	width: 20%;
+}
+
+.col-lg-12 {
+	font-size: 20px;
+}
+
+.summaryM-title-container {
+	padding: 5% 0% 0% 0%;
+}
+
+.summaryM-title {
+	font-size: 50px;
+    text-transform: uppercase;
+}
+
+.summaryM-date {
+	text-align: center;
+}
+
+.summaryM-input {
+	width: 50%;
+	margin: 1% 40% 1% 40%;
+}
+
+#DateChooser {
+	display: none;
+	font-size: 20px;
+}
+
+#search_button {
+	display: none;
+}
+
+#colu-1 {
+	align-content: center;
+	text-align: center;
+}
+
+#app {
+	text-align: center;
+}

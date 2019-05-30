@@ -9,9 +9,12 @@
 {% endblock page_titleicon %}
 
 {% block page_stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/rooms.css' %}">
-    <link rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
-	<link rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms.css' %}">
+    <link media="screen" rel="stylesheet" href="{% static 'css/rooms-table.css' %}">
+	<link media="screen" rel="stylesheet" href="{% static 'css/rooms-form.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-print.css' %}">
+    <link media="print" rel="stylesheet" href="{% static 'css/rooms-table-print.css' %}">
+	<link media="print" rel="stylesheet" href="{% static 'css/rooms-form-print.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -51,7 +54,7 @@
 
 {% block nav_bar_right %}
 	<ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
-		<button type="submit" onclick="getdate()" class="btn btn-success mr-2">
+		<button id="incr" type="submit" class="btn btn-success mr-2">
 			<i class="fa fa-save" aria-hidden="true"></i>
 			Save Day
 		</button>
@@ -63,6 +66,20 @@
 {% endblock nav_bar_right %}
 
 {% block page_body %}
+	{% if messages %}			
+		{% for message in messages %}
+			{% if message.tags == "error" %}
+				<div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
+			{% else %}
+				<div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
+			{% endif %}
+			{{ message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+		{% endfor %}
+	{% endif %}
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12 room-title-container">
@@ -75,20 +92,17 @@
         <div class="col-lg-12 date-container">
             <div class="row">
                 <div class="col-lg-6 text-right">
-                    {{year}}
-                    <div class="day" id="theDay"></div>
+                    <div class="day" id="theDay">{{ day }}</div>
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-12">
-                            {{weekday}}
-                            <div class="day-week" id="theDayWeek"></div>
+                            <div class="day-week" id="theDayWeek">{{ weekday }}</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            {{month_name}}
-                            <div class="month-year" id="theMonthYear"></div> 
+                            <div class="month-year" id="theMonthYear">{{ month_name }} {{ year }}</div> 
                         </div>
                     </div>
                 </div>
@@ -98,52 +112,46 @@
     <div class="row text-center">
         <div class="col-lg-12 counter-container">
             <div class="row">
-                <div class="col-lg-6 cname">Patients</div>
-                <div class="col-lg-6 cname">Watchers</div>
+                <div id="patient" class="col-lg-6 cname" >Patients</div>
+                <div id="watchers" class="col-lg-6 cname" >Watchers</div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row">
-                                <div class="col-lg-6 cname">Boys</div>
-                                <div class="col-lg-6 cnum-2">{{count.boys}}</div>
+                                <div id="boys" class="col-lg-6 cname">Boys</div>
+                                <div id="boysN" class="col-lg-6 cnum-2">{{ count.boys }}</div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 cname">Girls</div>
-                                <div class="col-lg-6 cnum-2">{{count.girls}}</div>
+                                <div id="girls" class="col-lg-6 cname">Girls</div>
+                                <div id="girlsN" class="col-lg-6 cnum-2">{{ count.girls }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cnum-1">{{count.total}}</div>
+                        <div id="total" class="col-lg-6 cnum-1">{{ count.total }}</div>
                     </div>
                 </div>
-                <div class="col-lg-6 cnum-1">{{count.watchers}}</div>
+                <div id="watch" class="col-lg-6 cnum-1">{{ count.watchers }}</div>
             </div>
         </div>
     </div>
 	<div class="row text-center">
-		<div class="col-lg-3">
+		<div class="col-lg-4">
 			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#AssignRoomModal">
 				<i class="fa fa-plus" aria-hidden="true"></i>
 				Assign to Room
 			</button>
 		</div>
-		<div class="col-lg-3">
+		<div class="col-lg-4">
 			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#TransferRoomModal">
 				<i class="fa fa-exchange" aria-hidden="true"></i>
 				Transfer Room
 			</button>
 		</div>
-		<div class="col-lg-3">
+		<div class="col-lg-4">
 			<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#CheckoutRoomModal">
 				<i class="fa fa-minus" aria-hidden="true"></i>
 				Checkout
-			</button>
-		</div>
-		<div class="col-lg-3">
-			<button type="submit" class="print-btn btn btn-light">
-				<i class="fa fa-print" aria-hidden="true"></i>
-				Print
 			</button>
 		</div>
 		
@@ -153,7 +161,7 @@
 					<div class="modal-header modal-title">
 						Assign to Room
 					</div>
-					<form method="post" action="">
+					<form id="assign_room" method="post" action="{% url 'action/assign-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -172,16 +180,19 @@
 									{{ form.middle_initial }}
 								</div>
 							</div>
-							<div class="row">
+							<div class="row text-left">
 								<div class="col-lg-12">
+									<div class="form-label">Relationship</div>
 									{{ form.relationship }}
 								</div>
 							</div>
-							<div class="row">
+							<div class="row text-left">
 								<div class="col-lg-6">
+									<div class="form-label">Date (From)</div>
 									{{ form.date_from }}
 								</div>
 								<div class="col-lg-6">
+									<div class="form-label">Date (To)</div>
 									{{ form.date_to }}
 								</div>
 							</div>
@@ -211,17 +222,15 @@
 					<div class="modal-header modal-title">
 						Transfer Room
 					</div>
-					<form method="post" action="">
+					<form id="transfer_room" method="post" action="{% url 'action/transfer-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
 								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
-							<div class="row">
+									{{ form.building_transfer }}
+								</div>
 								<div class="col-lg-4">
-									{{ form.room_num }}
+									{{ form.room_num_transfer }}
 								</div>							
 							</div>
 							<div class="row">
@@ -261,14 +270,9 @@
 					<div class="modal-header modal-title">
 						Checkout Patient
 					</div>
-					<form method="post" action="">
+					<form id="checkout" method="post" action="{% url 'action/checkout' %}">
 						<div class="modal-body">
 							{% csrf_token %}
-							<div class="row">
-								<div class="col-lg-4">
-									{{ form.room_num }}
-								</div>							
-							</div>
 							<div class="row">
 								<div class="col-lg-5">
 									{{ form.last_name }}
@@ -300,6 +304,7 @@
 			</div>
 		</div>
 	</div>
+    
     <div class="row">
         <div class="container-table">
             <div class="wrap-table">
@@ -335,35 +340,220 @@
     </div>
 </div>
 
-<script>
+{% endblock page_body %}
 
+{% block page_js %}
+
+<script>
+	
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function capFirst(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
+var num_rooms = {{num_rooms}};
+var rooms = JSON.parse("{{rooms | escapejs}}".replace(/'/g, '"'));
+var buildings = JSON.parse("{{buildings | escapejs}}".replace(/'/g, '"'));
+var building = "{{building}}";
+let iii = buildings.find((bb)=>{
+        console.log('bbname', bb[1]);
+        return bb[1] == building;
+    });
+    console.log('iii', iii);
+    
+function updateTransferRooms(e){
+    console.log('aaaaa');
+    let newId = document.getElementById('id_building_transfer').value;
+    if (!newId){
+        <!-- console.log(iii[0]); -->
+        document.getElementById('id_building_transfer').value = newId = iii[0];
+        console.log('new Id', newId);
+    }
+    
+    let rr = document.getElementById('id_room_num_transfer');
+    rr.innerHTML = '';
+    
+    rooms.forEach((room)=>{
+        <!-- console.log('rr', room, 'newId', newId); -->
+        if (room[1] != newId) return;
+        console.log('fasffas', room);
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", room[0]);
+        op.innerText = "Room "+room[2];
+        rr.appendChild(op);
+        
+    });
+    
+}
+
+
+<!-- window.addEventListener("load", function(){ -->
+    <!-- updateTransferRooms(); -->
+<!-- }); -->
 
 window.onload = function() {
+    <!-- $('#id_building_transfer>option:eq(2)').prop('selected', true); -->
+    $('#id_building_transfer').change(updateTransferRooms);
+    $("#id_building_transfer").val("1");
+    <!-- $('#id_building_transfer').prop('selectedIndex', 1); // select 4th option -->
+    $('#id_building_transfer').trigger('change');
+    <!-- document.getElementById('id_building_transfer').addEventListener('change', updateTransferRooms); -->
+    <!-- console.log('sel', document.getElementById('id_building_transfer').options); -->
+    <!-- document.getElementById('id_building_transfer').options[0].selected = true; -->
+    <!-- document.getElementById('id_building_transfer').dispatchEvent(new Event('change', { 'bubbles': true })); -->
+   
+    <!-- console.log('building', building); -->
+    
+    
+    // dynamic rooms for assign rooms
+    let sel = document.getElementById('id_room_num');
+    rooms.forEach((room)=>{
+        console.log('rr', room);
+        if (room[1] != iii[0]) return;
+        console.log('fasffas', room);
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", room[0]);
+        op.innerText = "Room "+room[2];
+        sel.appendChild(op);
+        
+    });
+    
+    // dynamic buildings for transfer roomslet 
+    sel = document.getElementById('id_building_transfer');
+    buildings.forEach((bb)=>{
+        console.log('bb', bb);
+        <!-- if (room[1] != iii[0]) return; -->
+        <!-- console.log('fasffas', room); -->
+        
+        let op = document.createElement('option');
+        op.setAttribute("value", bb[0]);
+        <!-- bb[1].charAt(0).toUpperCase(); -->
+        op.innerText = capFirst(bb[1]);
+        <!-- op.innerText.charAt(0).toUpperCase(); -->
+        sel.appendChild(op);
+        
+    });
+    
+    console.log(rooms);
+    console.log(buildings);
+    let ul = document.querySelector('ul#id_relationship');
+    let relas = JSON.parse("{{relationships | escapejs}}".replace(/'/g, '"'));
+    console.log(relas);
+    function addRelationship(rela){
+        console.log(rela[0], rela[1]);
+        
+        let li = document.createElement('li');
+        let label = document.createElement('label');
+        let checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("name", "relationship_"+rela[0]);
+        checkbox.setAttribute("id", "id_relationship_"+rela[0]);
+        checkbox.setAttribute("value", rela[0]);
+        label.setAttribute("for", "id_relationship_"+rela[0]);
+        <!-- checkbox.setAttribute("value", rel[0]); -->
+        label.textContent = ' '+rela[1];
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        ul.appendChild(li);
+    }
+    relas.forEach(addRelationship);
+
+    // add building to forms
+    function addBuildingAndDate(formId) {
+        let form = document.getElementById(formId);
+        let building = document.createElement("input");
+        building.setAttribute("type", "hidden");
+        building.setAttribute("name", "building_name");
+        building.setAttribute("value", "{{building}}");
+        form.appendChild(building);
+        <!-- let form = document.getElementById('formId'); -->
+        let date = document.createElement("input");
+        date.setAttribute("type", "hidden");
+        date.setAttribute("name", "date");
+        date.setAttribute("value", "{{year}}-{{month}}-{{day}}");
+        form.appendChild(date);
+    }
+    addBuildingAndDate('assign_room');
+    addBuildingAndDate('transfer_room');
+    addBuildingAndDate('checkout');
+    
 	var raw = '{{ rooms_json | escapejs }}';
 	var raw_json = JSON.parse(raw);
-
 
 	var body = document.getElementsByTagName('tbody')[0];
 	var fragment = document.createDocumentFragment();
 	// console.log(body);
 	console.time('loop');
-	raw_json.forEach(occ => {
+    var room_num = 1;
+    var last_room = 0;
+	raw_json.forEach((occ, i, occs) => {
 		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+        
+        // add empty rooms
+        console.log('pre', parseInt(room), room_num);
+        while (room_num < parseInt(room)){
+            let row = document.createElement('tr');
+            let td_room = document.createElement('td');
+            td_room.setAttribute("id" , "row-1");
+            let td_patient = document.createElement('td');
+            let td_num_watchers = document.createElement('td');
+            td_num_watchers.setAttribute("id" , "row-3");
+            let td_relationships = document.createElement('td');
+            let td_date = document.createElement('td');
+            td_date.setAttribute("id" , "row-5");
+            row.appendChild(td_room);
+            row.appendChild(td_patient);
+            row.appendChild(td_num_watchers);
+            row.appendChild(td_relationships);
+            row.appendChild(td_date);
+            fragment.appendChild(row);
+            // td_room.className = ""
+
+            td_room.textContent = room_num;
+            if (room_num < parseInt(room))
+            <!-- room_num--; -->
+                room_num++;
+            <!-- td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.'; -->
+            <!-- td_num_watchers.textContent = String(watchers.count); -->
+            <!-- td_relationships.textContent = watchers.list; -->
+            <!-- td_date.textContent = date_string; -->
+            console.log('skip', parseInt(room), room_num);
+        }
+        if (i+1 < occs.length){
+            let next_room = parseInt(occs[i+1].room);
+            if (room_num+1 == next_room){
+                room_num = next_room;
+            }
+            else if(room_num == next_room){
+                // magic ambot
+            }
+            else if (room_num+1 < num_rooms) {
+                room_num++;
+                console.log('ssss', room_num);
+                
+            }
+        }
+        
+        last_room = parseInt(room);
+        
         let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
-        date_string += date_of_stay.start.month_name + ' ';
+        date_string += date_of_stay.end.month_name + ' ';
         date_string += date_of_stay.end.day;
-        console.log(date_string);
+        <!-- console.log(date_string); -->
 		let row = document.createElement('tr');
 		let td_room = document.createElement('td');
+		td_room.setAttribute("id" , "row-1");
 		let td_patient = document.createElement('td');
 		let td_num_watchers = document.createElement('td');
+		td_num_watchers.setAttribute("id" , "row-3");
 		let td_relationships = document.createElement('td');
 		let td_date = document.createElement('td');
+		td_date.setAttribute("id" , "row-5");
 		row.appendChild(td_room);
 		row.appendChild(td_patient);
 		row.appendChild(td_num_watchers);
@@ -377,17 +567,44 @@ window.onload = function() {
 		td_num_watchers.textContent = String(watchers.count);
 		td_relationships.textContent = watchers.list;
 		td_date.textContent = date_string;
+        
+        
+        console.log('last', parseInt(room), room_num);
 
 		// await sleep(5000);
 		// console.log(room, patient, watchers, date_of_stay);
 	});
+    if (room_num == last_room)
+        room_num++;
+    while (room_num <= num_rooms){
+        let row = document.createElement('tr');
+        let td_room = document.createElement('td');
+        td_room.setAttribute("id" , "row-1");
+        let td_patient = document.createElement('td');
+        let td_num_watchers = document.createElement('td');
+        td_num_watchers.setAttribute("id" , "row-3");
+        let td_relationships = document.createElement('td');
+        let td_date = document.createElement('td');
+        td_date.setAttribute("id" , "row-5");
+        row.appendChild(td_room);
+        row.appendChild(td_patient);
+        row.appendChild(td_num_watchers);
+        row.appendChild(td_relationships);
+        row.appendChild(td_date);
+        fragment.appendChild(row);
+        // td_room.className = ""
+
+        td_room.textContent = room_num;
+        room_num++;
+        <!-- td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.'; -->
+        <!-- td_num_watchers.textContent = String(watchers.count); -->
+        <!-- td_relationships.textContent = watchers.list; -->
+        <!-- td_date.textContent = date_string; -->
+    }
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
-	
 </script>
-{% endblock page_body %}
 
-{% block page_js %}
-    <script src="{% static 'js/temp/date.js' %}"></script>    
+<script src="{% static 'js/x/date.js' %}"></script>
 {% endblock page_js %}

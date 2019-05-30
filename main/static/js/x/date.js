@@ -1,4 +1,4 @@
-var isDay = { day: 'numeric' } ;
+var isDay = { day: 'numeric' };
 var isDayWeek = { weekday: 'long' };
 var isMonthYear = { month: 'long', year: 'numeric' };
 
@@ -21,7 +21,7 @@ $('#incr').on('click', function() {
     document.getElementById("theDay").innerHTML = datetest.toLocaleDateString("en-US", isDay) ;
     document.getElementById("theDayWeek").innerHTML = datetest.toLocaleDateString("en-US", isDayWeek);
     document.getElementById("theMonthYear").innerHTML = datetest.toLocaleDateString("en-US", isMonthYear);
-  // datetest = new Date(Date.parse($('#datetest').text()));
-  // datetest.setDate(datetest.getDate() + 1);
-  // $('#datetest').text(datetest.toDateString());
+    // datetest = new Date(Date.parse($('#datetest').text()));
+    // datetest.setDate(datetest.getDate() + 1);
+    // $('#datetest').text(datetest.toDateString());
 });
