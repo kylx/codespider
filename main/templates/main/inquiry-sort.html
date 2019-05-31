@@ -103,20 +103,20 @@
 				<div class="results-wrap text-center">
 					<div class="row">
 						<div class="col-lg-12">
-							Date
-							{{ result.date_from }} - {{ result.date_to }}
+							Date:
+							{{ date_from }} - {{ date_to }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							Diagnosis
-							{{ result.diagnosis }}
+							Diagnosis:
+							{{ diagnosis }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							Region
-							{{ result.region }}
+							Region:
+							{{ region }}
 						</div>	
 					</div>
 				</div>
@@ -126,6 +126,10 @@
 							<th class="s-col-1"></th>
 							<th class="s-col-2">Number of Patients</th>
 						</tr>
+                        <tr class="tabel-head">
+                            <td class="s-col-1"></td>
+                            <td class="s-col-2">{{ count.patients }}</td>
+                        </tr>
 					</thead>
 
 					<tbody>

@@ -292,6 +292,12 @@ def get_filtered_patient_names(request):
     # mid = request.GET.get('mid')
     # last = request.GET.get('last')
     return JsonResponse(Patient.objects.get_filtered_names(term), safe=False)
+    
+def get_filtered_relationships(request):
+    term = request.GET.get('term')
+    # mid = request.GET.get('mid')
+    # last = request.GET.get('last')
+    return JsonResponse(Watcher.objects.get_filtered_relationships(term), safe=False)
 
 def summary_daily(request, year=-1, month=-1, day=-1):
 
@@ -440,11 +446,45 @@ def inquiry_filter(request):
     return render(request, 'main/inquiry-filter.html', context)
 	
 def inquiry_sort(request):
+
+    print(request.GET.get('date_from'))
+    date_from = request.GET.get('date_from')
+    date_to = request.GET.get('date_to')
+    diagnosis = request.GET.get('diagnosis')
+    region = request.GET.get('region')
+    
+    if diagnosis == '':
+        diagnosis = None
+        
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
-        'form': form
+        'form': form,
+        'date_from': date_from,
+        'date_to': date_to,
+        'diagnosis': diagnosis,
+        'region': region,
+        'count':{
+            'patients': 0,
+        },
     }
+    
+    filters = {}
+    
+    if date_from:
+        dates_from = list(map(lambda x: int(x), date_from.split('-')))
+        dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
+        filters['date__date__gte']=dfrom
+    if date_to:
+        dates_to = list(map(lambda x: int(x), date_to.split('-')))
+        dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
+        filters['date__date__lte']=dto
+    if diagnosis:
+        filters['visit__patient__diagnosis']=diagnosis
+    if region:
+        filters['visit__patient__region']=region
+     
+    
     return render(request, 'main/inquiry-sort.html', context)
     
 def tmp_create_patient(request):

@@ -163,7 +163,7 @@
 					<div class="modal-header modal-title">
 						Assign to Room
 					</div>
-					<form class=id="assign_room" method="post" action="{% url 'action/assign-room' %}">
+					<form id="assign_room" method="post" action="{% url 'action/assign-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -173,12 +173,14 @@
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
-									<select id="first"></select>
+									<select id="first">
+                                    </select>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col-lg-12">
-									<select id="relationships"></select>
+									<select id="relationships">
+                                    </select>
 								</div>
 							</div>
 							<div class="row text-left">
@@ -305,7 +307,7 @@
 
                 <tbody>
 					{% comment %}
-                    {% for room in rooms %}
+                    {% for room in rooms %} 
                     <tr>
                         <td class="col-1">{{ room.room.display_name }}</td>
                         <td class="col-2">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
@@ -426,24 +428,24 @@ window.onload = function() {
     let ul = document.querySelector('ul#id_relationship');
     let relas = JSON.parse("{{relationships | escapejs}}".replace(/'/g, '"'));
     console.log(relas);
-    function addRelationship(rela){
-        console.log(rela[0], rela[1]);
+    <!-- function addRelationship(rela){ -->
+        <!-- console.log(rela[0], rela[1]); -->
         
-        let li = document.createElement('li');
-        let label = document.createElement('label');
-        let checkbox = document.createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        checkbox.setAttribute("name", "relationship_"+rela[0]);
-        checkbox.setAttribute("id", "id_relationship_"+rela[0]);
-        checkbox.setAttribute("value", rela[0]);
-        label.setAttribute("for", "id_relationship_"+rela[0]);
+        <!-- let li = document.createElement('li'); -->
+        <!-- let label = document.createElement('label'); -->
+        <!-- let checkbox = document.createElement("input"); -->
+        <!-- checkbox.setAttribute("type", "checkbox"); -->
+        <!-- checkbox.setAttribute("name", "relationship_"+rela[0]); -->
+        <!-- checkbox.setAttribute("id", "id_relationship_"+rela[0]); -->
+        <!-- checkbox.setAttribute("value", rela[0]); -->
+        <!-- label.setAttribute("for", "id_relationship_"+rela[0]); -->
         <!-- checkbox.setAttribute("value", rel[0]); -->
-        label.textContent = ' '+rela[1];
-        li.appendChild(checkbox);
-        li.appendChild(label);
-        ul.appendChild(li);
-    }
-    relas.forEach(addRelationship);
+        <!-- label.textContent = ' '+rela[1]; -->
+        <!-- li.appendChild(checkbox); -->
+        <!-- li.appendChild(label); -->
+        <!-- ul.appendChild(li); -->
+    <!-- } -->
+    <!-- relas.forEach(addRelationship); -->
 
     // add building to forms
     function addBuildingAndDate(formId) {
@@ -452,17 +454,42 @@ window.onload = function() {
         building.setAttribute("type", "hidden");
         building.setAttribute("name", "building_name");
         building.setAttribute("value", "{{building}}");
-        form.appendChild(building);
         <!-- let form = document.getElementById('formId'); -->
         let date = document.createElement("input");
         date.setAttribute("type", "hidden");
         date.setAttribute("name", "date");
         date.setAttribute("value", "{{year}}-{{month}}-{{day}}");
+        console.log(formId, form);
+        form.appendChild(building);
         form.appendChild(date);
     }
     addBuildingAndDate('assign_room');
     addBuildingAndDate('transfer_room');
     addBuildingAndDate('checkout');
+    
+    function addRoom(occ){
+        let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+        let row = document.createElement('tr');
+        let td_room = document.createElement('td');
+        let td_patient = document.createElement('td');
+        let td_num_watchers = document.createElement('td');
+        let td_relationships = document.createElement('td');
+        let td_date = document.createElement('td');
+        
+        td_room.setAttribute("id" , "row-1");
+        td_num_watchers.setAttribute("id" , "row-3");
+        td_date.setAttribute("id" , "row-5");
+        
+        row.appendChild(td_room);
+        row.appendChild(td_patient);
+        row.appendChild(td_num_watchers);
+        row.appendChild(td_relationships);
+        row.appendChild(td_date);
+        fragment.appendChild(row);
+        // td_room.className = ""
+
+        td_room.textContent = room_num;
+    }
     
 	var raw = '{{ rooms_json | escapejs }}';
 	var raw_json = JSON.parse(raw);
@@ -528,20 +555,20 @@ window.onload = function() {
         date_string += date_of_stay.end.day;
         <!-- console.log(date_string); -->
 		let row = document.createElement('tr');
-		let td_room = document.createElement('td');
-		td_room.setAttribute("id" , "row-1");
-		let td_patient = document.createElement('td');
-		let td_num_watchers = document.createElement('td');
-		td_num_watchers.setAttribute("id" , "row-3");
-		let td_relationships = document.createElement('td');
-		let td_date = document.createElement('td');
-		td_date.setAttribute("id" , "row-5");
-		row.appendChild(td_room);
-		row.appendChild(td_patient);
-		row.appendChild(td_num_watchers);
-		row.appendChild(td_relationships);
-		row.appendChild(td_date);
-		fragment.appendChild(row);
+            let td_room = document.createElement('td');
+            td_room.setAttribute("id" , "row-1");
+            let td_patient = document.createElement('td');
+            let td_num_watchers = document.createElement('td');
+            td_num_watchers.setAttribute("id" , "row-3");
+            let td_relationships = document.createElement('td');
+            let td_date = document.createElement('td');
+            td_date.setAttribute("id" , "row-5");
+            row.appendChild(td_room);
+            row.appendChild(td_patient);
+            row.appendChild(td_num_watchers);
+            row.appendChild(td_relationships);
+            row.appendChild(td_date);
+            fragment.appendChild(row);
 		// td_room.className = ""
 
 		td_room.textContent = room;
@@ -549,7 +576,7 @@ window.onload = function() {
 		td_num_watchers.textContent = String(watchers.count);
 		td_relationships.textContent = watchers.list;
 		td_date.textContent = date_string;
-		td_address.textContent = c;
+		<!-- td_address.textContent = c; -->
         
         
         console.log('last', parseInt(room), room_num);
@@ -592,7 +619,35 @@ $(document).ready(function () {
 	console.log("asd");
 	// $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	var first, mid, last;
+    $('#relationships').select2({
+		multiple: true,
+		maximumSelectionLength: 2,
+		placeholder: 'Relationship/s',	
+		minimumInputLength: 1,
+		ajax: {
+			url: "{% url 'actions/get-filtered-relationships' %}",
+			data: function (params) {
+				var data = {
+					term: params.term,
+				};
+				console.log('data', data);
+				return data;
+			},
+			processResults: function (data) {
+				console.log(data);
+				// Tranforms the top-level key of the response object from 'items' to 'results'
+				return {
+					results: data.map(p => {
+						return {
+							id: p.pk,
+							text: p.relationship,
+						}
 
+					})
+				};
+			}
+		}
+	});
 	$('#first,#second,#third').select2({
 		placeholder: 'Patient Name',
 		minimumInputLength: 1,
@@ -621,35 +676,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#relationships').select2({
-		multiple: true,
-		maximumSelectionLength: 2,
-		placeholder: 'Relationship/s',	
-		minimumInputLength: 1,
-		ajax: {
-			url: "{% url 'actions/get-filtered-patient-names' %}",
-			data: function (params) {
-				var data = {
-					term: params.term,
-				};
-				console.log('data', data);
-				return data;
-			},
-			processResults: function (data) {
-				console.log(data);
-				// Tranforms the top-level key of the response object from 'items' to 'results'
-				return {
-					results: data.map(p => {
-						return {
-							id: p.pk,
-							text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
-						}
-
-					})
-				};
-			}
-		}
-	});
+	
 });
 </script>
 <script src="{% static 'js/x/date.js' %}"></script>

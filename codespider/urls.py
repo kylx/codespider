@@ -57,6 +57,7 @@ urlpatterns = [
     path('action/transfer-room', transfer_room, name='action/transfer-room'),
 
     path('actions/get-filtered-patient-names', get_filtered_patient_names, name='actions/get-filtered-patient-names'),
+    path('actions/get-filtered-relationships', get_filtered_relationships, name='actions/get-filtered-relationships'),
 
      
     path('', show_urls, name='dev/show-urls'),
