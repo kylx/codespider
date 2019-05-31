@@ -404,6 +404,12 @@ def inquiry_filter(request):
         filters['date__date__lte']=dto
     if diagnosis:
         filters['visit__patient__diagnosis']=diagnosis
+    if region:
+        filters['visit__patient__region']=region
+    if province:
+        filters['visit__patient__province']=province
+    if city:
+        filters['visit__patient__city']=city
 
     
     # date = Q(date__gte=date_from, date__lte=date_to)
@@ -411,7 +417,7 @@ def inquiry_filter(request):
     # dates_to = list(map(lambda x: int(x), date_to.split('-')))
     
     # dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
-    print(f'{dfrom}   {dto}')
+    # print(f'{dfrom}   {dto}')
     records = Occupancy.objects.filter(**filters).annotate(wcount=Count('watcher'))
     for rec in records:
         if rec.visit.patient.sex == 'm':
@@ -421,6 +427,11 @@ def inquiry_filter(request):
             
         context[rec.room.building.name][sex] += 1
         context[rec.room.building.name]['watchers'] += rec.wcount
+        context['both'][sex] += 1
+        context['both']['watchers'] += rec.wcount
+    
+    for building in ['both', 'main', 'annex']:
+        context[building]['patients'] = sum([context[building][key] for key in ['girls', 'boys', 'watchers']])
         
     
         

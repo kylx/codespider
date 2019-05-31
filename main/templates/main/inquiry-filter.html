@@ -178,6 +178,9 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
+
+    $('#id_date_from, #id_date_to, #id_diagnosis, #id_province, #id_region, #id_city').removeAttr('required');
+
 	let reg = $('select[name=region]');
 	let prov = $('select[name=province]');
 	let city = $('select[name=city]');
