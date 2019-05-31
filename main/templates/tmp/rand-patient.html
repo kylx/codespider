@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <script src="{% static 'js/vue.js'%}"></script>
@@ -33,8 +32,8 @@
             sex: '*',
         },
         methods: {
-            getRand: function() {
-                    fetch('{% url "rand" %}')
+            getRand: function () {
+                fetch('{% url "rand" %}')
                     .then(response => response.json())
                     .then(myJson => JSON.parse(myJson.rand_patient)[0])
                     .then(patient => {
@@ -46,9 +45,134 @@
                         this.$data.age = patient.fields.age;
                         this.$data.sex = patient.fields.sex;
                     })
-                }
-                ,
+            }
+            ,
         },
         delimiters: ['[[', ']]']
     });
 </script>
+
+
+<!-- <div class="container"> -->
+<!-- <select name="" id="test"></select> -->
+<!-- <label for="first">First Name -->
+    <span>
+<select id="first" style="width: 100%; display: inline-block"></select></span><span>
+<!-- <select id="mid" style="width: 30%"></select></span><span>
+<select id="last" style="width: 30%"></select></span><span></span> -->
+</span>
+<!-- </div> -->
+
+<script>
+    $(document).ready(function () {
+        console.log("asd");
+        // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+        var first, mid, last;
+
+        $('#first').select2({
+            placeholder: 'First Name',
+            minimumInputLength: 1,
+            ajax: {
+                url: "{% url 'actions/get-filtered-patient-names' %}",
+                data: function (params) {
+                    var data = {
+                        term: params.term,
+                    };
+                    console.log('data', data);
+                    return data;
+                },
+                processResults: function (data) {
+                    console.log(data);
+                    // Tranforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.map(p => {
+                            return {
+                                id: p.pk,
+                                text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
+                            }
+
+                        })
+                    };
+                }
+            }
+        });
+
+        // $('#mid').select2({
+        //     ajax: {
+        //         url: "{% url 'actions/get-filtered-patient-names' %}",
+        //         data: function (params) {
+        //             mid = params.term;
+        //             var data = {
+        //                 first: first,
+        //                 mid: mid,
+        //                 last: last,
+        //             };
+        //             console.log('data', data);
+        //             return data;
+        //         },
+        //         processResults: function (data) {
+        //             console.log(data);
+        //             // Tranforms the top-level key of the response object from 'items' to 'results'
+        //             return {
+        //                 results: data.map(p => {
+        //                     return {
+        //                         id: p.pk,
+        //                         text: p.middle_initial,
+        //                     }
+
+        //                 })
+        //             };
+        //         }
+        //     }
+        // });
+
+        // $('#last').select2({
+        //     ajax: {
+        //         url: "{% url 'actions/get-filtered-patient-names' %}",
+        //         data: function (params) {
+        //             last = params.term;
+        //             var data = {
+        //                 first: first,
+        //                 mid: mid,
+        //                 last: last,
+        //             };
+        //             console.log('data', data);
+        //             return data;
+        //         },
+        //         processResults: function (data) {
+        //             console.log(data);
+        //             // Tranforms the top-level key of the response object from 'items' to 'results'
+        //             return {
+        //                 results: data.map(p => {
+        //                     return {
+        //                         id: p.pk,
+        //                         text: p.last_name,
+        //                     }
+
+        //                 })
+        //             };
+        //         }
+        //     }
+        // });
+
+        // $('.js-example-basic-multiple').select2();
+
+    });
+
+
+
+</script>
+
+<style>
+    .select2-selection, .select2-selection--single {
+    width: 100%;
+    padding-bottom: 13px;
+    margin-bottom: 27px;
+    border-style: none none solid none;
+    border-bottom: 2px solid #d9d9d9;
+    background: transparent;
+    color: #333333;
+    font-size: 18px;
+    font-weight: 500;
+}
+</style>

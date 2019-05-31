@@ -54,6 +54,8 @@ urlpatterns = [
     path('action/checkout', checkout, name='action/checkout'),
     path('action/transfer-room', transfer_room, name='action/transfer-room'),
 
+    path('actions/get-filtered-patient-names', get_filtered_patient_names, name='actions/get-filtered-patient-names'),
+
      
     path('', show_urls, name='dev/show-urls'),
 

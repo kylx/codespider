@@ -249,13 +249,10 @@ def rooms(request, building, year=-1, month=-1, day=-1):
         'month_name': date.strftime("%B"),
         'count': occ['count'],
         'relationships': Watcher.objects.get_relationship_list(),
-<<<<<<< HEAD
-=======
         'rooms': Room.objects.get_list(),
         'buildings': Building.objects.get_list(),
         'num_rooms': occ['num_rooms'],
         'error': request.session.get('error_msg', 'fish'),
->>>>>>> 3a561ff59328552ce706d2eaab6cb1788d513cc1
         
 		# 'rooms': ['fish','is', 'love'],
     }
@@ -287,6 +284,12 @@ def patients(request):
     # messages.success(request, f'ss')
     # messages.error(request, f'ee')
     return render(request, 'main/patients.html', context)
+
+def get_filtered_patient_names(request):
+    term = request.GET.get('term')
+    # mid = request.GET.get('mid')
+    # last = request.GET.get('last')
+    return JsonResponse(Patient.objects.get_filtered_names(term), safe=False)
 
 def summary_daily(request):
     form = SummaryForm()
