@@ -1,3 +1,10 @@
+#Chooser {
+	display: none;
+}
+
+#searchBut {
+	display: none;
+}
 
 .col-lg-12 {
     padding: 0%;
@@ -14,7 +21,7 @@
 
 .summaryD-date {
 	text-align: center;
-	padding-bottom: 100px;
+	padding-bottom: 50px;
 }
 
 .summaryD-input {
@@ -57,3 +64,4 @@
 .col-9-d {
 	width: 213px;
 }
+
