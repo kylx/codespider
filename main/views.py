@@ -358,6 +358,9 @@ def inquiry_filter(request):
     province = request.GET.get('province')
     city = request.GET.get('city')
     
+    if diagnosis == '':
+        diagnosis = None
+    
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
@@ -388,15 +391,28 @@ def inquiry_filter(request):
             'watchers': 0,
         },
     }
+    
+    filters = {}
+    
+    if date_from:
+        dates_from = list(map(lambda x: int(x), date_from.split('-')))
+        dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
+        filters['date__date__gte']=dfrom
+    if date_to:
+        dates_to = list(map(lambda x: int(x), date_to.split('-')))
+        dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
+        filters['date__date__lte']=dto
+    if diagnosis:
+        filters['visit__patient__diagnosis']=diagnosis
 
     
     # date = Q(date__gte=date_from, date__lte=date_to)
-    dates_from = list(map(lambda x: int(x), date_from.split('-')))
-    dates_to = list(map(lambda x: int(x), date_to.split('-')))
-    dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
-    dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
+    
+    # dates_to = list(map(lambda x: int(x), date_to.split('-')))
+    
+    # dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
     print(f'{dfrom}   {dto}')
-    records = Occupancy.objects.filter(date__date__gte=dfrom, date__date__lte=dto).annotate(wcount=Count('watcher'))
+    records = Occupancy.objects.filter(**filters).annotate(wcount=Count('watcher'))
     for rec in records:
         if rec.visit.patient.sex == 'm':
             sex = 'boys'

@@ -38,24 +38,24 @@ class Command(BaseCommand):
                     "user_permissions": []
                 }
             },
-            diagnosis('Henlo HSA', 'HHSA'),
-            diagnosis('bagagnawowngitis', 'aa'),
+            # diagnosis('Henlo HSA', 'HHSA'),
+            # diagnosis('bagagnawowngitis', 'aa'),
             diagnosis('kulang sa gugma', 'dd'),
-            diagnosis('fishisloveparinmgaulol', 'sdsd'),
-            diagnosis('imong mama', 'sd'),
+            # diagnosis('fishisloveparinmgaulol', 'sdsd'),
+            # diagnosis('imong mama', 'sd'),
             diagnosis('dislocated neck', 'sd'),
             watcher('mother'),
             watcher('father'),
             watcher('grandmother'),
             watcher('grandfather'),
-            watcher('daughter'),
-            watcher('son'),
-            watcher('mistress'),
-            watcher('ex-wife'),
-            watcher('ex-husband'),
-            watcher('ex-mistress'),
-            watcher('husband'),
-            watcher('wife'),
+            # watcher('daughter'),
+            # watcher('son'),
+            # watcher('mistress'),
+            # watcher('ex-wife'),
+            # watcher('ex-husband'),
+            # watcher('ex-mistress'),
+            # watcher('husband'),
+            # watcher('wife'),
             building('main'),
             building('annex'),
         ]
@@ -66,13 +66,13 @@ class Command(BaseCommand):
         data = []
 
         # Add patients
-        for x in range(100):
+        for x in range(20):
             data.append(patient())
 
         # Add rooms
-        for x in range(1,30):
+        for x in range(1,6):
             data.append(room('main', x))
-        for x in range(1,25):
+        for x in range(1,6):
             data.append(room('annex', x))
 
         with open('db.json', 'w') as dump_file:
@@ -88,7 +88,7 @@ class Command(BaseCommand):
         call_command('loaddata', 'db.json')
 
         data = []
-        for x in range(1, 2000):
+        for x in range(1, 200):
             data.append(occupancy())
         with open('db.json', 'w') as dump_file:
             json.dump(data, dump_file, indent=4)
