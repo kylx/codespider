@@ -1,4 +1,5 @@
-/*! Select2 4.0.6-rc.0 | https://github.com/select2/select2/blob/master/LICENSE.md */
+/*! Select2 4.0.7 | https://github.com/select2/select2/blob/master/LICENSE.md */
+
 ! function(a) {
     "function" == typeof define && define.amd ? define(["jquery"], a) : "object" == typeof module && module.exports ? module.exports = function(b, c) {
         return void 0 === c && (c = "undefined" != typeof window ? require("jquery") : require("jquery")(b)), a(c), c
@@ -380,9 +381,9 @@
                     }), c.on("query", function(a) {
                         e.hideMessages(), e.showLoading(a)
                     }), c.on("select", function() {
-                        c.isOpen() && (e.setClasses(), e.highlightFirstItem())
+                        c.isOpen() && (e.setClasses(), e.options.get("scrollAfterSelect") && e.highlightFirstItem())
                     }), c.on("unselect", function() {
-                        c.isOpen() && (e.setClasses(), e.highlightFirstItem())
+                        c.isOpen() && (e.setClasses(), e.options.get("scrollAfterSelect") && e.highlightFirstItem())
                     }), c.on("open", function() {
                         e.$results.attr("aria-expanded", "true"), e.$results.attr("aria-hidden", "false"), e.setClasses(), e.ensureHighlightVisible()
                     }), c.on("close", function() {
@@ -402,7 +403,7 @@
                         var a = e.getHighlightedResults(),
                             b = e.$results.find("[aria-selected]"),
                             c = b.index(a);
-                        if (0 !== c) {
+                        if (!(c <= 0)) {
                             var d = c - 1;
                             0 === a.length && (d = 0);
                             var f = b.eq(d);
@@ -517,7 +518,9 @@
                     }), a.on("open", function() {
                         d.$selection.attr("aria-expanded", "true"), d.$selection.attr("aria-owns", e), d._attachCloseHandler(a)
                     }), a.on("close", function() {
-                        d.$selection.attr("aria-expanded", "false"), d.$selection.removeAttr("aria-activedescendant"), d.$selection.removeAttr("aria-owns"), d.$selection.focus(), d._detachCloseHandler(a)
+                        d.$selection.attr("aria-expanded", "false"), d.$selection.removeAttr("aria-activedescendant"), d.$selection.removeAttr("aria-owns"), window.setTimeout(function() {
+                            d.$selection.focus()
+                        }, 0), d._detachCloseHandler(a)
                     }), a.on("enable", function() {
                         d.$selection.attr("tabindex", d._tabindex)
                     }), a.on("disable", function() {
@@ -673,8 +676,9 @@
                     d.isOpen() || c.which != b.DELETE && c.which != b.BACKSPACE || this._handleClear(c)
                 }, d.prototype.update = function(b, d) {
                     if (b.call(this, d), !(this.$selection.find(".select2-selection__placeholder").length > 0 || 0 === d.length)) {
-                        var e = a('<span class="select2-selection__clear">&times;</span>');
-                        c.StoreData(e[0], "data", d), this.$selection.find(".select2-selection__rendered").prepend(e)
+                        var e = this.options.get("translations").get("removeAllItems"),
+                            f = a('<span class="select2-selection__clear" title="' + e() + '">&times;</span>');
+                        c.StoreData(f[0], "data", d), this.$selection.find(".select2-selection__rendered").prepend(f)
                     }
                 }, d
             }), b.define("select2/selection/search", ["jquery", "../utils", "../keys"], function(a, b, c) {
@@ -729,7 +733,9 @@
                     this.$search.attr("placeholder", b.text)
                 }, d.prototype.update = function(a, b) {
                     var c = this.$search[0] == document.activeElement;
-                    this.$search.attr("placeholder", ""), a.call(this, b), this.$selection.find(".select2-selection__rendered").append(this.$searchContainer), this.resizeSearch(), c && this.$search.focus()
+                    if (this.$search.attr("placeholder", ""), a.call(this, b), this.$selection.find(".select2-selection__rendered").append(this.$searchContainer), this.resizeSearch(), c) {
+                        this.$element.find("[data-select2-tag]").length ? this.$element.focus() : this.$search.focus()
+                    }
                 }, d.prototype.handleSearch = function() {
                     if (this.resizeSearch(), !this._keyUpPrevented) {
                         var a = this.$search.val();
@@ -1046,6 +1052,7 @@
                     "Ɵ": "O",
                     "Ꝋ": "O",
                     "Ꝍ": "O",
+                    "Œ": "OE",
                     "Ƣ": "OI",
                     "Ꝏ": "OO",
                     "Ȣ": "OU",
@@ -1455,6 +1462,7 @@
                     "ꝋ": "o",
                     "ꝍ": "o",
                     "ɵ": "o",
+                    "œ": "oe",
                     "ƣ": "oi",
                     "ȣ": "ou",
                     "ꝏ": "oo",
@@ -1623,8 +1631,9 @@
                     "ύ": "υ",
                     "ϋ": "υ",
                     "ΰ": "υ",
-                    "ω": "ω",
-                    "ς": "σ"
+                    "ώ": "ω",
+                    "ς": "σ",
+                    "’": "'"
                 }
             }), b.define("select2/data/base", ["../utils"], function(a) {
                 function b(a, c) {
@@ -2199,7 +2208,7 @@
                     })
                 }, a.prototype._selectTriggered = function(a, b) {
                     var c = b.originalEvent;
-                    c && c.ctrlKey || this.trigger("close", {
+                    c && (c.ctrlKey || c.metaKey) || this.trigger("close", {
                         originalEvent: c,
                         originalSelect2Event: b
                     })
@@ -2229,6 +2238,9 @@
                     },
                     searching: function() {
                         return "Searching…"
+                    },
+                    removeAllItems: function() {
+                        return "Remove all items"
                     }
                 }
             }), b.define("select2/defaults", ["jquery", "require", "./results", "./selection/single", "./selection/multiple", "./selection/placeholder", "./selection/allowClear", "./selection/search", "./selection/eventRelay", "./utils", "./translation", "./diacritics", "./data/select", "./data/array", "./data/ajax", "./data/tags", "./data/tokenizer", "./data/minimumInputLength", "./data/maximumInputLength", "./data/maximumSelectionLength", "./dropdown", "./dropdown/search", "./dropdown/hidePlaceholder", "./dropdown/infiniteScroll", "./dropdown/attachBody", "./dropdown/minimumResultsForSearch", "./dropdown/selectOnClose", "./dropdown/closeOnSelect", "./i18n/en"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C) {
@@ -2330,6 +2342,7 @@
                         maximumSelectionLength: 0,
                         minimumResultsForSearch: 0,
                         selectOnClose: !1,
+                        scrollAfterSelect: !1,
                         sorter: function(a) {
                             return a
                         },
@@ -2357,13 +2370,24 @@
                     }
                 }
                 return e.prototype.fromElement = function(a) {
-                    var c = ["select2"];
+                    function c(a, b) {
+                        return b.toUpperCase()
+                    }
+                    var e = ["select2"];
                     null == this.options.multiple && (this.options.multiple = a.prop("multiple")), null == this.options.disabled && (this.options.disabled = a.prop("disabled")), null == this.options.language && (a.prop("lang") ? this.options.language = a.prop("lang").toLowerCase() : a.closest("[lang]").prop("lang") && (this.options.language = a.closest("[lang]").prop("lang"))), null == this.options.dir && (a.prop("dir") ? this.options.dir = a.prop("dir") : a.closest("[dir]").prop("dir") ? this.options.dir = a.closest("[dir]").prop("dir") : this.options.dir = "ltr"), a.prop("disabled", this.options.disabled), a.prop("multiple", this.options.multiple), d.GetData(a[0], "select2Tags") && (this.options.debug && window.console && console.warn && console.warn('Select2: The `data-select2-tags` attribute has been changed to use the `data-data` and `data-tags="true"` attributes and will be removed in future versions of Select2.'), d.StoreData(a[0], "data", d.GetData(a[0], "select2Tags")), d.StoreData(a[0], "tags", !0)), d.GetData(a[0], "ajaxUrl") && (this.options.debug && window.console && console.warn && console.warn("Select2: The `data-ajax-url` attribute has been changed to `data-ajax--url` and support for the old attribute will be removed in future versions of Select2."), a.attr("ajax--url", d.GetData(a[0], "ajaxUrl")), d.StoreData(a[0], "ajax-Url", d.GetData(a[0], "ajaxUrl")));
-                    var e = {};
-                    e = b.fn.jquery && "1." == b.fn.jquery.substr(0, 2) && a[0].dataset ? b.extend(!0, {}, a[0].dataset, d.GetData(a[0])) : d.GetData(a[0]);
-                    var f = b.extend(!0, {}, e);
-                    f = d._convertData(f);
-                    for (var g in f) b.inArray(g, c) > -1 || (b.isPlainObject(this.options[g]) ? b.extend(this.options[g], f[g]) : this.options[g] = f[g]);
+                    for (var f = {}, g = 0; g < a[0].attributes.length; g++) {
+                        var h = a[0].attributes[g].name,
+                            i = "data-";
+                        if (h.substr(0, i.length) == i) {
+                            var j = h.substring(i.length),
+                                k = d.GetData(a[0], j);
+                            f[j.replace(/-([a-z])/g, c)] = k
+                        }
+                    }
+                    b.fn.jquery && "1." == b.fn.jquery.substr(0, 2) && a[0].dataset && (f = b.extend(!0, {}, a[0].dataset, f));
+                    var l = b.extend(!0, {}, d.GetData(a[0]), f);
+                    l = d._convertData(l);
+                    for (var m in l) b.inArray(m, e) > -1 || (b.isPlainObject(this.options[m]) ? b.extend(this.options[m], l[m]) : this.options[m] = l[m]);
                     return this
                 }, e.prototype.get = function(a) {
                     return this.options[a]
@@ -2390,7 +2414,7 @@
                         l.trigger("selection:update", {
                             data: a
                         })
-                    }), a.addClass("select2-hidden-accessible"), a.attr("aria-hidden", "true"), this._syncAttributes(), c.StoreData(a[0], "select2", this)
+                    }), a.addClass("select2-hidden-accessible"), a.attr("aria-hidden", "true"), this._syncAttributes(), c.StoreData(a[0], "select2", this), a.data("select2", this)
                 };
                 return c.Extend(e, c.Observable), e.prototype._generateId = function(a) {
                     var b = "";
@@ -2563,7 +2587,7 @@
                         return a.toString()
                     })), this.$element.val(c).trigger("change")
                 }, e.prototype.destroy = function() {
-                    this.$container.remove(), this.$element[0].detachEvent && this.$element[0].detachEvent("onpropertychange", this._syncA), null != this._observer ? (this._observer.disconnect(), this._observer = null) : this.$element[0].removeEventListener && (this.$element[0].removeEventListener("DOMAttrModified", this._syncA, !1), this.$element[0].removeEventListener("DOMNodeInserted", this._syncS, !1), this.$element[0].removeEventListener("DOMNodeRemoved", this._syncS, !1)), this._syncA = null, this._syncS = null, this.$element.off(".select2"), this.$element.attr("tabindex", c.GetData(this.$element[0], "old-tabindex")), this.$element.removeClass("select2-hidden-accessible"), this.$element.attr("aria-hidden", "false"), c.RemoveData(this.$element[0]), this.dataAdapter.destroy(), this.selection.destroy(), this.dropdown.destroy(), this.results.destroy(), this.dataAdapter = null, this.selection = null, this.dropdown = null, this.results = null
+                    this.$container.remove(), this.$element[0].detachEvent && this.$element[0].detachEvent("onpropertychange", this._syncA), null != this._observer ? (this._observer.disconnect(), this._observer = null) : this.$element[0].removeEventListener && (this.$element[0].removeEventListener("DOMAttrModified", this._syncA, !1), this.$element[0].removeEventListener("DOMNodeInserted", this._syncS, !1), this.$element[0].removeEventListener("DOMNodeRemoved", this._syncS, !1)), this._syncA = null, this._syncS = null, this.$element.off(".select2"), this.$element.attr("tabindex", c.GetData(this.$element[0], "old-tabindex")), this.$element.removeClass("select2-hidden-accessible"), this.$element.attr("aria-hidden", "false"), c.RemoveData(this.$element[0]), this.$element.removeData("select2"), this.dataAdapter.destroy(), this.selection.destroy(), this.dropdown.destroy(), this.results.destroy(), this.dataAdapter = null, this.selection = null, this.dropdown = null, this.results = null
                 }, e.prototype.render = function() {
                     var b = a('<span class="select2 select2-container"><span class="selection"></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>');
                     return b.attr("dir", this.options.get("dir")), this.$container = b, this.$container.addClass("select2-container--" + this.options.get("theme")), c.StoreData(b[0], "element", this.$element), b

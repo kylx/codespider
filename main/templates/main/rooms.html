@@ -15,6 +15,7 @@
     <link media="print" rel="stylesheet" href="{% static 'css/rooms-print.css' %}">
     <link media="print" rel="stylesheet" href="{% static 'css/rooms-table-print.css' %}">
 	<link media="print" rel="stylesheet" href="{% static 'css/rooms-form-print.css' %}">
+	<link rel="stylesheet" href="{% static 'css/plugins/select2.css' %}">
 {% endblock page_stylesheet %}
 
 {% block nav_bar %}
@@ -161,7 +162,7 @@
 					<div class="modal-header modal-title">
 						Assign to Room
 					</div>
-					<form id="assign_room" method="post" action="{% url 'action/assign-room' %}">
+					<form class=id="assign_room" method="post" action="{% url 'action/assign-room' %}">
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
@@ -170,20 +171,13 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-lg-5">
-									{{ form.last_name }}
-								</div>
-								<div class="col-lg-5">
-									{{ form.first_name }}
-								</div>
-								<div class="col-lg-2">
-									{{ form.middle_initial }}
+								<div class="col-lg-12">
+									<select id="first"></select>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col-lg-12">
-									<div class="form-label">Relationship</div>
-									{{ form.relationship }}
+									<select id="relationships"></select>
 								</div>
 							</div>
 							<div class="row text-left">
@@ -234,14 +228,8 @@
 								</div>							
 							</div>
 							<div class="row">
-								<div class="col-lg-5">
-									{{ form.last_name }}
-								</div>
-								<div class="col-lg-5">
-									{{ form.first_name }}
-								</div>
-								<div class="col-lg-2">
-									{{ form.middle_initial }}
+								<div class="col-lg-12">
+									<select id="second"></select>
 								</div>
 							</div>
 						</div>
@@ -274,14 +262,8 @@
 						<div class="modal-body">
 							{% csrf_token %}
 							<div class="row">
-								<div class="col-lg-5">
-									{{ form.last_name }}
-								</div>
-								<div class="col-lg-5">
-									{{ form.first_name }}
-								</div>
-								<div class="col-lg-2">
-									{{ form.middle_initial }}
+								<div class="col-lg-12">
+									<select id="third"></select>
 								</div>
 							</div>
 						</div>
@@ -343,9 +325,8 @@
 {% endblock page_body %}
 
 {% block page_js %}
-
+<script src="{% static 'js/plugins/select2.js' %}"></script>
 <script>
-	
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -604,7 +585,70 @@ window.onload = function() {
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
-</script>
 
+$(document).ready(function () {
+	console.log("asd");
+	// $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+	var first, mid, last;
+
+	$('#first,#second,#third').select2({
+		placeholder: 'Patient Name',
+		minimumInputLength: 1,
+		ajax: {
+			url: "{% url 'actions/get-filtered-patient-names' %}",
+			data: function (params) {
+				var data = {
+					term: params.term,
+				};
+				console.log('data', data);
+				return data;
+			},
+			processResults: function (data) {
+				console.log(data);
+				// Tranforms the top-level key of the response object from 'items' to 'results'
+				return {
+					results: data.map(p => {
+						return {
+							id: p.pk,
+							text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
+						}
+
+					})
+				};
+			}
+		}
+	});
+	
+	$('#relationships').select2({
+		multiple: true,
+		maximumSelectionLength: 2,
+		placeholder: 'Relationship/s',	
+		minimumInputLength: 1,
+		ajax: {
+			url: "{% url 'actions/get-filtered-patient-names' %}",
+			data: function (params) {
+				var data = {
+					term: params.term,
+				};
+				console.log('data', data);
+				return data;
+			},
+			processResults: function (data) {
+				console.log(data);
+				// Tranforms the top-level key of the response object from 'items' to 'results'
+				return {
+					results: data.map(p => {
+						return {
+							id: p.pk,
+							text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
+						}
+
+					})
+				};
+			}
+		}
+	});
+});
+</script>
 <script src="{% static 'js/x/date.js' %}"></script>
 {% endblock page_js %}
