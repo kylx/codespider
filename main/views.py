@@ -221,7 +221,7 @@ def assign_room(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def rooms(request, building, year=-1, month=-1, day=-1):
-    print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
+    # print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
     form = RoomForm()
 
     if year == -1 and month == -1 and day == -1:
@@ -291,12 +291,51 @@ def get_filtered_patient_names(request):
     # last = request.GET.get('last')
     return JsonResponse(Patient.objects.get_filtered_names(term), safe=False)
 
-def summary_daily(request):
+def summary_daily(request, year=-1, month=-1, day=-1):
+
+
     form = SummaryForm()
+    
+    if year == -1 and month == -1 and day == -1:
+        # return render(request, 'main/summary-daily.html')
+        date = datetime.datetime.now()
+        year = date.year
+        month = date.month
+        day = date.day
+    date = datetime.datetime(int(year), int(month), int(day))
+        
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
+    occ = Occupancy.objects.get_list_for_day_extended(int(year), int(month), int(day))
+    request.session['error'] = 'haha'
     context = {
-        'url_name': 'SUMMARY',
-		'form': form
+        'url_name': 'ROOMS',
+		'form': form,
+		# 'rooms': occ,
+		'rooms_json': json.dumps(occ['list']),
+        'year': year,
+        'month': month,
+        'day': day,
+        'weekday': weekdays[date.weekday()],
+        'month_name': date.strftime("%B"),
+        'count': occ['count'],
+        'relationships': Watcher.objects.get_relationship_list(),
+        'rooms': Room.objects.get_list(),
+        'buildings': Building.objects.get_list(),
+        'num_rooms': occ['num_rooms'],
+        'error': request.session.get('error_msg', 'fish'),
+        
+		# 'rooms': ['fish','is', 'love'],
     }
+    # messages.success(request, f'ss')
+    # messages.error(request, f'ee')
+    # return render(request, 'main/rooms.html', context)
+    
+    # context = {
+        # 'url_name': 'SUMMARY',
+		# 'form': form
+    # }
     return render(request, 'main/summary-daily.html', context)
 	
 def summary_monthly(request):

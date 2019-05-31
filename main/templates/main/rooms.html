@@ -474,7 +474,7 @@ window.onload = function() {
     var room_num = 1;
     var last_room = 0;
 	raw_json.forEach((occ, i, occs) => {
-		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay, address} = occ;
         
         // add empty rooms
         console.log('pre', parseInt(room), room_num);
@@ -549,6 +549,7 @@ window.onload = function() {
 		td_num_watchers.textContent = String(watchers.count);
 		td_relationships.textContent = watchers.list;
 		td_date.textContent = date_string;
+		td_address.textContent = c;
         
         
         console.log('last', parseInt(room), room_num);

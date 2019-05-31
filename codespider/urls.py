@@ -37,6 +37,8 @@ urlpatterns = [
     path('rooms/main'        , test     , name='rooms/main'),
     path('rooms/annex'        , test     , name='rooms/annex'),
     path('patients'         , patients  , name='patients'),
+    # path('summary/daily'      , summary_daily   , name='summary/daily'),
+    re_path('summary/daily/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', summary_daily),
     path('summary/daily'      , summary_daily   , name='summary/daily'),
     path('summary/monthly'  , summary_monthly   , name='summary/monthly'),
     path('inquiry/filter'      , inquiry_filter   , name='inquiry/filter'),

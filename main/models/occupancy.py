@@ -9,7 +9,7 @@ import datetime
 import calendar
 
 class OccupancyManager(models.Manager):
-    def get_list_for_day(self, building, year, month, date):
+    def get_list_for_day(self, year, month, date):
         def simplify_occupancy(occu):
             room = occu.room
             visit = occu.visit
@@ -52,7 +52,8 @@ class OccupancyManager(models.Manager):
             }
         start_date = datetime.date(year, month, date)
         end_date = start_date + datetime.timedelta(days=1)
-        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True, room__building__name=building, date__range=(start_date, end_date)).order_by('room__display_number')
+        occ = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True,room__building__name=building, date__range=(start_date, end_date)).order_by('room__display_number')
+            
         llll = list(map(simplify_occupancy, occ))
         watchers = 0
         male = 0
@@ -64,18 +65,6 @@ class OccupancyManager(models.Manager):
                 male += 1
             else:
                 female += 1
-        # occ = super().only(
-        #     'room',
-        #     'visit__patient__id',
-        #     'visit__patient__first_name',
-        #     'visit__patient__last_name',
-        #     'visit__patient__middle_initial',
-        #     'watcher',
-        #     'visit__id',
-        #     'visit__start_date',
-        #     'visit__assigned_end_date',
-        #     'date'
-        # ).filter(room__building__name=building, date__range=(start_date, end_date))
         return {
             'list': llll,
             'count': {
@@ -85,6 +74,79 @@ class OccupancyManager(models.Manager):
                 'total': male+female,
             },
             'num_rooms': Room.objects.filter(building__name=building).count()
+        }
+        
+        
+    def get_list_for_day_extended(self, year, month, date):
+        def simplify_occupancy(occu):
+            room = occu.room
+            visit = occu.visit
+            patient = visit.patient
+            watchers_set = occu.watcher.all().only('relationship')
+            start_date = visit.start_date
+            end_date = visit.assigned_end_date
+            # print(room)
+            return {
+                'pk': {
+                    'room': occu.room.pk,
+                    'patient': patient.pk,
+                    'visit': visit.pk,
+                },
+                'room': occu.room.display_number,
+                'room_name': f'{occu.room.building.name[0]}{occu.room.display_number}',
+                'first_name': patient.last_name,
+                'last_name': patient.first_name,
+                'middle_initial': patient.middle_initial,
+                'sex': patient.sex,
+                'age': patient.age,
+                # 'address': patient.city,
+                'diagnosis': patient.diagnosis.full_name,
+                'city': patient.city,
+                'watchers': {
+                    'list': ', '.join([w.relationship for w in watchers_set]),
+                    'count': watchers_set.count(),
+                },
+                'date_of_stay': {
+                    'start': {
+                        'year': start_date.year,
+                        'month': start_date.month,
+                        'day': start_date.day,
+                        'weekday': start_date.weekday(),
+                        'month_name': start_date.strftime("%B"),
+                    },
+                    'end': {
+                        'year': end_date.year,
+                        'month': end_date.month,
+                        'day': end_date.day,
+                        'weekday': end_date.weekday(),
+                        'month_name': end_date.strftime("%B"),
+                    },
+                }
+            }
+        start_date = datetime.date(year, month, date)
+        end_date = start_date + datetime.timedelta(days=1)
+        occ = super().select_related('room', 'room__building', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True,date__range=(start_date, end_date)).order_by('room__display_number')
+            
+        llll = list(map(simplify_occupancy, occ))
+        watchers = 0
+        male = 0
+        female = 0
+        
+        for o in llll:
+            watchers += o['watchers']['count']
+            if o['sex'] == 'm':
+                male += 1
+            else:
+                female += 1
+        return {
+            'list': llll,
+            'count': {
+                'watchers': watchers,
+                'boys': male,
+                'girls': female,
+                'total': male+female,
+            },
+            'num_rooms': Room.objects.all().count()
         }
     
     
@@ -106,6 +168,34 @@ class OccupancyManager(models.Manager):
             [d, Occupancy.objects.get_count_for_date(2019, 5, d)]
             for d in range(1, calendar.monthrange(year, month)[1]+1)
         ] 
+        
+    """
+    Return status for given date and building
+    If given id is null, the total is given
+    
+        - boys
+        - girls
+        - total patients
+        - total watchers
+    """
+    def get_status_for_day(self, building_id, year, month, day):
+        # prefetch fields for faster performance
+        query = super().select_related('room', 'visit', 'visit__patient',).prefetch_related('watcher')
+        
+        query = query.filter(
+            visit__is_ongoing=True,
+            room__building__name=building,
+            date__range=(start_date, end_date))
+        query = query.order_by('room__display_number')
+        
+        watchers = 0
+        male = 0
+        female = 0
+        
+        for record in query:
+            watcher_set = record.watcher.all().only('relationship')
+            
+        pass
             
 
 class Occupancy(models.Model):
