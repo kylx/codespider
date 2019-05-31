@@ -252,6 +252,33 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
+	var raw = '{{ patient_info | escapejs }}';
+    var raw_json = JSON.parse(raw);
+    console.log(raw_json)
+
+
+    var body = document.getElementById('name');
+    var fragment = document.createDocumentFragment();
+
+        // console.log(body);
+    // console.time('loop');
+    raw_json.forEach(occ => {
+        let first_name = document.getElementById('name');
+        body.innerText = occ.fields.last_name;
+
+    });
+
+    raw_json.find(finder)
+    body.appendChild(fragment);
+    // console.timeEnd('loop');
+
+    function finder(patient)
+    {
+        console.log("Finder", patient);
+    }
+
+
+
 	let reg = $('select[name=region]');
 	let prov = $('select[name=province]');
 	let city = $('select[name=city]');
@@ -304,6 +331,33 @@ $(document).ready(function() {
 		option.innerText = diagnosis[1]; // assign text
 		dropdown.appendChild(option); // add option to dropdown
 	}
+});
+
+var lname, fname, mname;
+//onclclicksummarize
+$("tr").click(function()
+{
+    $("td", this).each(function(j) 
+    {
+        console.log(j, ($(this).text()));
+        if (j == 0)
+        {
+            lname = $(this).text();
+        }
+
+        if (j == 1)
+        {
+            fname = $(this).text();
+        }
+        if (j == 2)
+        {
+            mname = $(this).text();
+        }
+    }
+  )
+
+console.log(lname, fname, mname);
+    ;
 });
 </script>
 {% endblock page_body %}
