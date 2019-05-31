@@ -16,6 +16,8 @@ import datetime
 import json
 from django.contrib import messages
 
+from django.db.models import Q, Count
+
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -347,11 +349,67 @@ def summary_monthly(request):
     return render(request, 'main/summary-monthly.html', context)
 
 def inquiry_filter(request):
+    
+    print(request.GET.get('date_from'))
+    date_from = request.GET.get('date_from')
+    date_to = request.GET.get('date_to')
+    diagnosis = request.GET.get('diagnosis')
+    region = request.GET.get('region')
+    province = request.GET.get('province')
+    city = request.GET.get('city')
+    
     form = FilterForm()
     context = {
         'url_name': 'INQUIRY',
-        'form': form
+        'form': form,
+        'date_from': date_from,
+        'date_to': date_to,
+        'diagnosis': diagnosis,
+        'region': region,
+        'province': province,
+        'city': city,
+        'both': {
+            'patients': 0,
+            'boys': 0,
+            'girls': 0,
+            'watchers': 0,
+        
+        },
+        'main': {
+            'patients': 0,
+            'boys': 0,
+            'girls': 0,
+            'watchers': 0,
+        },
+        'annex': {
+            'patients': 0,
+            'boys': 0,
+            'girls': 0,
+            'watchers': 0,
+        },
     }
+
+    
+    # date = Q(date__gte=date_from, date__lte=date_to)
+    dates_from = list(map(lambda x: int(x), date_from.split('-')))
+    dates_to = list(map(lambda x: int(x), date_to.split('-')))
+    dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
+    dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
+    print(f'{dfrom}   {dto}')
+    records = Occupancy.objects.filter(date__date__gte=dfrom, date__date__lte=dto).annotate(wcount=Count('watcher'))
+    for rec in records:
+        if rec.visit.patient.sex == 'm':
+            sex = 'boys'
+        else:
+            sex = 'girls'
+            
+        context[rec.room.building.name][sex] += 1
+        context[rec.room.building.name]['watchers'] += rec.wcount
+        
+    
+        
+    
+
     return render(request, 'main/inquiry-filter.html', context)
 	
 def inquiry_sort(request):

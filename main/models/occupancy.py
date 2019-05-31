@@ -9,7 +9,7 @@ import datetime
 import calendar
 
 class OccupancyManager(models.Manager):
-    def get_list_for_day(self, year, month, date):
+    def get_list_for_day(self, building, year, month, date):
         def simplify_occupancy(occu):
             room = occu.room
             visit = occu.visit
@@ -165,7 +165,7 @@ class OccupancyManager(models.Manager):
         
     def get_count_for_month(self, year, month):
         return [
-            [d, Occupancy.objects.get_count_for_date(2019, 5, d)]
+            [d, Occupancy.objects.get_count_for_date(year, month, d)]
             for d in range(1, calendar.monthrange(year, month)[1]+1)
         ] 
         

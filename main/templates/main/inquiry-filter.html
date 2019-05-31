@@ -52,9 +52,8 @@
 						<div class="filter-header filter-title">
 							Filter
 						</div>
-						<form method="post" action="">
+						<form method="get" action="">
 							<div class="filter-body">
-								{% csrf_token %}
 								<div class="row">
 									Date of Stay
 								</div>
@@ -110,27 +109,27 @@
 					<div class="row">
 						<div class="col-lg-12">
 							Date
-							{{ result.date_from }} - {{ result.date_to }}
+							{{ date_from }} - {{ date_to }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
 							Diagnosis
-							{{ result.diagnosis }}
+							{{ diagnosis }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-4">
 							Region
-							{{ result.region }}
+							{{ region }}
 						</div>
 						<div class="col-lg-4">
 							Province
-							{{ result.province }}
+							{{ province }}
 						</div>
 						<div class="col-lg-4">
 							City
-							{{ result.city }}
+							{{ city }}
 						</div>
 					</div>
 					<table class="table">
@@ -146,27 +145,27 @@
 						<tbody">
 							<tr>
 								<td class="f-col-1">Patients</td>
-								<td class="f-col-2">1</td>
-								<td class="f-col-3">2</td>
-								<td class="f-col-4">3</td>
+								<td class="f-col-2">{{both.patients}}</td>
+								<td class="f-col-3">{{main.patients}}</td>
+								<td class="f-col-4">{{annex.patients}}</td>
 							</tr>
 							<tr>
 								<td class="f-col-1">Boys</td>
-								<td class="f-col-2">4</td>
-								<td class="f-col-3">5</td>
-								<td class="f-col-4">6</td>
+								<td class="f-col-2">{{both.boys}}</td>
+								<td class="f-col-3">{{main.boys}}</td>
+								<td class="f-col-4">{{annex.boys}}</td>
 							</tr>
 							<tr>
 								<td class="f-col-1">Girls</td>
-								<td class="f-col-2">7</td>
-								<td class="f-col-3">8</td>
-								<td class="f-col-4">9</td>
+								<td class="f-col-2">{{both.girls}}</td>
+								<td class="f-col-3">{{main.girls}}</td>
+								<td class="f-col-4">{{annex.girls}}</td>
 							</tr>
 							<tr>
 								<td class="f-col-1">Watchers</td>
-								<td class="f-col-2">10</td>
-								<td class="f-col-3">11</td>
-								<td class="f-col-4">12</td>
+								<td class="f-col-2">{{both.watchers}}</td>
+								<td class="f-col-3">{{main.watchers}}</td>
+								<td class="f-col-4">{{annex.watchers}}</td>
 							</tr>
 						</tbody>
 					</table>
