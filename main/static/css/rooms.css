@@ -70,6 +70,13 @@ ul {
     text-align: center;
 }
 
+#row-1,
+#row-3,
+#row-5,
+#row-7 {
+    vertical-align: middle;
+}
+
 #forTable {
     border-style: solid 1px black;
 }

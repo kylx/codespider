@@ -1,3 +1,19 @@
+#colu3 {
+	font-size: 5px;
+}
+
+#colu1, #colu2 {
+	font-size: 15px;
+}
+
+#colu1, #colu2, #colu3 {
+	vertical-align: middle;
+}
+
+#colu1 {
+	text-align: center;
+}
+
 #total {
 	padding: 3% 20% 0% 0%;
 }
