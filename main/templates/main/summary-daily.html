@@ -215,31 +215,21 @@ window.onload = function(){
         row.appendChild(td_address);
         fragment.appendChild(row);
 
-        if (occ != null){
-            let {pk, room, room_name, first_name, last_name, middle_initial, age, sex, diagnosis, watchers, date_of_stay, city} = occ;
-            let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
-            date_string += date_of_stay.end.month_name + ' ';
-            date_string += date_of_stay.end.day;
+        let {pk, room, room_name, first_name, last_name, middle_initial, age, sex, diagnosis, watchers, date_of_stay, city} = occ;
+        let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
+        date_string += date_of_stay.end.month_name + ' ';
+        date_string += date_of_stay.end.day;
+    
+        td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
+        td_num_watchers.textContent = String(watchers.count);
+        td_relationships.textContent = watchers.list;
+        td_date.textContent = date_string;
+        td_sex.textContent = sex;
+        td_age.textContent = age;
+        td_diagnosis.textContent = diagnosis;
+        td_address.textContent = city;
+        td_room.textContent = room_name;
         
-            td_room.textContent = room_name;
-            td_patient.textContent = first_name + ', ' + last_name + ' ' + middle_initial + '.';
-            td_num_watchers.textContent = String(watchers.count);
-            td_relationships.textContent = watchers.list;
-            td_date.textContent = date_string;
-            td_room.textContent = room;
-        }
-        else{
-            console.log("empty", empty);
-            td_room.textContent = empty;
-            td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
-            td_num_watchers.textContent = String(watchers.count);
-            td_relationships.textContent = watchers.list;
-            td_date.textContent = date_string;
-            td_sex.textContent = sex;
-            td_age.textContent = age;
-            td_diagnosis.textContent = diagnosis;
-            td_address.textContent = city;
-        }
 		
     }
     
