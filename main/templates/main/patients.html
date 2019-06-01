@@ -253,6 +253,7 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
+<<<<<<< HEAD
 	var raw = '{{ patient_info | escapejs }}';
     var raw_json = JSON.parse(raw);
     console.log(raw_json)
@@ -263,18 +264,26 @@ $(document).ready(function() {
     });
 
 
+=======
+
+    var raw = '{{ patient_info | escapejs }}';
+    var raw_json = JSON.parse(raw);
+
+
+    /*
+>>>>>>> pr/15
     raw_json.find(finder);
 
     function finder(patient)
     {
         console.log("Finder", patient);
     }
+    */
 
 
-
-	let reg = $('select[name=region]');
-	let prov = $('select[name=province]');
-	let city = $('select[name=city]');
+    let reg = $('select[name=region]');
+    let prov = $('select[name=province]');
+    let city = $('select[name=city]');
 
     let provinces = prov.children('option').detach();
     let cities = city.children('option').detach();
@@ -285,6 +294,7 @@ $(document).ready(function() {
         prov.val('');
         resetCity();
     }
+
     function resetCity(){
         city.children('option').detach();
         city.append(cities[0]);
@@ -324,9 +334,18 @@ $(document).ready(function() {
 		option.innerText = diagnosis[1]; // assign text
 		dropdown.appendChild(option); // add option to dropdown
 	}
+
 });
 
+<<<<<<< HEAD
 var lname, fname, mname, ager;
+=======
+raw_json.forEach(occ => {
+    console.log("loop", occ);
+});
+
+let lname, fname, mname;
+>>>>>>> pr/15
 //onclclicksummarize
 $("tr").click(function()
 {
@@ -345,16 +364,33 @@ $("tr").click(function()
         {
             mname = $(this).text();
         }
+<<<<<<< HEAD
         let name = document.getElementById('name');
         name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
     }
+=======
+    }
 
+    const pmatch = raw_json.filter(occ =>
+        occ.fields.first_name     === fname
+     && occ.fields.middle_initial === mname
+     && occ.fields.last_name      === lname)[0];
+
+    let nametxt = document.getElementById('name');
+    nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
+>>>>>>> pr/15
+
+    let agetxt = document.getElementById('age');
+    agetxt.innerText = "Age: " + pmatch.fields.age;
 )
 
+<<<<<<< HEAD
     var agetxt = document.getElementById('age').value;
 
     age.innerText = "Age: " + agetxt;
 
+=======
+>>>>>>> pr/15
 });
 </script>
 {% endblock page_body %}
