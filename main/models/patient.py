@@ -3,6 +3,7 @@ from django.db import models
 from .diagnosis import Diagnosis
 from main.enums import Enums
 from .visit import Visit
+from .occupancy import Occupancy
 
 def simplify_patient_name(patient):
     return {
@@ -63,6 +64,38 @@ class PatientsManager(models.Manager):
             # return diags
             
         return []
+        
+    def get_history(self):
+        pats = []
+        for pat in super().get_queryset().all():
+            
+            code = pat.city
+            reg = [x[1] for x in Enums.REGIONS if x[0] == code[0:2]][0]
+            if reg.startswith('r'):
+                reg = reg.split('-')[1].strip()
+            else:
+                reg = reg.split('-')[0].strip()
+            prov = [x[1] for x in Enums.PROVINCES if x[0] == code[0:4]][0]
+            city = [x[1] for x in Enums.CITIES if x[0] == code[0:6]][0]
+        
+            pats.append({
+                'first_name': pat.first_name,
+                'last_name': pat.last_name,
+                'middle_initial': pat.middle_initial,
+                'age': pat.age,
+                'sex': pat.sex,
+                'region': reg,
+                'province': prov,
+                'city': city,
+                'total_days': Visit.objects.filter(patient=pat).count(),
+                'frequency': Occupancy.objects.filter(visit__patient=pat).count(),
+                'dates_of_stay': [
+                    {'from': x.start_date.strftime('%Y-%m-%d'), 
+                    'to': x.assigned_end_date.strftime('%Y-%m-%d')}
+                    for x in Visit.objects.filter(patient=pat)],
+            
+            })
+        return pats
                 
 
 class Patient(models.Model):

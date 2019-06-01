@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Count, Q
 
-from .patient import Patient
+# from .patient import Patient
 # from .building import Building
 from .room import Room
 from .visit import Visit
