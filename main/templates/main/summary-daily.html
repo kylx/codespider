@@ -156,24 +156,6 @@
                     </tr>
                 </thead>
 
-                <tbody>
-					{% comment %}
-                    {% for patient in daily %}
-                    <tr>
-                        <td class="col-1-d">{{ room.room.display_name }}</td>
-                        <td class="col-2-d">{{ room.patient.last_name }}, {{ room.patient.first_name }} {{ room.patient.middle_initial }}.</td>
-						<td class="col-3-d">{{ room.watchers.count }}</td>
-						<td class="col-4-d">{{ room.watchers.list }}</td>
-						<td class="col-5-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						<td class="col-6-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						<td class="col-7-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						<td class="col-8-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-						<td class="col-9-d">{{ room.date_of_stay.start}} - {{ room.date_of_stay.end}}</td>
-                    </tr>
-					{% endfor %} 
-					{% endcomment %}
-                </tbody>
-                
                 </table>
             </div>
         </div>
