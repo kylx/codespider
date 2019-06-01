@@ -191,14 +191,12 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'address'>Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
-
-										<span class="patient-label" id = 'address'>Address: </span> 
+										<span class="patient-label" id = 'addresstxt'>Address: </span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'diagnosis'>Diagnosis: </span>{{ patient.diagnosis }}
+										<span class="patient-label" id = 'diagnosis'>Diagnosis: </span>
 									</div>
 								</div>
 								<div class="row">
@@ -273,9 +271,7 @@ $(document).ready(function() {
     let reg = $('select[name=region]');
     let prov = $('select[name=province]');
     let city = $('select[name=city]');
-    let sex = $('select[name=sex]');
 
-    let sexz = sex.children('option').detach();
     let provinces = prov.children('option').detach();
     let cities = city.children('option').detach();
 
@@ -344,10 +340,12 @@ $(document).ready(function() {
             if (j == 2) mname = $(this).text();
         });
 
+
         const pmatch = raw_json.filter(occ =>
             occ.fields.first_name     === fname
          && occ.fields.middle_initial === mname
          && occ.fields.last_name      === lname)[0];
+
 
         let nametxt = document.getElementById('name');
         nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
@@ -357,6 +355,14 @@ $(document).ready(function() {
 
         let sextxt = document.getElementById('sex');
         sextxt.innerText = "Sex: " + pmatch.fields.sex;
+
+        let addresstxt = document.getElementById('addresstxt');
+        addresstxt.innerText = "Address: " + pmatch.fields.region + "| " + pmatch.fields.province + "| " + pmatch.fields.city
+
+        let diagnosistxt = document.getElementById('diagnosis');
+        diagnosistxt.innerText = "Diagnosis: " + pmatch.fields.diagnosis
+
+
 
     });
 
