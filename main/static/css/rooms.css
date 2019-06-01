@@ -18,7 +18,7 @@ ul {
 }
 
 .room-title-container {
-	padding: 2% 0% 0% 0%;
+	padding: 1% 0% 0% 0%;
 }
 
 .room-title {
@@ -27,13 +27,13 @@ ul {
 }
 
 .date-container {
-    padding: 3% 10% 3% 10%;
+    padding: 2% 15% 3% 10%;
 }
 
 .day {
 	font-size: 50px;
 	font-weight: 600;
-    padding: 0% 15% 0% 0%;
+    padding: 0% 10% 0% 0%;
 }
 
 .day-week {
@@ -68,4 +68,8 @@ ul {
 #row-3,
 #row-5 {
     text-align: center;
+}
+
+#forTable {
+    border-style: solid 1px black;
 }

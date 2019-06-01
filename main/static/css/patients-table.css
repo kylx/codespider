@@ -61,7 +61,7 @@ table tbody tr:last-child {
 }
 
 .table td, .table th {
-    padding: .55rem;
+    padding: .50rem;
     vertical-align: top;
     border-top: 0;
 }

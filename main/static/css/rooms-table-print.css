@@ -46,7 +46,7 @@ table thead tr {
 }
 
 table tbody tr {
-    height: 10px;
+    height: 5px;
 }
 
 table tbody tr:last-child {
