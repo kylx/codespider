@@ -467,8 +467,8 @@ window.onload = function() {
     addBuildingAndDate('transfer_room');
     addBuildingAndDate('checkout');
     
-    function addRoom(occ){
-        let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+    function addRoom(occ, empty=null){
+        
         let row = document.createElement('tr');
         let td_room = document.createElement('td');
         let td_patient = document.createElement('td');
@@ -487,10 +487,24 @@ window.onload = function() {
         row.appendChild(td_relationships);
         row.appendChild(td_date);
         fragment.appendChild(row);
-        // td_room.className = ""
 
         row.setAttribute("id", "forTable");
-        td_room.textContent = room_num;
+        if (occ != null){
+            let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay} = occ;
+            let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
+            date_string += date_of_stay.end.month_name + ' ';
+            date_string += date_of_stay.end.day;
+        
+            td_patient.textContent = first_name + ', ' + last_name + ' ' + middle_initial + '.';
+            td_num_watchers.textContent = String(watchers.count);
+            td_relationships.textContent = watchers.list;
+            td_date.textContent = date_string;
+            td_room.textContent = room;
+        }
+        else{
+            console.log("empty", empty);
+            td_room.textContent = empty;
+        }
     }
     
 	var raw = '{{ rooms_json | escapejs }}';
@@ -508,31 +522,9 @@ window.onload = function() {
         // add empty rooms
         console.log('pre', parseInt(room), room_num);
         while (room_num < parseInt(room)){
-            let row = document.createElement('tr');
-            let td_room = document.createElement('td');
-            td_room.setAttribute("id" , "row-1");
-            let td_patient = document.createElement('td');
-            let td_num_watchers = document.createElement('td');
-            td_num_watchers.setAttribute("id" , "row-3");
-            let td_relationships = document.createElement('td');
-            let td_date = document.createElement('td');
-            td_date.setAttribute("id" , "row-5");
-            row.appendChild(td_room);
-            row.appendChild(td_patient);
-            row.appendChild(td_num_watchers);
-            row.appendChild(td_relationships);
-            row.appendChild(td_date);
-            fragment.appendChild(row);
-            // td_room.className = ""
-
-            td_room.textContent = room_num;
+            addRoom(null, room_num);
             if (room_num < parseInt(room))
-            <!-- room_num--; -->
                 room_num++;
-            <!-- td_patient.textContent = first_name + ', ' + last_name + ' ' + middle_initial + '.'; -->
-            <!-- td_num_watchers.textContent = String(watchers.count); -->
-            <!-- td_relationships.textContent = watchers.list; -->
-            <!-- td_date.textContent = date_string; -->
             console.log('skip', parseInt(room), room_num);
         }
         if (i+1 < occs.length){
@@ -552,32 +544,10 @@ window.onload = function() {
         
         last_room = parseInt(room);
         
-        let date_string = date_of_stay.start.month_name + ' ' + date_of_stay.start.day + ' - ';
-        date_string += date_of_stay.end.month_name + ' ';
-        date_string += date_of_stay.end.day;
-        <!-- console.log(date_string); -->
-		let row = document.createElement('tr');
-            let td_room = document.createElement('td');
-            td_room.setAttribute("id" , "row-1");
-            let td_patient = document.createElement('td');
-            let td_num_watchers = document.createElement('td');
-            td_num_watchers.setAttribute("id" , "row-3");
-            let td_relationships = document.createElement('td');
-            let td_date = document.createElement('td');
-            td_date.setAttribute("id" , "row-5");
-            row.appendChild(td_room);
-            row.appendChild(td_patient);
-            row.appendChild(td_num_watchers);
-            row.appendChild(td_relationships);
-            row.appendChild(td_date);
-            fragment.appendChild(row);
+        // add rooms on records
+        addRoom(occ);
 		// td_room.className = ""
 
-		td_room.textContent = room;
-		td_patient.textContent = first_name + ', ' + last_name + ' ' + middle_initial + '.';
-		td_num_watchers.textContent = String(watchers.count);
-		td_relationships.textContent = watchers.list;
-		td_date.textContent = date_string;
 		<!-- td_address.textContent = c; -->
         
         
@@ -589,38 +559,14 @@ window.onload = function() {
     if (room_num == last_room)
         room_num++;
     while (room_num <= num_rooms){
-        let row = document.createElement('tr');
-        let td_room = document.createElement('td');
-        td_room.setAttribute("id" , "row-1");
-        let td_patient = document.createElement('td');
-        let td_num_watchers = document.createElement('td');
-        td_num_watchers.setAttribute("id" , "row-3");
-        let td_relationships = document.createElement('td');
-        let td_date = document.createElement('td');
-        td_date.setAttribute("id" , "row-5");
-        row.appendChild(td_room);
-        row.appendChild(td_patient);
-        row.appendChild(td_num_watchers);
-        row.appendChild(td_relationships);
-        row.appendChild(td_date);
-        fragment.appendChild(row);
-        // td_room.className = ""
-
-        td_room.textContent = room_num;
+        console.log('rrom_num', room_num);
+        addRoom(null, room_num);
         room_num++;
-        <!-- td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.'; -->
-        <!-- td_num_watchers.textContent = String(watchers.count); -->
-        <!-- td_relationships.textContent = watchers.list; -->
-        <!-- td_date.textContent = date_string; -->
     }
 	body.appendChild(fragment);
 	console.timeEnd('loop');
-};
-
-$(document).ready(function () {
-	console.log("asd");
-	// $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-	var first, mid, last;
+    
+    var first, mid, last;
     $('#relationships').select2({
 		multiple: true,
 		maximumSelectionLength: 2,
@@ -641,6 +587,7 @@ $(document).ready(function () {
 				return {
 					results: data.map(p => {
 						return {
+                            pk: p.pk,
 							id: p.pk,
 							text: p.relationship,
 						}
@@ -668,8 +615,9 @@ $(document).ready(function () {
 				return {
 					results: data.map(p => {
 						return {
+                            pk: p.pk,
 							id: p.pk,
-							text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
+							text: p.pk + ' - ' + p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
 						}
 
 					})
@@ -677,9 +625,49 @@ $(document).ready(function () {
 			}
 		}
 	});
+    
+    $('#assign_room').append($('<input type="hidden" name="assign_patient_id" value="-1">' ));
+    $('#first').change(function(){
+        let id = $('#first').find(":selected")[0].value;
+        $('input[name=assign_patient_id]')[0].value = id;
+        console.log(id);
+    });
+    
+    $('#transfer_room').append($('<input type="hidden" name="transfer_patient_id" value="-1">' ));
+    $('#second').change(function(){
+        let id = $('#second').find(":selected")[0].value;
+        $('input[name=transfer_patient_id]')[0].value = id;
+        console.log(id);
+    });
+    
+    $('#checkout').append($('<input type="hidden" name="checkout_patient_id" value="-1">' ));
+    $('#third').change(function(){
+        let id = $('#third').find(":selected")[0].value;
+        $('input[name=checkout_patient_id]')[0].value = id;
+        console.log(id);
+    });
+    
+    $('#assign_room').append($('<div id="hh"></div>'));
+    $('#relationships').change(function(){
+        $('#hh').empty();
+        let data = $('#relationships').select2('data');
+        $('#hh').append($('<input type="hidden" name="rel_count" value="' +data.length +'">'));
+        data.forEach(function(d, i){
+            $('#hh').append($('<input type="hidden" name="rel_' +i+ '" value="' +d.id +'">'));
+
+        });
+        <!-- $('input[name=patient_id]')[0].value = id; -->
+        console.log(id);
+    });
+};
+
+<!-- $(document).ready(function () { -->
+	<!-- console.log("asd"); -->
+	<!-- // $.fn.modal.Constructor.prototype.enforceFocus = function() {}; -->
 	
 	
-});
+	
+<!-- }); -->
 </script>
 <script src="{% static 'js/x/date.js' %}"></script>
 {% endblock page_js %}

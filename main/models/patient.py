@@ -7,6 +7,14 @@ def simplify_patient_name(patient):
         'last_name': patient.last_name,
         'middle_initial': patient.middle_initial,
     }
+    
+def simplify_patient_extended(patient):
+    return {
+        'pk': patient.pk,
+        'first_name': patient.first_name,
+        'last_name': patient.last_name,
+        'middle_initial': patient.middle_initial,
+    }
 
 class PatientsManager(models.Manager):
     def get_list_names(self):

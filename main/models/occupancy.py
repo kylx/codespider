@@ -4,6 +4,7 @@ from django.db.models import Count
 from .patient import Patient
 # from .building import Building
 from .room import Room
+from main.enums import Enums
 
 import datetime
 import calendar
@@ -17,6 +18,7 @@ class OccupancyManager(models.Manager):
             watchers_set = occu.watcher.all().only('relationship')
             start_date = visit.start_date
             end_date = visit.assigned_end_date
+            
 
             return {
                 'pk': {
@@ -85,6 +87,18 @@ class OccupancyManager(models.Manager):
             watchers_set = occu.watcher.all().only('relationship')
             start_date = visit.start_date
             end_date = visit.assigned_end_date
+            
+            
+            code = patient.city
+            
+            reg = [x[1] for x in Enums.REGIONS if x[0] == code[0:2]][0]
+            if reg.startswith('r'):
+                reg = reg.split('-')[1].strip()
+            else:
+                reg = reg.split('-')[0].strip()
+            prov = [x[1] for x in Enums.PROVINCES if x[0] == code[0:4]][0]
+            city = [x[1] for x in Enums.CITIES if x[0] == code[0:6]][0]
+            
             # print(room)
             return {
                 'pk': {
@@ -101,7 +115,7 @@ class OccupancyManager(models.Manager):
                 'age': patient.age,
                 # 'address': patient.city,
                 'diagnosis': patient.diagnosis.full_name,
-                'city': patient.city,
+                'city': f'{reg}, {prov.title()}, {city.title()}',
                 'watchers': {
                     'list': ', '.join([w.relationship for w in watchers_set]),
                     'count': watchers_set.count(),
