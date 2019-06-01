@@ -1,3 +1,15 @@
+#total {
+	padding: 3% 20% 0% 0%;
+}
+
+#watchers {
+	padding: 0% 0% 0% 30%;
+}
+
+#watch {
+	padding: 3% 0% 0% 30%;
+}
+
 #Chooser {
 	display: none;
 }
@@ -11,7 +23,7 @@
 }
 
 .summaryD-title-container {
-	padding: 2% 0% 0% 0%;
+	padding: 0% 0% 0% 0%;
 }
 
 .summaryD-title {
@@ -26,7 +38,7 @@
 
 .summaryD-input {
 	width: 50%;
-	margin: 1% 40% 1% 40%;
+	margin: 0% 40% 0% 40%;
 }
 
 .col-1-d {
@@ -64,4 +76,3 @@
 .col-9-d {
 	width: 213px;
 }
-
