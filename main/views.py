@@ -294,10 +294,9 @@ def patients(request):
     form = PatientForm()
     context = {
         'url_name': 'PATIENTS',
-        'patients': list(patient_list),
+        'patients': patient_list,
 		'form': form,
-        'diagnosis': Diagnosis.objects.get_diagnosis_list(),
-        'patient_info': serializers.serialize("json", Patient.objects.all())
+        'diagnosis': Diagnosis.objects.get_diagnosis_list()
     }
 	
 	# For message after submit validation 
