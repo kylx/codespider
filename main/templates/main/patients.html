@@ -325,35 +325,35 @@ $(document).ready(function() {
         dropdown.appendChild(option); // add option to dropdown
     }
 
-});
-
-raw_json.forEach(occ => {
-    console.log("loop", occ);
-});
-
-//onclclicksummarize
-$("tr").click(function()
-{
-    
-    let lname, fname, mname;
-    
-    $("td", this).each(function(j) 
-    {
-        if (j == 0) lname = $(this).text();
-        if (j == 1) fname = $(this).text();
-        if (j == 2) mname = $(this).text();
+    raw_json.forEach(occ => {
+        console.log("loop", occ);
     });
 
-    const pmatch = raw_json.filter(occ =>
-        occ.fields.first_name     === fname
-     && occ.fields.middle_initial === mname
-     && occ.fields.last_name      === lname)[0];
+    //onclclicksummarize
+    $("tr").click(function()
+    {
+    
+        let lname, fname, mname;
+    
+        $("td", this).each(function(j) 
+        {
+            if (j == 0) lname = $(this).text();
+            if (j == 1) fname = $(this).text();
+            if (j == 2) mname = $(this).text();
+        });
 
-    let nametxt = document.getElementById('name');
-    nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
+        const pmatch = raw_json.filter(occ =>
+            occ.fields.first_name     === fname
+         && occ.fields.middle_initial === mname
+         && occ.fields.last_name      === lname)[0];
 
-    let agetxt = document.getElementById('age');
-    agetxt.innerText = "Age: " + pmatch.fields.age;
+        let nametxt = document.getElementById('name');
+        nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
+
+        let agetxt = document.getElementById('age');
+        agetxt.innerText = "Age: " + pmatch.fields.age;
+
+    });
 
 });
 
