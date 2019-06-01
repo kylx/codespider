@@ -256,58 +256,23 @@
 <script>
 $(document).ready(function() {
 
-	var raw = '{{ patient_info | escapejs }}';
-    var raw_json = JSON.parse(raw);
-    console.log(raw_json)
-
-
-    raw_json.forEach(occ => {
-	console.log("loop", occ);
-    });
-
-
-
     var raw = '{{ patient_info | escapejs }}';
     var raw_json = JSON.parse(raw);
 
 
     /*
->>>>>>> pr/15
     raw_json.find(finder);
-=======
-	var raw = '{{ patient_info | escapejs }}';
-    var raw_json = JSON.parse(raw);
-    console.log(raw_json);
-
-
-    var body = document.getElementById('name');
-    var body1 = document.getElementById('address');
-    var fragment = document.createDocumentFragment();
-
-
-    raw_json.find(finder)
-    body.appendChild(fragment);
-    body1.appendChild(fragment);
-    // console.timeEnd('loop');
->>>>>>> parent of 55cb31a... Revert "Merge branch 'patientpopuphist' into develop"
 
     function finder(patient)
     {
         console.log("Finder", patient);
     }
-<<<<<<< HEAD
     */
 
 
     let reg = $('select[name=region]');
     let prov = $('select[name=province]');
     let city = $('select[name=city]');
-
-
-
-	let reg = $('select[name=region]');
-	let prov = $('select[name=province]');
-	let city = $('select[name=city]');
 
     let provinces = prov.children('option').detach();
     let cities = city.children('option').detach();
@@ -334,64 +299,50 @@ $(document).ready(function() {
         select.val('');
     }
 
-	reg.change(function() {
-		let filter = $(this).val();
+    reg.change(function() {
+        let filter = $(this).val();
         resetProv();
         doFilter(provinces, prov, filter);
-	});
+    });
+
     prov.change(function() {
-		let filter = $(this).val();
+        let filter = $(this).val();
         resetCity();
         doFilter(cities, city, filter);
-	});
+    });
 
     resetProv();
 	
-	var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
-	console.log(diagnosis);
-	let dropdown = document.getElementById('id_diagnosis');
-	
-	diagnosis.forEach(arrayopt);
-	function arrayopt(diagnosis){
-		let option = document.createElement('option'); // create option element
-		option.value = diagnosis[0]; // assign id/value
-		option.innerText = diagnosis[1]; // assign text
-		dropdown.appendChild(option); // add option to dropdown
-	}
+    var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
+    console.log(diagnosis);
+    let dropdown = document.getElementById('id_diagnosis');
+
+    diagnosis.forEach(arrayopt);
+    function arrayopt(diagnosis){
+        let option = document.createElement('option'); // create option element
+        option.value = diagnosis[0]; // assign id/value
+        option.innerText = diagnosis[1]; // assign text
+        dropdown.appendChild(option); // add option to dropdown
+    }
 
 });
 
-
-var lname, fname, mname, ager;
 raw_json.forEach(occ => {
     console.log("loop", occ);
 });
 
-let lname, fname, mname;
 //onclclicksummarize
 $("tr").click(function()
 {
+    
+    let lname, fname, mname;
+    
     $("td", this).each(function(j) 
     {
-        if (j == 0)
-        {
-            lname = $(this).text();
-        }
-
-        if (j == 1)
-        {
-            fname = $(this).text();
-        }
-        if (j == 2)
-        {
-            mname = $(this).text();
-        }
-
-        let name = document.getElementById('name');
-        name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
-    }
-
-    }
+        if (j == 0) lname = $(this).text();
+        if (j == 1) fname = $(this).text();
+        if (j == 2) mname = $(this).text();
+    });
 
     const pmatch = raw_json.filter(occ =>
         occ.fields.first_name     === fname
@@ -401,65 +352,11 @@ $("tr").click(function()
     let nametxt = document.getElementById('name');
     nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
 
-
     let agetxt = document.getElementById('age');
     agetxt.innerText = "Age: " + pmatch.fields.age;
-)
-
-
-    var agetxt = document.getElementById('age').value;
-
-    age.innerText = "Age: " + agetxt;
-
 
 });
 
-var lname, fname, mname, ager, city, region;
-//onclclicksummarize
-$("tr").click(function()
-{
-    $("td", this).each(function(j) 
-    {
-        console.log(j, ($(this).text()));
-        if (j == 0)
-        {
-            lname = $(this).text();
-        }
-
-        if (j == 1)
-        {
-            fname = $(this).text();
-        }
-        if (j == 2)
-        {
-            mname = $(this).text();
-        }
-  
-       	if (j==3)
-       	{
-       		region = $(this).text();
-       	}
-
-       	if (j==4)
-       	{
-       		city = $(this).text();
-       	}
-        let name = document.getElementById('name');
-        name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
-
-        let address = document.getElementById('address');
-        address.innerText = "Adddress: " + {{ 'city' }} + " " ;
-
-    }
-
-)
-
-    
-    // age.innerText = "Age: " + agetxt
-
-	console.log(lname, fname, mname, region, city);
-    ;
-});
 </script>
 {% endblock page_body %}
 
