@@ -46,6 +46,7 @@
 {% endblock nav_bar %}
 
 {% block page_body %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -180,7 +181,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'age'>Age: </span> {{patient.age}}
+										<span class="patient-label" id = 'age'>Age: </span> 
 									</div>
 								</div>
 								<div class="row">
@@ -258,20 +259,13 @@ $(document).ready(function() {
 
 
     var body = document.getElementById('name');
-    // var body = document.getElementById('age');
+    var body1 = document.getElementById('age');
     var fragment = document.createDocumentFragment();
 
-        // console.log(body);
-    // // console.time('loop');
-    // raw_json.forEach(occ => {
-    //     let first_name = document.getElementById('name');
-    //     body.innerText = "Name: " + occ.fields.last_name + ", " + occ.fields.first_name + " " + occ.fields.middle_initial
-
-
-    // });
 
     raw_json.find(finder)
     body.appendChild(fragment);
+    body1.appendChild(fragment);
     // console.timeEnd('loop');
 
     function finder(patient)
@@ -335,7 +329,7 @@ $(document).ready(function() {
 	}
 });
 
-var lname, fname, mname;
+var lname, fname, mname, ager;
 //onclclicksummarize
 $("tr").click(function()
 {
@@ -355,14 +349,20 @@ $("tr").click(function()
         {
             mname = $(this).text();
         }
+  
+       
         let name = document.getElementById('name');
         name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
 
-        // let age = document.getElementById('age');
-        // age.innerText = "Age: " + age
     }
+
 )
-console.log(lname, fname, mname);
+
+    var agetxt = document.getElementById('age').value;
+
+    age.innerText = "Age: " + agetxt
+
+	console.log(lname, fname, mname, age);
     ;
 });
 </script>
