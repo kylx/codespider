@@ -191,11 +191,9 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-<<<<<<< HEAD
 										<span class="patient-label" id = 'address'>Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
-=======
+
 										<span class="patient-label" id = 'address'>Address: </span> 
->>>>>>> parent of 55cb31a... Revert "Merge branch 'patientpopuphist' into develop"
 									</div>
 								</div>
 								<div class="row">
@@ -257,8 +255,7 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 	var raw = '{{ patient_info | escapejs }}';
     var raw_json = JSON.parse(raw);
     console.log(raw_json)
@@ -269,7 +266,6 @@ $(document).ready(function() {
     });
 
 
-=======
 
     var raw = '{{ patient_info | escapejs }}';
     var raw_json = JSON.parse(raw);
@@ -306,14 +302,12 @@ $(document).ready(function() {
     let reg = $('select[name=region]');
     let prov = $('select[name=province]');
     let city = $('select[name=city]');
-=======
 
 
 
 	let reg = $('select[name=region]');
 	let prov = $('select[name=province]');
 	let city = $('select[name=city]');
->>>>>>> parent of 55cb31a... Revert "Merge branch 'patientpopuphist' into develop"
 
     let provinces = prov.children('option').detach();
     let cities = city.children('option').detach();
@@ -367,15 +361,13 @@ $(document).ready(function() {
 
 });
 
-<<<<<<< HEAD
+
 var lname, fname, mname, ager;
-=======
 raw_json.forEach(occ => {
     console.log("loop", occ);
 });
 
 let lname, fname, mname;
->>>>>>> pr/15
 //onclclicksummarize
 $("tr").click(function()
 {
@@ -394,11 +386,11 @@ $("tr").click(function()
         {
             mname = $(this).text();
         }
-<<<<<<< HEAD
+
         let name = document.getElementById('name');
         name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
     }
-=======
+
     }
 
     const pmatch = raw_json.filter(occ =>
@@ -408,19 +400,18 @@ $("tr").click(function()
 
     let nametxt = document.getElementById('name');
     nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
->>>>>>> pr/15
+
 
     let agetxt = document.getElementById('age');
     agetxt.innerText = "Age: " + pmatch.fields.age;
 )
 
-<<<<<<< HEAD
+
     var agetxt = document.getElementById('age').value;
 
     age.innerText = "Age: " + agetxt;
 
-=======
->>>>>>> pr/15
+
 });
 
 var lname, fname, mname, ager, city, region;
