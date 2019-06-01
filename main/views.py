@@ -322,7 +322,7 @@ def rooms(request, building):
     # messages.success(request, f'ss')
     # messages.error(request, f'ee')
     return render(request, 'main/rooms.html', context)
-
+import json
 def patients(request):
     patient_list = Patient.objects.get_list_names()
     form = PatientForm()
@@ -331,7 +331,7 @@ def patients(request):
         'patients': list(patient_list),
 		'form': form,
         'diagnosis': Diagnosis.objects.get_diagnosis_list(),
-        'patient_info': serializers.serialize("json", Patient.objects.all())
+        'patient_info': json.dumps(Patient.objects.get_history())
     }
 	
 	# For message after submit validation 

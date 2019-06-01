@@ -254,8 +254,11 @@
 <script>
 $(document).ready(function() {
 
-    var raw = '{{ patient_info | escapejs }}';
+    var raw = "{{ patient_info | escapejs }}";
+    console.log(raw);
     var raw_json = JSON.parse(raw);
+    
+    console.log(raw_json);
 
 
     /*
@@ -342,25 +345,25 @@ $(document).ready(function() {
 
 
         const pmatch = raw_json.filter(occ =>
-            occ.fields.first_name     === fname
-         && occ.fields.middle_initial === mname
-         && occ.fields.last_name      === lname)[0];
+            occ.first_name     === fname
+         && occ.middle_initial === mname
+         && occ.last_name      === lname)[0];
 
 
         let nametxt = document.getElementById('name');
         nametxt.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
 
         let agetxt = document.getElementById('age');
-        agetxt.innerText = "Age: " + pmatch.fields.age;
+        agetxt.innerText = "Age: " + pmatch.age;
 
         let sextxt = document.getElementById('sex');
-        sextxt.innerText = "Sex: " + pmatch.fields.sex;
+        sextxt.innerText = "Sex: " + pmatch.sex;
 
         let addresstxt = document.getElementById('addresstxt');
-        addresstxt.innerText = "Address: " + pmatch.fields.region + "| " + pmatch.fields.province + "| " + pmatch.fields.city
+        addresstxt.innerText = "Address: " + pmatch.region + "| " + pmatch.province + "| " + pmatch.city
 
         let diagnosistxt = document.getElementById('diagnosis');
-        diagnosistxt.innerText = "Diagnosis: " + pmatch.fields.diagnosis
+        diagnosistxt.innerText = "Diagnosis: " + pmatch.diagnosis;
 
 
 

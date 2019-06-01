@@ -85,6 +85,7 @@ class PatientsManager(models.Manager):
                 'age': pat.age,
                 'sex': pat.sex,
                 'region': reg,
+                'diagnosis': pat.diagnosis.full_name,
                 'province': prov,
                 'city': city,
                 'total_days': Visit.objects.filter(patient=pat).count(),
