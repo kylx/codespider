@@ -5,6 +5,7 @@ from .patient import Patient
 # from .building import Building
 from .room import Room
 from .visit import Visit
+from .diagnosis import Diagnosis
 from main.enums import Enums
 
 import datetime
@@ -92,6 +93,8 @@ class OccupancyManager(models.Manager):
             
             code = patient.city
             
+            
+            
             reg = [x[1] for x in Enums.REGIONS if x[0] == code[0:2]][0]
             if reg.startswith('r'):
                 reg = reg.split('-')[1].strip()
@@ -170,16 +173,16 @@ class OccupancyManager(models.Manager):
         count_watchers = 0
         start = datetime.date(year, month, day)
         end = start + datetime.timedelta(days=1)
-        visits = Visit.objects.filter(start_date__lte=end, actual_end_date__gte=start)
-        for visit in visits:
-            occu = visit.occupancy_set.filter(date__gte=start, date__lte=end)
-            count_patients += occu.count()
-            for occ in occu:
-                count_watchers += occ.watcher.all().count()
+        occu = Occupancy.objects.filter(date__lte=end, date__gte=start).annotate(wcount=Count('watcher'))
+        # for visit in visits:
+            # occu = visit.occupancy_set.filter(date__gte=start, date__lte=end)
+            # count_patients += occu.count()
+            # for occ in occu:
+                # count_watchers += occ.watcher.all().count()
         # query = super().get_queryset().filter(date__gte=start, date__lte=end).annotate(wcount=Count('watcher'))
-        # count_patients = visits.count()
-        # for occ in query:
-            # count_watchers += occ.wcount;
+        count_patients = occu.count()
+        for occ in occu:
+            count_watchers += occ.wcount;
             
         return {
             'patients': count_patients,
@@ -191,6 +194,39 @@ class OccupancyManager(models.Manager):
             [d, Occupancy.objects.get_count_for_date(year, month, d)]
             for d in range(1, calendar.monthrange(year, month)[1]+1)
         ] 
+        
+    def get_diagnosis_region(self, start, end, diag, reg):
+        
+        visits = super().get_queryset().filter(date__lte=end, date__gte=start)
+        print(visits)
+        if diag != None:
+            regs = []
+            visits = visits.filter(visit__patient__diagnosis=diag)
+            # visits = super().get_queryset()
+            for reg in Enums.REGIONS[1:]:
+                # print 
+                regs.append([reg[1], visits.filter(visit__patient__region=reg[0]).count()])
+            regs.sort(key=(lambda r: r[1]), reverse=True)
+            return regs
+            
+        if reg != None:
+            diags = []
+            visits = visits.filter(visit__patient__region=reg)
+            # visits = super().get_queryset()
+            for diag in Diagnosis.objects.all():
+                # print 
+                diags.append([diag.full_name, visits.filter(visit__patient__diagnosis=diag).count()])
+            diags.sort(key=(lambda r: r[1]), reverse=True)
+            return diags
+            
+        # if reg != None:
+            # diags = []
+            # pats = super().get_queryset().filter(region=reg)
+            # for diag in Diagnosis.objects.all():
+                # diags.append([diag.full_name, pats.filter(diagnosis=diag).count()])
+            # return diags
+            
+        return []
         
     """
     Return status for given date and building

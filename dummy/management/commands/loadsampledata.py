@@ -41,8 +41,8 @@ class Command(BaseCommand):
             # diagnosis('Henlo HSA', 'HHSA'),
             # diagnosis('bagagnawowngitis', 'aa'),
             diagnosis('kulang sa gugma', 'dd'),
-            # diagnosis('fishisloveparinmgaulol', 'sdsd'),
-            # diagnosis('imong mama', 'sd'),
+            diagnosis('fishisloveparinmgaulol', 'sdsd'),
+            diagnosis('imong mama', 'sd'),
             diagnosis('dislocated neck', 'sd'),
             watcher('mother'),
             watcher('father'),
@@ -79,17 +79,17 @@ class Command(BaseCommand):
             json.dump(data, dump_file, indent=4)
         call_command('loaddata', 'db.json')
 
-        data = []
-        for x in range(1, 20):
-            data.append(visit_start(str(x)))
+        # data = []
+        # for x in range(1, 20):
+            # data.append(visit_start(str(x)))
         
-        with open('db.json', 'w') as dump_file:
-            json.dump(data, dump_file, indent=4)
-        call_command('loaddata', 'db.json')
+        # with open('db.json', 'w') as dump_file:
+            # json.dump(data, dump_file, indent=4)
+        # call_command('loaddata', 'db.json')
 
-        data = []
-        for x in range(1, 200):
-            data.append(occupancy())
-        with open('db.json', 'w') as dump_file:
-            json.dump(data, dump_file, indent=4)
-        call_command('loaddata', 'db.json')
+        # data = []
+        # for x in range(1, 200):
+            # data.append(occupancy())
+        # with open('db.json', 'w') as dump_file:
+            # json.dump(data, dump_file, indent=4)
+        # call_command('loaddata', 'db.json')

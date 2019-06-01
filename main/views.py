@@ -11,6 +11,7 @@ from .models.occupancy import Occupancy
 from .models.room import Room
 from .models.building import Building
 from .models.watcher import Watcher
+from .models.saved_date import Saved_Date
 from django.utils.http import urlencode
 import datetime
 import json
@@ -25,9 +26,33 @@ from django.http import HttpResponseRedirect
 
 from django.http import HttpResponse
 
+weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+def get_today():
+    if Saved_Date.objects.all().count() == 0:
+        date = datetime.datetime.now()
+    else:
+        date = Saved_Date.objects.latest('last_modified').last_modified + datetime.timedelta(days=1)
+    # date = Saved_Date.objects.latest('last_modified').last_modified 
+    print(f'today {date}')
+    return date
+    
+def get_today_as_dict():
+    date = get_today()
+    di = {
+        'year': date.year,
+        'month': date.month,
+        'day': date.day,
+        'weekday': weekdays[date.weekday()],
+        'monthname': date.strftime('%B') ,
+    }
+    
+    print(f'ddd {di}')
+    
+    return di
+
 def get_summary_monthly(request, year=-1, month=-1):
     if year == -1 or month == -1:
-        date = datetime.datetime.now()
+        date = get_today()
         year = date.year
         month = date.month
     else:
@@ -37,21 +62,29 @@ def get_summary_monthly(request, year=-1, month=-1):
 
 def home(request):
 
-    # if year == -1 and month == -1 and day == -1:
-        # date = datetime.datetime.now()
-        # year = date.year
-        # month = date.month
-        # day = date.day
+    year = -1
+    month = -1
+    day = -1
 
-    occ = Occupancy.objects.get_list_for_day_extended(2019, 5, 31)
-    context = {'count': occ['count'],}
+    if year == -1 and month == -1 and day == -1:
+        date = get_today()
+        year = date.year
+        month = date.month
+        day = date.day
+
+    occ = Occupancy.objects.get_list_for_day_extended(year, month, day)
+    context = {
+        'today': get_today_as_dict(),
+        'count': occ['count'],
+        
+        }
     return render(request, 'main/home.html', context)
 
 def transfer_room(request):
     post = request.POST
     building_name = post.get('building_name', 1)
     room_number = post.get('room_num_transfer', 1)
-    date = post.get('date', None)
+    date = get_today()
     patient_id = post.get('transfer_patient_id', -1)
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
@@ -84,7 +117,7 @@ def transfer_room(request):
         room = Room.objects.filter(pk=room_number)[0]
         occu = Occupancy.objects.filter(
             visit=visit,
-            date=date,
+            date__date=date,
         )[0]
         if occu.room == room:
             messages.success(request, 'Transfering to the same room!')
@@ -125,6 +158,7 @@ def checkout(request):
         messages.success(request, 'Checkout succesful!')
         visit = visit.first()
         visit.is_ongoing = False
+        visit.actual_end_date = get_today()
         visit.save()
     context = {
         'post_stuff': post
@@ -249,18 +283,18 @@ def assign_room(request):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-def rooms(request, building, year=-1, month=-1, day=-1):
+def rooms(request, building):
     # print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
     form = RoomForm()
 
-    if year == -1 and month == -1 and day == -1:
-        date = datetime.datetime.now()
-        year = date.year
-        month = date.month
-        day = date.day
-    date = datetime.datetime(int(year), int(month), int(day))
+    
+    date = get_today()
+    year = date.year
+    month = date.month
+    day = date.day
+    # date = datetime.datetime(int(year), int(month), int(day))
         
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    
 
     # occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
     occ = Occupancy.objects.get_list_for_day(building, int(year), int(month), int(day))
@@ -334,7 +368,7 @@ def summary_daily(request, year=-1, month=-1, day=-1):
     
     if year == -1 and month == -1 and day == -1:
         # return render(request, 'main/summary-daily.html')
-        date = datetime.datetime.now()
+        date = get_today()
         year = date.year
         month = date.month
         day = date.day
@@ -474,6 +508,7 @@ def inquiry_filter(request):
     return render(request, 'main/inquiry-filter.html', context)
 	
 def inquiry_sort(request):
+    form = FilterForm()
 
     # start = request.GET.get(
 
@@ -483,13 +518,30 @@ def inquiry_sort(request):
     diagnosis = request.GET.get('diagnosis')
     region = request.GET.get('region')
     
+    if date_from == None and date_to == None and diagnosis == None and region == None:
+        context = {
+            'url_name': 'INQUIRY',
+            'form': form,
+            'date_from': '',
+            'date_to': '',
+            'diagnosis': '',
+            'region': '',
+            'count':{
+                'patients': 0,
+            },
+        }
+    
+        return render(request, 'main/inquiry-sort.html', context)
+        
+    
     if diagnosis == '':
         diagnosis = None
         
-    form = FilterForm()
     
     dd = diagnosis
     rr = region
+    
+    
     
     if diagnosis is None:
         dd = 'all'
@@ -506,23 +558,23 @@ def inquiry_sort(request):
             'patients': 0,
         },
         # 'diags': Patient.objects.get_diagnosis_region(1, None),
-        'diags': Visit.objects.get_diagnosis_region(date_from, date_to, diagnosis, region),
+        'diags': Occupancy.objects.get_diagnosis_region(date_from, date_to, diagnosis, region),
     }
     
     filters = {}
     
-    if date_from:
-        dates_from = list(map(lambda x: int(x), date_from.split('-')))
-        dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
-        filters['date__date__gte']=dfrom
-    if date_to:
-        dates_to = list(map(lambda x: int(x), date_to.split('-')))
-        dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
-        filters['date__date__lte']=dto
-    if diagnosis:
-        filters['visit__patient__diagnosis']=diagnosis
-    if region:
-        filters['visit__patient__region']=region
+    # if date_from:
+        # dates_from = list(map(lambda x: int(x), date_from.split('-')))
+        # dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
+        # filters['date__date__gte']=dfrom
+    # if date_to:
+        # dates_to = list(map(lambda x: int(x), date_to.split('-')))
+        # dto = datetime.date(dates_to[0], dates_to[1], dates_to[2])
+        # filters['date__date__lte']=dto
+    # if diagnosis:
+        # filters['visit__patient__diagnosis']=diagnosis
+    # if region:
+        # filters['visit__patient__region']=region
      
     
     return render(request, 'main/inquiry-sort.html', context)
@@ -559,6 +611,20 @@ def tmp_create_patient(request):
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
+    
+def save_day(request):
+    date = get_today()
+    day = Saved_Date(saved=True, last_modified=date)
+    day.save()
+    
+    occu = Occupancy.objects.filter(date__date=date)
+    for occ in occu:
+        print("ASSSSASAS")
+        occ.pk = None
+        occ.id = None
+        occ.date = get_today()
+        occ.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def login(request):
     context = {}

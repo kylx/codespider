@@ -31,11 +31,11 @@ urlpatterns = [
     
     path('home'             , home          , name='home'),
     re_path('summary/monthly/(?P<year>(\d{4}))/(?P<month>(\d{2}))', get_summary_monthly),
-    re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
-    re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
     re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
-    path('rooms/main'        , test     , name='rooms/main'),
-    path('rooms/annex'        , test     , name='rooms/annex'),
+    # re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
+    # re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
+    path('rooms/main'        , rooms     , name='rooms/main'),
+    path('rooms/annex'        , rooms     , name='rooms/annex'),
     path('patients'         , patients  , name='patients'),
     # path('summary/daily'      , summary_daily   , name='summary/daily'),
     re_path('summary/daily/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', summary_daily),
@@ -58,6 +58,7 @@ urlpatterns = [
 
     path('actions/get-filtered-patient-names', get_filtered_patient_names, name='actions/get-filtered-patient-names'),
     path('actions/get-filtered-relationships', get_filtered_relationships, name='actions/get-filtered-relationships'),
+    path('actions/save-day', save_day, name='actions/save-day'),
 
      
     path('', show_urls, name='dev/show-urls'),

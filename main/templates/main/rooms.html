@@ -316,6 +316,17 @@
 {% block page_js %}
 <script src="{% static 'js/plugins/select2.js' %}"></script>
 <script>
+console.log('ZZZZ', 'http://localhost:8000{% url "actions/save-day" %}');
+function myFunction() {
+  if (confirm("Are you sure you want to save?")) {
+    window.location.href = 'http://localhost:8000{% url "actions/save-day" %}';
+    <!-- console.log('{% url "actions/save-day" %}); -->
+  } else {
+    alert("You pressed cancel.");
+  }
+  <!-- document.getElementById("demo").innerHTML = txt; -->
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -649,4 +660,5 @@ window.onload = function() {
     });
 };
 </script>
+<!-- <script src="{% static 'js/x/date.js' %}"></script> -->
 {% endblock page_js %}
