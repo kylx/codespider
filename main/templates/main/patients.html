@@ -201,17 +201,17 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'numofdays'>Total No. of Days: </span>{{ patient.total_days }}
+										<span class="patient-label" id = 'numofdays'>Total No. of Days: </span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'frequency'>Frequency: </span>{{ patient.frequency }}
+										<span class="patient-label" id = 'frequency'>Frequency: </span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Date/s of Stay: </span>
+										<span class="patient-label" id = 'dateofstay'>Date/s of Stay: </span>
 										<div class="row">
 											<div class="col-lg-6 date-list">
 												From
@@ -360,12 +360,19 @@ $(document).ready(function() {
         sextxt.innerText = "Sex: " + pmatch.sex;
 
         let addresstxt = document.getElementById('addresstxt');
-        addresstxt.innerText = "Address: " + pmatch.region + "| " + pmatch.province + "| " + pmatch.city
+        addresstxt.innerText = "Address: " + pmatch.region + " | " + pmatch.province + " | " + pmatch.city
 
         let diagnosistxt = document.getElementById('diagnosis');
         diagnosistxt.innerText = "Diagnosis: " + pmatch.diagnosis;
 
+        let numofdaystxt = document.getElementById('numofdays');
+        numofdaystxt.innerText = "Total No. of Days: " + pmatch.total_days;
 
+        let frequencytxt = document.getElementById('frequency');
+        frequencytxt.innerText = "Frequency: " + pmatch.frequency;
+
+        let dateofstaytxt = document.getElementById('dateofstay');
+        dateofstaytxt.innerText = "Date/s of Stay: " + pmatch.dates_of_stay.map(dates => dates.from + " to " + dates.to).join(", ");
 
     });
 
