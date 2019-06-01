@@ -215,12 +215,9 @@
     </div>
 </div>
 <script>
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
 
 window.onload = function() {
 	var raw = '{{ rooms_json | escapejs }}';
@@ -259,7 +256,6 @@ window.onload = function() {
 	body.appendChild(fragment);
 	console.timeEnd('loop');
 };
-	
 </script>
 
 {% endblock page_body %}
