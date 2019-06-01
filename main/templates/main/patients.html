@@ -186,7 +186,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'sex'>Sex: </span>{{ patient.sex }}
+										<span class="patient-label" id = 'sex'>Sex: </span>
 									</div>
 								</div>
 								<div class="row">
@@ -273,7 +273,9 @@ $(document).ready(function() {
     let reg = $('select[name=region]');
     let prov = $('select[name=province]');
     let city = $('select[name=city]');
+    let sex = $('select[name=sex]');
 
+    let sexz = sex.children('option').detach();
     let provinces = prov.children('option').detach();
     let cities = city.children('option').detach();
 
@@ -352,6 +354,9 @@ $(document).ready(function() {
 
         let agetxt = document.getElementById('age');
         agetxt.innerText = "Age: " + pmatch.fields.age;
+
+        let sextxt = document.getElementById('sex');
+        agetxt.innerText = "Sex " + pmatch.fields.sex;
 
     });
 
