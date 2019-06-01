@@ -1,9 +1,10 @@
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from .patient import Patient
 # from .building import Building
 from .room import Room
+from .visit import Visit
 from main.enums import Enums
 
 import datetime
@@ -139,7 +140,7 @@ class OccupancyManager(models.Manager):
             }
         start_date = datetime.date(year, month, date)
         end_date = start_date + datetime.timedelta(days=1)
-        occ = super().select_related('room', 'room__building', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True,date__range=(start_date, end_date)).order_by('room__display_number')
+        occ = super().select_related('room', 'room__building', 'visit', 'visit__patient',).prefetch_related('watcher').filter(visit__is_ongoing=True,date__range=(start_date, end_date)).order_by('-room__building__name', 'room__display_number')
             
         llll = list(map(simplify_occupancy, occ))
         watchers = 0
@@ -165,12 +166,20 @@ class OccupancyManager(models.Manager):
     
     
     def get_count_for_date(self, year, month, day):
-        date = datetime.date(year, month, day)
-        query = super().get_queryset().filter(date__year=year, date__month=month, date__day=day).annotate(wcount=Count('watcher'))
-        count_patients = query.count()
+        count_patients = 0
         count_watchers = 0
-        for occ in query:
-            count_watchers += occ.wcount;
+        start = datetime.date(year, month, day)
+        end = start + datetime.timedelta(days=1)
+        visits = Visit.objects.filter(start_date__lte=end, actual_end_date__gte=start)
+        for visit in visits:
+            occu = visit.occupancy_set.filter(date__gte=start, date__lte=end)
+            count_patients += occu.count()
+            for occ in occu:
+                count_watchers += occ.watcher.all().count()
+        # query = super().get_queryset().filter(date__gte=start, date__lte=end).annotate(wcount=Count('watcher'))
+        # count_patients = visits.count()
+        # for occ in query:
+            # count_watchers += occ.wcount;
             
         return {
             'patients': count_patients,

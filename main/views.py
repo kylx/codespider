@@ -204,6 +204,7 @@ def assign_room(request):
     
     # watcher=Watcher.objects.order_by('?').first(),
     
+    visit.save()
     if len(occu) == 0:
         occu = Occupancy(
             visit=visit,
@@ -217,7 +218,6 @@ def assign_room(request):
         msg_success = f'Re-assigning to the same room. Old table values have been updated.'
         occu = occu.first()
         
-    visit.save()
     occu.watcher.clear()
     occu.watcher.set(watchers)
     print(f'sssss {occu.watcher.all()}')
@@ -456,7 +456,7 @@ def inquiry_filter(request):
         context['both']['watchers'] += rec.wcount
     
     for building in ['both', 'main', 'annex']:
-        context[building]['patients'] = sum([context[building][key] for key in ['girls', 'boys', 'watchers']])
+        context[building]['patients'] = sum([context[building][key] for key in ['girls', 'boys']])
         
     
         
