@@ -46,6 +46,7 @@
 {% endblock nav_bar %}
 
 {% block page_body %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -175,37 +176,37 @@
 								</div>						
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Name: </span>{{ patient.last_name }}, {{ patient.first_name }} {{ patient.middle_initial }}.
+										<span class="patient-label" id = 'name'>Name: </span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Age: </span>{{ patient.age }}
+										<span class="patient-label" id = 'age'>Age: </span> 
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Sex: </span>{{ patient.sex }}
+										<span class="patient-label" id = 'sex'>Sex: </span>{{ patient.sex }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
+										<span class="patient-label" id = 'address'>Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Diagnosis: </span>{{ patient.diagnosis }}
+										<span class="patient-label" id = 'diagnosis'>Diagnosis: </span>{{ patient.diagnosis }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Total No. of Days: </span>{{ patient.total_days }}
+										<span class="patient-label" id = 'numofdays'>Total No. of Days: </span>{{ patient.total_days }}
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label">Frequency: </span>{{ patient.frequency }}
+										<span class="patient-label" id = 'frequency'>Frequency: </span>{{ patient.frequency }}
 									</div>
 								</div>
 								<div class="row">
@@ -249,8 +250,28 @@
     </div>
 </div>
 
+<script src="{% static 'js/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
+	var raw = '{{ patient_info | escapejs }}';
+    var raw_json = JSON.parse(raw);
+    console.log(raw_json)
+
+
+    raw_json.forEach(occ => {
+	console.log("loop", occ);
+    });
+
+
+    raw_json.find(finder);
+
+    function finder(patient)
+    {
+        console.log("Finder", patient);
+    }
+
+
+
 	let reg = $('select[name=region]');
 	let prov = $('select[name=province]');
 	let city = $('select[name=city]');
@@ -303,6 +324,37 @@ $(document).ready(function() {
 		option.innerText = diagnosis[1]; // assign text
 		dropdown.appendChild(option); // add option to dropdown
 	}
+});
+
+var lname, fname, mname, ager;
+//onclclicksummarize
+$("tr").click(function()
+{
+    $("td", this).each(function(j) 
+    {
+        if (j == 0)
+        {
+            lname = $(this).text();
+        }
+
+        if (j == 1)
+        {
+            fname = $(this).text();
+        }
+        if (j == 2)
+        {
+            mname = $(this).text();
+        }
+        let name = document.getElementById('name');
+        name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
+    }
+
+)
+
+    var agetxt = document.getElementById('age').value;
+
+    age.innerText = "Age: " + agetxt;
+
 });
 </script>
 {% endblock page_body %}
