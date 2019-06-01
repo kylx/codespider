@@ -44,43 +44,46 @@ def transfer_room(request):
     building_name = post.get('building_name', 1)
     room_number = post.get('room_num_transfer', 1)
     date = post.get('date', None)
+    patient_id = post.get('transfer_patient_id', -1)
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
     
-    # check if patient exists
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
-    if len(pat) == 0:
-        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
-    else:
-        pat = pat.first()
+    pat = Patient.objects.get(pk=patient_id)
     
-        # check if patient is currently visiting
-        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    # check if patient exists
+    # pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    # if len(pat) == 0:
+        # messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    # else:
+        # pat = pat.first()
+    
+    # check if patient is currently visiting
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    
+    if len(visit) == 0:
+        messages.error(request, f'ERROR: Patient {pat.last_name}, {pat.first_name} {pat.middle_initial}. is not assigned to any room.')
+    else:
         
-        if len(visit) == 0:
-            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
+        visit = visit.first()
+        # visit.is_ongoing = False
+        visit.save()
+    
+    
+    
+    
+        # check if room is valid
+        room = Room.objects.filter(pk=room_number)[0]
+        occu = Occupancy.objects.filter(
+            visit=visit,
+            date=date,
+        )[0]
+        if occu.room == room:
+            messages.success(request, 'Transfering to the same room!')
         else:
-            
-            visit = visit.first()
-            # visit.is_ongoing = False
-            visit.save()
-        
-        
-        
-        
-            # check if room is valid
-            room = Room.objects.filter(pk=room_number)[0]
-            occu = Occupancy.objects.filter(
-                visit=visit,
-                date=date,
-            )[0]
-            if occu.room == room:
-                messages.success(request, 'Transfering to the same room!')
-            else:
-                messages.success(request, 'Room transfer succesful!')
-            occu.room = room
-            occu.save()
+            messages.success(request, 'Room transfer succesful!')
+        occu.room = room
+        occu.save()
             
         
     
@@ -90,28 +93,31 @@ def transfer_room(request):
 def checkout(request):
     post = request.POST
     # room_number = post.get('room_num', 1)
+    patient_id = post.get('checkout_patient_id', -1)
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
     
+    pat = Patient.objects.get(pk=patient_id)
+    
     # check if patient exists
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
-    if len(pat) == 0:
-        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
-    else:
-        pat = pat.first()
+    # pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
+    # if len(pat) == 0:
+        # messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    # else:
+        # pat = pat.first()
         # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
         # msg_success = f'Room assignment successful!'
     
     # check if patient is currently visiting/assigned to a room
-        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
-        if len(visit) == 0:
-            messages.error(request, f'ERROR: Patient {last_name}, {first_name} {middle_initial}. is not assigned to any room.')
-        else:
-            messages.success(request, 'Checkout succesful!')
-            visit = visit.first()
-            visit.is_ongoing = False
-            visit.save()
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    if len(visit) == 0:
+        messages.error(request, f'ERROR: Patient {pat.last_name}, {pat.first_name} {pat.middle_initial}. is not assigned to any room.')
+    else:
+        messages.success(request, 'Checkout succesful!')
+        visit = visit.first()
+        visit.is_ongoing = False
+        visit.save()
     context = {
         'post_stuff': post
     }
@@ -131,78 +137,91 @@ def assign_room(request):
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
+    patient_id = post.get('assign_patient_id');
     date_to = post.get('date_to', None)
     date_from = post.get('date_from', None)
     date = post.get('date', None)
     
-    msg_success = None
+    msg_success = f'Room assignment successful!'
     
-    # check if patient exists
-    pat = Patient.objects.get_by_name(last_name, first_name, middle_initial)
-    if len(pat) == 0:
-        error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
-        messages.error(request, f'Patient not found: {last_name}, {first_name} {middle_initial}.')
+    
+    pat = Patient.objects.get(pk=int(patient_id));
+    visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    
+    
+    
+    # Get visit
+    if len(visit) == 0:
+        # create new visit if none
+        visit = Visit(
+            patient=pat,
+            start_date=date_from,
+            assigned_end_date=date_to,
+            is_ongoing=True
+        )
+        # visit.save()
     else:
-        # error = f'Patient not found: {last_name}, {first_name} {middle_initial}.'
-        msg_success = f'Room assignment successful!'
+        visit = visit.first() # get first element
+        visit.start_date = datetime.datetime.strptime(date_from, '%Y-%m-%d')
+        visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
         
-        
-        pat = pat[0]
+    # Get room
+    room = Room.objects.filter(building__name=building_name, pk=room_number)[0]
     
-        # check if patient is currently visiting
-        visit = Visit.objects.filter(patient=pat, is_ongoing=True)
+    occu2 = Occupancy.objects.filter(visit=visit, date=date)
+    occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
+    is_assigned_to_same_room = len(occu) > 0
+    is_already_assigned = len(occu2) > 0
+    
+    
+    if not is_assigned_to_same_room and is_already_assigned:
+        occu = occu2.first()
+        messages.error(request, f'ERROR: Patient already assigned at {occu.room}')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+    # get list of watchers
+    # i = 1
+    watchers = []
+    
+    val = request.POST.get('rel_0', None)
+    for i in range(0, int(request.POST.get('rel_count', 0))):
+        val = int(request.POST.get(f'rel_{i}', None))
+        watchers.append(val)
+        print(f'----------www {val} > {watchers}')
+    # while val != None:
         
-        # Get visit
-        if len(visit) == 0:
-            # create new visit if none
-            visit = Visit(
-                patient=pat,
-                start_date=date_from,
-                assigned_end_date=date_to,
-                is_ongoing=True
-            )
-            visit.save()
-        else:
-            visit = visit[0] # get first element
-            visit.start_date = datetime.datetime.strptime(date_from, '%Y-%m-%d')
-            print(f'date to {date_to}')
-            visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
-            visit.save()
-        # Get room
-        room = Room.objects.filter(building__name=building_name, pk=room_number)[0]
         
-        # get list of watchers
-        i = 1
-        watchers = []
-        # print(post.get(f'relationship_{i}', None))
-        for key, value in request.POST.items():
-        # while post.get(f'relationship_{i}', None) is not None:
-            # rel = f'relationship_{i}'
-            if key.startswith('relationship_'):
-                
-            # rel = Watcher.objects.get(id=i).relationship
-                watchers.append(int(key.split('_')[1]))
-            i += 1
-        
-        # watcher=Watcher.objects.order_by('?').first(),
-        
-        occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
-        if len(occu) == 0:
-            occu = Occupancy(
-                visit=visit,
-                room=room,
-                # watcher=watcher,
-                date=date
-                
-            )
-            occu.save()
-        else:
-            msg_success = f'Re-assigning to the same room. Old table values have been updated.'
-            occu = occu.first()
-            # occu.watcher_set.all().delete()
-        
-        occu.watcher.set(watchers)
+    # print(post.get(f'relationship_{i}', None))
+    # for key, value in request.POST.items():
+    # while post.get(f'relationship_{i}', None) is not None:
+        # rel = f'relationship_{i}'
+        # if key.startswith('rel_'):
+            
+        # rel = Watcher.objects.get(id=i).relationship
+            # print(f'----------www {key} {value} = {watchers}')
+            # watchers.append(int(value))
+        # i += 1
+    
+    # watcher=Watcher.objects.order_by('?').first(),
+    
+    if len(occu) == 0:
+        occu = Occupancy(
+            visit=visit,
+            room=room,
+            # watcher=watcher,
+            date=date
+            
+        )
         occu.save()
+    else:
+        msg_success = f'Re-assigning to the same room. Old table values have been updated.'
+        occu = occu.first()
+        
+    visit.save()
+    occu.watcher.clear()
+    occu.watcher.set(watchers)
+    print(f'sssss {occu.watcher.all()}')
+    occu.save()
         
     if msg_success:
         messages.success(request, msg_success)
