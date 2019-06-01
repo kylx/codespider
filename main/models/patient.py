@@ -1,5 +1,9 @@
 from django.db import models
 
+from .diagnosis import Diagnosis
+from main.enums import Enums
+from .visit import Visit
+
 def simplify_patient_name(patient):
     return {
         'pk': patient.pk,
@@ -40,6 +44,26 @@ class PatientsManager(models.Manager):
 
 
         return list(map(simplify_patient_name, query))
+        
+    def get_diagnosis_region(self, start, end, diag, reg):
+        
+        # if diag != None:
+            # regs = []
+            # visits = Visit.objects.filter(diagnosis=diag)
+            # for reg in Enums.REGIONS[1:]:
+                # print 
+                # regs.append([reg[1], pats.filter(region=reg[0]).count()])
+            # return regs
+            
+        # if reg != None:
+            # diags = []
+            # pats = super().get_queryset().filter(region=reg)
+            # for diag in Diagnosis.objects.all():
+                # diags.append([diag.full_name, pats.filter(diagnosis=diag).count()])
+            # return diags
+            
+        return []
+                
 
 class Patient(models.Model):
     objects = PatientsManager()

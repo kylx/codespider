@@ -466,6 +466,8 @@ def inquiry_filter(request):
 	
 def inquiry_sort(request):
 
+    # start = request.GET.get(
+
     print(request.GET.get('date_from'))
     date_from = request.GET.get('date_from')
     date_to = request.GET.get('date_to')
@@ -476,16 +478,26 @@ def inquiry_sort(request):
         diagnosis = None
         
     form = FilterForm()
+    
+    dd = diagnosis
+    rr = region
+    
+    if diagnosis is None:
+        dd = 'all'
+    if region is None:
+        rr = 'all'
     context = {
         'url_name': 'INQUIRY',
         'form': form,
         'date_from': date_from,
         'date_to': date_to,
-        'diagnosis': diagnosis,
-        'region': region,
+        'diagnosis': dd,
+        'region': rr,
         'count':{
             'patients': 0,
         },
+        # 'diags': Patient.objects.get_diagnosis_region(1, None),
+        'diags': Visit.objects.get_diagnosis_region(date_from, date_to, diagnosis, region),
     }
     
     filters = {}
