@@ -36,7 +36,15 @@ def get_summary_monthly(request, year=-1, month=-1):
     return JsonResponse(Occupancy.objects.get_count_for_month(year, month), safe=False)
 
 def home(request):
-    context = {'url_name': 'HOME'}
+
+    # if year == -1 and month == -1 and day == -1:
+        # date = datetime.datetime.now()
+        # year = date.year
+        # month = date.month
+        # day = date.day
+
+    occ = Occupancy.objects.get_list_for_day_extended(2019, 5, 31)
+    context = {'count': occ['count'],}
     return render(request, 'main/home.html', context)
 
 def transfer_room(request):
