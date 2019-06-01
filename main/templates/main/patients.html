@@ -191,7 +191,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
-										<span class="patient-label" id = 'address'>Address: </span>{{ patient.region }} | {{ patient.province }} | {{ patient.city }}
+										<span class="patient-label" id = 'address'>Address: </span> 
 									</div>
 								</div>
 								<div class="row">
@@ -255,11 +255,11 @@
 $(document).ready(function() {
 	var raw = '{{ patient_info | escapejs }}';
     var raw_json = JSON.parse(raw);
-    console.log(raw_json)
+    console.log(raw_json);
 
 
     var body = document.getElementById('name');
-    var body1 = document.getElementById('age');
+    var body1 = document.getElementById('address');
     var fragment = document.createDocumentFragment();
 
 
@@ -329,7 +329,7 @@ $(document).ready(function() {
 	}
 });
 
-var lname, fname, mname, ager;
+var lname, fname, mname, ager, city, region;
 //onclclicksummarize
 $("tr").click(function()
 {
@@ -350,19 +350,29 @@ $("tr").click(function()
             mname = $(this).text();
         }
   
-       
+       	if (j==3)
+       	{
+       		region = $(this).text();
+       	}
+
+       	if (j==4)
+       	{
+       		city = $(this).text();
+       	}
         let name = document.getElementById('name');
         name.innerText = "Name: " + lname + ", " + fname + " " + mname + ".";
+
+        let address = document.getElementById('address');
+        address.innerText = "Adddress: " + city + " " + region;
 
     }
 
 )
 
-    var agetxt = document.getElementById('age').value;
+    
+    // age.innerText = "Age: " + agetxt
 
-    age.innerText = "Age: " + agetxt
-
-	console.log(lname, fname, mname, age);
+	console.log(lname, fname, mname, region, city);
     ;
 });
 </script>
