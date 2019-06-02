@@ -201,7 +201,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-12">
+									<div id="dos" class="col-lg-12">
 										<span class="patient-label" id = 'dateofstay'>Date/s of Stay: </span>
 										<div class="row">
 											<div class="col-lg-6 date-list">
@@ -362,9 +362,14 @@ $(document).ready(function() {
         let frequencytxt = document.getElementById('frequency');
         frequencytxt.innerText = "Frequency: " + pmatch.frequency;
 
-        let dateofstaytxt = document.getElementById('dateofstay');
-        dateofstaytxt.innerText = "Date/s of Stay: " + pmatch.dates_of_stay.map(dates => dates.from + " to " + dates.to).join(", ");
+        let dos = document.getElementById('dos');
+        pmatch.dates_of_stay.forEach((date)=>{
+            let dateofstaytxt = document.getElementById('dateofstay');
+            dateofstaytxt.textContent = date.from.replace(/-/g, '/') + '   -   ' + date.to.replace(/-/g, '/');
+            dos.appendChild(dateofstaytxt);
 
+        })
+        
     });
 
 });
