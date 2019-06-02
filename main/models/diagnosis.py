@@ -18,3 +18,5 @@ class Diagnosis(models.Model):
     short_name = models.CharField(max_length=30, blank=True)
     def __str__(self):
         return self.full_name
+    class Meta:
+         verbose_name_plural = "diagnoses"
