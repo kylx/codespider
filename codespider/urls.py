@@ -17,10 +17,10 @@ from django.contrib import admin
 from django.urls import path, re_path, register_converter, include
 from main.views import *
 
-import debug_toolbar
+# import debug_toolbar
 
 urlpatterns = [
-    path('debug', include(debug_toolbar.urls)),
+    # path('debug', include(debug_toolbar.urls)),
 
     # main pages
     # path('asd', tmp_date, name='asd'),
@@ -59,6 +59,7 @@ urlpatterns = [
     path('actions/get-filtered-patient-names', get_filtered_patient_names, name='actions/get-filtered-patient-names'),
     path('actions/get-filtered-relationships', get_filtered_relationships, name='actions/get-filtered-relationships'),
     path('actions/save-day', save_day, name='actions/save-day'),
+    path('actions/logout', logout_view, name='actions/logout'),
 
      
     path('', show_urls, name='dev/show-urls'),

@@ -16,6 +16,9 @@ admin.site.register(Watcher)
 admin.site.register(Room)	
 admin.site.register(Building)
 admin.site.register(Visit)
-admin.site.register(Extension)
-admin.site.register(Occupancy)
+# admin.site.register(Extension)
+# admin.site.register(Occupancy)
 admin.site.register(Saved_Date)
+
+
+admin.site.site_header = 'Admin Interface'

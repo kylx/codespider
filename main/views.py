@@ -23,6 +23,8 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 from django.http import HttpResponse
 
@@ -60,6 +62,7 @@ def get_summary_monthly(request, year=-1, month=-1):
         month = int(month)
     return JsonResponse(Occupancy.objects.get_count_for_month(year, month), safe=False)
 
+@staff_member_required
 def home(request):
 
     year = -1
@@ -323,6 +326,9 @@ def rooms(request, building):
     # messages.error(request, f'ee')
     return render(request, 'main/rooms.html', context)
 import json
+
+
+
 def patients(request):
     patient_list = Patient.objects.get_list_names()
     form = PatientForm()
@@ -674,18 +680,8 @@ def rand_patient(request):
     }
     return JsonResponse(data)
 	
-def regex(request, test='wtf'):
-
-	context = {
-		'aaa': test,
-	}
-	return render(request, 'tmp/regex.html', context)
-	
-def tmp_date(request, year=9999, month=99, day=0):
-
-	context = {
-		'year': year,
-		'month': month,
-		'day': day,
-	}
-	return render(request, 'tmp/asd.html', context)
+from django.contrib.auth import logout
+from django.urls import reverse
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))

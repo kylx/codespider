@@ -56,9 +56,14 @@
                 </ul>
 				{% block nav_bar_right %}
                 <ul class="nav navbar-nav flex-row justify-content-center flex-nowrap">
-                    <button type="button" class="btn btn-outline-secondary">
+                    <button type="button" class="btn btn-outline-secondary" onclick="logout()">
                         <i class="fa fa-power-off" aria-hidden="true"></i>
                         Logout
+                        <script>
+                            function logout() {
+                                window.location.href = 'http://localhost:8000{% url "actions/logout" %}';
+                            }
+                        </script>
                     </button>
                 </ul>
 				{% endblock nav_bar_right %}

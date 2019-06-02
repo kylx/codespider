@@ -60,10 +60,15 @@
 			Save Day
 		</button>
 		<p id="demo"></p>
-		<button type="button" class="btn btn-outline-secondary">
-			<i class="fa fa-power-off" aria-hidden="true"></i>
-			Logout
-		</button>
+		<button type="button" class="btn btn-outline-secondary" onclick="logout()">
+            <i class="fa fa-power-off" aria-hidden="true"></i>
+            Logout
+            <script>
+                function logout() {
+                    window.location.href = 'http://localhost:8000{% url "actions/logout" %}';
+                }
+            </script>
+        </button>
 	</ul>
 {% endblock nav_bar_right %}
 
@@ -319,15 +324,12 @@
 {% block page_js %}
 <script src="{% static 'js/plugins/select2.js' %}"></script>
 <script>
-console.log('ZZZZ', 'http://localhost:8000{% url "actions/save-day" %}');
 function myFunction() {
-  if (confirm("Are you sure you want to save?")) {
-    window.location.href = 'http://localhost:8000{% url "actions/save-day" %}';
-    <!-- console.log('{% url "actions/save-day" %}); -->
-  } else {
-    alert("You pressed cancel.");
-  }
-  <!-- document.getElementById("demo").innerHTML = txt; -->
+    if (confirm("Are you sure you want to save?")) {
+        window.location.href = 'http://localhost:8000{% url "actions/save-day" %}';
+    } else {
+        alert("You pressed cancel.");
+    }
 }
 
 function sleep(ms) {
@@ -516,19 +518,19 @@ window.onload = function() {
 	var fragment = document.createDocumentFragment();
 	// console.log(body);
 	console.time('loop');
-    var room_num = 1;
-    var last_room = 0;
+    var room_num = 0;
+    var last_room = -1;
 	raw_json.forEach((occ, i, occs) => {
 		let {pk, room, first_name, last_name, middle_initial, watchers, date_of_stay, address} = occ;
         
         // add empty rooms
         console.log('pre', parseInt(room), room_num);
-        while (room_num < parseInt(room)){
-            addRoom(null, room_num);
-            if (room_num < parseInt(room))
-                room_num++;
-            console.log('skip', parseInt(room), room_num);
-        }
+        // while (room_num < parseInt(room)){
+        //     addRoom(null, room_num);
+        //     if (room_num < parseInt(room))
+        //         room_num++;
+        //     console.log('skip', parseInt(room), room_num);
+        // }
         if (i+1 < occs.length){
             let next_room = parseInt(occs[i+1].room);
             if (room_num+1 == next_room){
@@ -558,12 +560,16 @@ window.onload = function() {
 		// await sleep(5000);
 		// console.log(room, patient, watchers, date_of_stay);
 	});
-    if (room_num == last_room)
-        room_num++;
-    while (room_num <= num_rooms){
-        console.log('rrom_num', room_num);
-        addRoom(null, room_num);
-        room_num++;
+    if (raw_json.length == 0){
+        let row = document.createElement('tr');
+        let td_room = document.createElement('td');
+        td_room.setAttribute('colspan', 5);
+
+        td_room.setAttribute("id" , "row-1");
+        td_room.textContent = "No room assignments"
+        row.appendChild(td_room);
+        fragment.appendChild(row);
+
     }
 	body.appendChild(fragment);
 	console.timeEnd('loop');
