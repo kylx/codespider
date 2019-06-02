@@ -52,6 +52,7 @@ def get_today_as_dict():
     
     return di
 
+@staff_member_required
 def get_summary_monthly(request, year=-1, month=-1):
     if year == -1 or month == -1:
         date = get_today()
@@ -83,6 +84,7 @@ def home(request):
         }
     return render(request, 'main/home.html', context)
 
+@staff_member_required
 def transfer_room(request):
     post = request.POST
     building_name = post.get('building_name', 1)
@@ -134,6 +136,7 @@ def transfer_room(request):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
+@staff_member_required
 def checkout(request):
     post = request.POST
     # room_number = post.get('room_num', 1)
@@ -171,6 +174,7 @@ def checkout(request):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@staff_member_required
 def assign_room(request):
     type = 'assign room'
     error = None
@@ -286,6 +290,7 @@ def assign_room(request):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@staff_member_required
 def rooms(request, building):
     # print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
     form = RoomForm()
@@ -329,6 +334,7 @@ import json
 
 
 
+@staff_member_required
 def patients(request):
     patient_list = Patient.objects.get_list_names()
     form = PatientForm()
@@ -355,18 +361,21 @@ def patients(request):
     # messages.error(request, f'ee')
     return render(request, 'main/patients.html', context)
 
+@staff_member_required
 def get_filtered_patient_names(request):
     term = request.GET.get('term')
     # mid = request.GET.get('mid')
     # last = request.GET.get('last')
     return JsonResponse(Patient.objects.get_filtered_names(term), safe=False)
     
+@staff_member_required
 def get_filtered_relationships(request):
     term = request.GET.get('term')
     # mid = request.GET.get('mid')
     # last = request.GET.get('last')
     return JsonResponse(Watcher.objects.get_filtered_relationships(term), safe=False)
 
+@staff_member_required
 def summary_daily(request, year=-1, month=-1, day=-1):
 
 
@@ -414,6 +423,7 @@ def summary_daily(request, year=-1, month=-1, day=-1):
     # }
     return render(request, 'main/summary-daily.html', context)
 	
+@staff_member_required
 def summary_monthly(request):
     form = SummaryForm()
     context = {
@@ -422,6 +432,7 @@ def summary_monthly(request):
     }
     return render(request, 'main/summary-monthly.html', context)
 
+@staff_member_required
 def inquiry_filter(request):
     
     print(request.GET.get('date_from'))
@@ -513,6 +524,7 @@ def inquiry_filter(request):
 
     return render(request, 'main/inquiry-filter.html', context)
 	
+@staff_member_required
 def inquiry_sort(request):
     form = FilterForm()
 
@@ -585,6 +597,7 @@ def inquiry_sort(request):
     
     return render(request, 'main/inquiry-sort.html', context)
     
+@staff_member_required
 def tmp_create_patient(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     if request.method == 'POST':
@@ -614,10 +627,12 @@ def tmp_create_patient(request):
     # messages.error(request, f'c{post.middle_initial}')
     return redirect('patients')
 
+@staff_member_required
 def tmp_assign_room(request):
     context = {'url_name': 'PATIENTS_CREATE'}
     return render(request, 'main/forms/roomform.html', context)
     
+@staff_member_required
 def save_day(request):
     date = get_today()
     day = Saved_Date(saved=True, last_modified=date)
