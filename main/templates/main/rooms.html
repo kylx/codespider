@@ -178,14 +178,16 @@
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
-									<select id="first">
+									<select id="first" required>
                                     </select>
 								</div>
 							</div>
 							<div class="row text-left">
 								<div class="col-lg-12">
-									<select id="relationships">
+                                    <select id="relationships" required>
+                                        <!-- <option value=""></option> -->
                                     </select>
+                                    <!-- <input type="hidden"> -->
 								</div>
 							</div>
 							<div class="row text-left">
@@ -376,23 +378,9 @@ function updateTransferRooms(e){
     
 }
 
-
-<!-- window.addEventListener("load", function(){ -->
-    <!-- updateTransferRooms(); -->
-<!-- }); -->
-
 window.onload = function() {
-    <!-- $('#id_building_transfer>option:eq(2)').prop('selected', true); -->
     $('#id_building_transfer').change(updateTransferRooms);
-    $("#id_building_transfer").val("1");
-    <!-- $('#id_building_transfer').prop('selectedIndex', 1); // select 4th option -->
     $('#id_building_transfer').trigger('change');
-    <!-- document.getElementById('id_building_transfer').addEventListener('change', updateTransferRooms); -->
-    <!-- console.log('sel', document.getElementById('id_building_transfer').options); -->
-    <!-- document.getElementById('id_building_transfer').options[0].selected = true; -->
-    <!-- document.getElementById('id_building_transfer').dispatchEvent(new Event('change', { 'bubbles': true })); -->
-   
-    <!-- console.log('building', building); -->
     
     
     // dynamic rooms for assign rooms
@@ -412,42 +400,13 @@ window.onload = function() {
     // dynamic buildings for transfer roomslet 
     sel = document.getElementById('id_building_transfer');
     buildings.forEach((bb)=>{
-        console.log('bb', bb);
-        <!-- if (room[1] != iii[0]) return; -->
-        <!-- console.log('fasffas', room); -->
-        
         let op = document.createElement('option');
         op.setAttribute("value", bb[0]);
-        <!-- bb[1].charAt(0).toUpperCase(); -->
         op.innerText = capFirst(bb[1]);
-        <!-- op.innerText.charAt(0).toUpperCase(); -->
         sel.appendChild(op);
         
     });
     
-    console.log(rooms);
-    console.log(buildings);
-    let ul = document.querySelector('ul#id_relationship');
-    let relas = JSON.parse("{{relationships | escapejs}}".replace(/'/g, '"'));
-    console.log(relas);
-    <!-- function addRelationship(rela){ -->
-        <!-- console.log(rela[0], rela[1]); -->
-        
-        <!-- let li = document.createElement('li'); -->
-        <!-- let label = document.createElement('label'); -->
-        <!-- let checkbox = document.createElement("input"); -->
-        <!-- checkbox.setAttribute("type", "checkbox"); -->
-        <!-- checkbox.setAttribute("name", "relationship_"+rela[0]); -->
-        <!-- checkbox.setAttribute("id", "id_relationship_"+rela[0]); -->
-        <!-- checkbox.setAttribute("value", rela[0]); -->
-        <!-- label.setAttribute("for", "id_relationship_"+rela[0]); -->
-        <!-- checkbox.setAttribute("value", rel[0]); -->
-        <!-- label.textContent = ' '+rela[1]; -->
-        <!-- li.appendChild(checkbox); -->
-        <!-- li.appendChild(label); -->
-        <!-- ul.appendChild(li); -->
-    <!-- } -->
-    <!-- relas.forEach(addRelationship); -->
 
     // add building to forms
     function addBuildingAndDate(formId) {
@@ -456,12 +415,10 @@ window.onload = function() {
         building.setAttribute("type", "hidden");
         building.setAttribute("name", "building_name");
         building.setAttribute("value", "{{building}}");
-        <!-- let form = document.getElementById('formId'); -->
         let date = document.createElement("input");
         date.setAttribute("type", "hidden");
         date.setAttribute("name", "date");
         date.setAttribute("value", "{{year}}-{{month}}-{{day}}");
-        console.log(formId, form);
         form.appendChild(building);
         form.appendChild(date);
     }
@@ -545,20 +502,8 @@ window.onload = function() {
                 
             }
         }
-        
         last_room = parseInt(room);
-        
-        // add rooms on records
         addRoom(occ);
-		// td_room.className = ""
-
-		<!-- td_address.textContent = c; -->
-        
-        
-        console.log('last', parseInt(room), room_num);
-
-		// await sleep(5000);
-		// console.log(room, patient, watchers, date_of_stay);
 	});
     if (raw_json.length == 0){
         let row = document.createElement('tr');
@@ -572,13 +517,17 @@ window.onload = function() {
 
     }
 	body.appendChild(fragment);
-	console.timeEnd('loop');
     
     var first, mid, last;
     $('#relationships').select2({
 		multiple: true,
 		maximumSelectionLength: 2,
+        closeOnSelect: false,
+        dropdownParent: $('#AssignRoomModal'),
 		placeholder: 'Relationship/s',	
+        // placeholder: function(){
+        //     $(this).data('placeholder');
+        // },
 		minimumInputLength: 1,
 		ajax: {
 			url: "{% url 'actions/get-filtered-relationships' %}",
@@ -605,6 +554,10 @@ window.onload = function() {
 			}
 		}
 	});
+    console.log("CHANGE!", $('#relationships'));
+    $('#AssignRoomModal').on("shown.bs.modal", function(){
+        $('#relationships').trigger("change");
+    });
 	$('#first,#second,#third').select2({
 		placeholder: 'Patient Name',
 		minimumInputLength: 1,
@@ -614,18 +567,15 @@ window.onload = function() {
 				var data = {
 					term: params.term,
 				};
-				console.log('data', data);
 				return data;
 			},
 			processResults: function (data) {
-				console.log(data);
-				// Tranforms the top-level key of the response object from 'items' to 'results'
-				return {
+                return {
 					results: data.map(p => {
 						return {
                             pk: p.pk,
 							id: p.pk,
-							text: p.pk + ' - ' + p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
+							text: p.last_name + ', ' + p.first_name + ' ' + p.middle_initial + '.',
 						}
 
 					})
@@ -638,21 +588,18 @@ window.onload = function() {
     $('#first').change(function(){
         let id = $('#first').find(":selected")[0].value;
         $('input[name=assign_patient_id]')[0].value = id;
-        console.log(id);
     });
     
     $('#transfer_room').append($('<input type="hidden" name="transfer_patient_id" value="-1">' ));
     $('#second').change(function(){
         let id = $('#second').find(":selected")[0].value;
         $('input[name=transfer_patient_id]')[0].value = id;
-        console.log(id);
     });
     
     $('#checkout').append($('<input type="hidden" name="checkout_patient_id" value="-1">' ));
     $('#third').change(function(){
         let id = $('#third').find(":selected")[0].value;
         $('input[name=checkout_patient_id]')[0].value = id;
-        console.log(id);
     });
     
     $('#assign_room').append($('<div id="hh"></div>'));
@@ -664,8 +611,6 @@ window.onload = function() {
             $('#hh').append($('<input type="hidden" name="rel_' +i+ '" value="' +d.id +'">'));
 
         });
-        <!-- $('input[name=patient_id]')[0].value = id; -->
-        console.log(id);
     });
 };
 </script>

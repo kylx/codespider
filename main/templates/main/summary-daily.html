@@ -90,7 +90,7 @@
 			</div>
 		</div>
 	</div>
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-lg-12 date-container">
             <div class="row">
                 <div class="col-lg-6 text-right">
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="row text-center">
         <div class="col-lg-12 counter-container">
             <div class="row">
@@ -225,7 +225,7 @@ window.onload = function(){
         date_string += date_of_stay.end.month_name + ' ';
         date_string += date_of_stay.end.day;
     
-        td_patient.textContent = last_name + ', ' + first_name + ' ' + middle_initial + '.';
+        td_patient.textContent = first_name + ', ' + last_name + ' ' + middle_initial + '.';
         td_num_watchers.textContent = String(watchers.count);
         td_relationships.textContent = watchers.list;
         td_date.textContent = date_string;

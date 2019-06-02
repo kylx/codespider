@@ -30,6 +30,7 @@ urlpatterns = [
     # re_path(r'^fish/(?P<test>(main)|(annex))$', regex),
     
     path('home'             , home          , name='home'),
+    path(''             , home          , name='home'),
     re_path('summary/monthly/(?P<year>(\d{4}))/(?P<month>(\d{2}))', get_summary_monthly),
     re_path('rooms/(?P<building>([a-zA-Z]+))', rooms),
     # re_path('rooms/(?P<building>([a-zA-Z]+))/(?P<year>(\d{4}))/(?P<month>(\d{2}))/(?P<day>(\d{2}))', rooms),
@@ -62,7 +63,7 @@ urlpatterns = [
     path('actions/logout', logout_view, name='actions/logout'),
 
      
-    path('', show_urls, name='dev/show-urls'),
+    path('dev', show_urls, name='dev/show-urls'),
 
     # admin
     path('admin', admin.site.urls, name='admin'),

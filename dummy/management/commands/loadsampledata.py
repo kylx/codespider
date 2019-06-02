@@ -70,9 +70,11 @@ class Command(BaseCommand):
             data.append(patient())
 
         # Add rooms
-        for x in range(1,6):
+        for x in range(0,6):
             data.append(room('main', x))
-        for x in range(1,6):
+        for x in range(2,11):
+            data.append(room('annex', x))
+        for x in range(21,31):
             data.append(room('annex', x))
 
         with open('db.json', 'w') as dump_file:
