@@ -48,14 +48,14 @@ class Command(BaseCommand):
             watcher('father'),
             watcher('grandmother'),
             watcher('grandfather'),
-            # watcher('daughter'),
-            # watcher('son'),
-            # watcher('mistress'),
-            # watcher('ex-wife'),
-            # watcher('ex-husband'),
-            # watcher('ex-mistress'),
-            # watcher('husband'),
-            # watcher('wife'),
+            watcher('daughter'),
+            watcher('son'),
+            watcher('mistress'),
+            watcher('ex-wife'),
+            watcher('ex-husband'),
+            watcher('ex-mistress'),
+            watcher('husband'),
+            watcher('wife'),
             building('main'),
             building('annex'),
         ]
@@ -72,6 +72,7 @@ class Command(BaseCommand):
         # Add rooms
         for x in range(0,6):
             data.append(room('main', x))
+        data.append(room('annex', 0))
         for x in range(2,11):
             data.append(room('annex', x))
         for x in range(21,31):
@@ -81,17 +82,17 @@ class Command(BaseCommand):
             json.dump(data, dump_file, indent=4)
         call_command('loaddata', 'db.json')
 
-        # data = []
-        # for x in range(1, 20):
-            # data.append(visit_start(str(x)))
+        data = []
+        for x in range(1, 20):
+            data.append(visit_start(str(x)))
         
-        # with open('db.json', 'w') as dump_file:
-            # json.dump(data, dump_file, indent=4)
-        # call_command('loaddata', 'db.json')
+        with open('db.json', 'w') as dump_file:
+            json.dump(data, dump_file, indent=4)
+        call_command('loaddata', 'db.json')
 
-        # data = []
-        # for x in range(1, 200):
-            # data.append(occupancy())
-        # with open('db.json', 'w') as dump_file:
-            # json.dump(data, dump_file, indent=4)
-        # call_command('loaddata', 'db.json')
+        data = []
+        for x in range(1, 200):
+            data.append(occupancy())
+        with open('db.json', 'w') as dump_file:
+            json.dump(data, dump_file, indent=4)
+        call_command('loaddata', 'db.json')

@@ -221,17 +221,19 @@ $(document).ready(function() {
 
     resetProv();
 	
-	var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
-	console.log(diagnosis);
-	let dropdown = document.getElementById('id_diagnosis');
+	// var diagnosis = {{diagnosis}};
+	// console.log(diagnosis);
+	// let dropdown = document.getElementById('id_diagnosis');
+	// dropdown.innerHTML = ''
+	// // console.log()
 	
-	diagnosis.forEach(arrayopt);
-	function arrayopt(diagnosis){
-		let option = document.createElement('option'); // create option element
-		option.value = diagnosis[0]; // assign id/value
-		option.innerText = diagnosis[1]; // assign text
-		dropdown.appendChild(option); // add option to dropdown
-	}
+	// diagnosis.forEach(arrayopt);
+	// function arrayopt(diagnosis){
+	// 	let option = document.createElement('option'); // create option element
+	// 	option.value = diagnosis[0]; // assign id/value
+	// 	option.innerText = diagnosis[1]; // assign text
+	// 	dropdown.appendChild(option); // add option to dropdown
+	// }
 });
 </script>
 {% endblock page_body %}

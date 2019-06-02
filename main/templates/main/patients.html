@@ -308,6 +308,7 @@ $(document).ready(function() {
     var diagnosis = JSON.parse("{{diagnosis | escapejs}}".replace(/'/g, '"'));
     console.log(diagnosis);
     let dropdown = document.getElementById('id_diagnosis');
+    dropdown.innerHTML = '';
 
     diagnosis.forEach(arrayopt);
     function arrayopt(diagnosis){
@@ -351,7 +352,7 @@ $(document).ready(function() {
         sextxt.innerText = "Sex: " + pmatch.sex;
 
         let addresstxt = document.getElementById('addresstxt');
-        addresstxt.innerText = "Address: " + pmatch.region + " | " + pmatch.province + " | " + pmatch.city
+        addresstxt.innerText = "Address: " + pmatch.region + ", " + pmatch.province + ", " + pmatch.city
 
         let diagnosistxt = document.getElementById('diagnosis');
         diagnosistxt.innerText = "Diagnosis: " + pmatch.diagnosis;

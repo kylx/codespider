@@ -443,11 +443,22 @@ def inquiry_filter(request):
     province = request.GET.get('province')
     city = request.GET.get('city')
     
+    if date_from == '':
+        date_from = None
+    if date_to == '':
+        date_to = None
     if diagnosis == '':
         diagnosis = None
+    if region == '':
+        region = None
+    if province == '':
+        province = None
+    if city == '':
+        city = None
     
     form = FilterForm()
     context = {
+        'diagnosis': json.dumps(Diagnosis.objects.get_diagnosis_list()),
         'url_name': 'INQUIRY',
         'form': form,
         'date_from': date_from,
@@ -479,6 +490,10 @@ def inquiry_filter(request):
     
     filters = {}
     
+    if date_from == None and date_to == None and diagnosis == None and region == None and province == None and city == None:
+        
+        return render(request, 'main/inquiry-filter.html', context)
+
     if date_from:
         dates_from = list(map(lambda x: int(x), date_from.split('-')))
         dfrom = datetime.date(dates_from[0], dates_from[1], dates_from[2])
@@ -554,6 +569,10 @@ def inquiry_sort(request):
     
     if diagnosis == '':
         diagnosis = None
+    else:
+        diagnosis = Diagnosis.objects.get(pk=diagnosis);
+    if region == '':
+        diagnosis = None
         
     
     dd = diagnosis
@@ -613,6 +632,7 @@ def tmp_create_patient(request):
         post.region = request.POST.get('region')
         post.province = request.POST.get('province')
         post.city = request.POST.get('city')
+        print(post)
         
         if len(Patient.objects.filter(first_name= post.first_name,middle_initial= post.middle_initial,last_name=post.last_name)) == 0:
             post.save()
