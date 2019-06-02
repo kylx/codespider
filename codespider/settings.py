@@ -162,6 +162,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+# STATIC_ROOT = 'G:/Projects/python/codespider/static/'
 
 LOGOUT_REDIRECT_URL = 'home'

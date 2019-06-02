@@ -17,7 +17,7 @@ ids = {
     'extension': 1,
 }
 
-def diagnosis(full_name, short_name=None):
+def diagnosis(full_name):
     pk = ids['diagnosis']
     ids['diagnosis'] += 1
     return {
@@ -25,7 +25,6 @@ def diagnosis(full_name, short_name=None):
         'pk': pk,
         'fields':{
             'full_name': full_name,
-            'short_name': short_name,
         },
     }
 
