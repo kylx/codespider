@@ -29,13 +29,14 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 
 weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-def get_today():
+def get_today(days_delta=0):
     if Saved_Date.objects.all().count() == 0:
         date = datetime.datetime.now()
     else:
         date = Saved_Date.objects.latest('last_modified').last_modified + datetime.timedelta(days=1)
     # date = Saved_Date.objects.latest('last_modified').last_modified 
     print(f'today {date}')
+    date += datetime.timedelta(days=days_delta)
     return date
     
 def get_today_as_dict():
@@ -182,7 +183,7 @@ def assign_room(request):
     post = request.POST
     ll = post.getlist('id_relationship')
     building_name = post.get('building_name', 1)
-    room_number = post.get('room_num', 1)
+    room_number = int(post.get('room_num', 1))
     last_name = post.get('last_name', 1)
     first_name = post.get('first_name', 1)
     middle_initial = post.get('middle_initial', 1)
@@ -190,6 +191,7 @@ def assign_room(request):
     date_to = post.get('date_to', None)
     date_from = post.get('date_from', None)
     date = post.get('date', None)
+    date = get_today()
     
     msg_success = f'Room assignment successful!'
     
@@ -208,19 +210,27 @@ def assign_room(request):
             assigned_end_date=date_to,
             is_ongoing=True
         )
+        # print(f"VISIT len0")
         # visit.save()
     else:
         visit = visit.first() # get first element
         visit.start_date = datetime.datetime.strptime(date_from, '%Y-%m-%d')
         visit.assigned_end_date = datetime.datetime.strptime(date_to, '%Y-%m-%d')
+        # print(f"VISIT len0 NOT")
         
     # Get room
     room = Room.objects.filter(building__name=building_name, pk=room_number)[0]
+    # print(f"ROOM {room}")
     
     occu2 = Occupancy.objects.filter(visit=visit, date=date)
     occu = Occupancy.objects.filter(visit=visit, room=room, date=date)
     is_assigned_to_same_room = len(occu) > 0
     is_already_assigned = len(occu2) > 0
+
+    # print(f"is_assigned_to_same_room? {is_assigned_to_same_room}")
+    # print(f"is_already_assigned? {is_already_assigned}")
+    # print(f"today? {get_today()}")
+    # print(f"date? {date}")
     
     
     if not is_assigned_to_same_room and is_already_assigned:
@@ -236,7 +246,7 @@ def assign_room(request):
     for i in range(0, int(request.POST.get('rel_count', 0))):
         val = int(request.POST.get(f'rel_{i}', None))
         watchers.append(val)
-        print(f'----------www {val} > {watchers}')
+        # print(f'----------www {val} > {watchers}')
     # while val != None:
         
         
@@ -263,13 +273,15 @@ def assign_room(request):
             
         )
         occu.save()
+        # print(f"new occu!")
     else:
         msg_success = f'Re-assigning to the same room. Old table values have been updated.'
         occu = occu.first()
+        # print(f"OLD occu!")
         
     occu.watcher.clear()
     occu.watcher.set(watchers)
-    print(f'sssss {occu.watcher.all()}')
+    # print(f'sssss {occu.watcher.all()}')
     occu.save()
         
     if msg_success:
