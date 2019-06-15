@@ -673,10 +673,16 @@ def save_day(request):
     occu = Occupancy.objects.filter(date__date=date)
     for occ in occu:
         print("ASSSSASAS")
-        occ.pk = None
-        occ.id = None
-        occ.date = get_today()
-        occ.save()
+        cp = occ.copy()
+        cp.date = get_today()
+        cp.save()
+        # watchers = occ.watcher.all()
+        # occ.pk = None
+        # occ.id = None
+        # occ.date = get_today()
+        # occ.save()
+        # occ.watcher.set(watchers)
+        # occ.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def login(request):

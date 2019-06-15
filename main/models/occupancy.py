@@ -264,5 +264,16 @@ class Occupancy(models.Model):
     watcher = models.ManyToManyField("Watcher")
     date = models.DateTimeField()
 
+    def copy(self):
+        o = Occupancy()
+        o.visit = self.visit
+        o.room = self.room
+        o.date = self.date
+        o.save()
+        o.watcher.set(self.watcher.all())
+        o.save()
+        return o
+
+
     def __str__(self):
         return f'{self.room.display_number} - {self.visit.patient.last_name}'
