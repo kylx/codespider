@@ -65,7 +65,7 @@ class OccupancyManager(models.Manager):
         
         for o in llll:
             watchers += o['watchers']['count']
-            if o['sex'] == 'M':
+            if o['sex'].lower() == 'M'.lower():
                 male += 1
             else:
                 female += 1
